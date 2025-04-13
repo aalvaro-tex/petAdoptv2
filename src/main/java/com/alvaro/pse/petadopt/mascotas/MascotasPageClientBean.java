@@ -56,7 +56,7 @@ public class MascotasPageClientBean {
         Mascota m = new Mascota();
         m.setCosteAdopcion(bean.getCosteAdopcion());
         m.setEdad(bean.getEdad());
-        m.setEspecie(bean.getEspecia());
+        m.setEspecie(bean.getEspecie());
         m.setEstadoSalud(bean.getEstadoSalud());
         m.setRaza(bean.getRaza());
         m.setNombre(bean.getNombre());

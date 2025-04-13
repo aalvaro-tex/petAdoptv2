@@ -16,8 +16,8 @@ import javax.inject.Named;
 @Named
 @SessionScoped
 public class MascotasPageBackingBean implements Serializable {
-    
-    private String verMascotasFilter;
+
+    private String verMascotasFilter = "todas";
     private String nombre;
     private String especie;
     private String raza;
@@ -32,14 +32,6 @@ public class MascotasPageBackingBean implements Serializable {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getEspecia() {
-        return especie;
-    }
-
-    public void setEspecia(String especia) {
-        this.especie = especia;
     }
 
     public String getRaza() {
@@ -82,7 +74,6 @@ public class MascotasPageBackingBean implements Serializable {
         this.costeAdopcion = costeAdopcion;
     }
 
-   
     public String getFoto() {
         return foto;
     }
@@ -97,7 +88,24 @@ public class MascotasPageBackingBean implements Serializable {
 
     public void setVerMascotasFilter(String verMascotasFilter) {
         this.verMascotasFilter = verMascotasFilter;
-        
+
     }
-    
+
+    public String getFilterDisplayName() {
+        String text = "";
+        switch (this.verMascotasFilter) {
+            case "todas":
+                text = "Todas las mascotas";
+                break;
+            case "sinAdoptar":
+                text = "Mascotas sin adoptar";
+                break;
+            case "adoptadas":
+                text = "Mascotas adoptadas";
+                break;
+            default:
+                break;
+        }
+        return text;
+    }
 }

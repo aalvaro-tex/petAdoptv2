@@ -37,12 +37,8 @@
 
             <ui:define name="content">
                 <script>
-                    function handleSubmit(xhr, status, args) {
-                        if (args.validationFailed) {
-// Handle validation failure if needed
-                        } else {
-                            PF('mascotaDialog').hide(); // Close the dialog if the operation is successful
-                        }
+                    function handleSubmit() {
+                        PF('mascotaDialog').hide();
                     }</script>
                 <div class="product card" style="margin-top:40px;">
 
@@ -51,18 +47,19 @@
                             <p:commandButton value="Añadir nueva mascota" icon="pi pi-plus" style="margin-bottom:10px; heigth:40px;" onclick="PF('mascotaDialog').show()"></p:commandButton>
                         </h:form>    
                         <h:form>
-                            <p:selectOneMenu id="filter" value="#{mascotasPageBackingBean.verMascotasFilter}" label="Ver..."
-                                             alwaysDisplayLabel="true" style="height: 40px;">
+                            <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{mascotasPageBackingBean.verMascotasFilter}">
                                 <f:selectItem itemLabel="Todas las mascotas" itemValue="todas" />
                                 <f:selectItem itemLabel="Sin adoptar" itemValue="sinAdoptar"/>
                                 <f:selectItem itemLabel="Adoptadas" itemValue="adoptadas"/>
+                                <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
                             </p:selectOneMenu>
                         </h:form>
                     </div>
-                    <h:form>
-                        <p:dataScroller value="" var="product" chunkSize="10">
-                            <f:facet name="header" >
-                                Mascotas
+                   
+                    <h:form id="form">
+                        <p:dataScroller value="" var="product" chunkSize="10" id="data">
+                            <f:facet name="header" id="header" >
+                                <p:outputLabel id="selectedItemText" value="#{mascotasPageBackingBean.filterDisplayName}"/>
                             </f:facet>
 
                             <f:facet name="loader">
