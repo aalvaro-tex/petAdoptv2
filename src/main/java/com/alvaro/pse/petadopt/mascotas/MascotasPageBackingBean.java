@@ -5,7 +5,9 @@
  */
 package com.alvaro.pse.petadopt.mascotas;
 
+import com.alvaro.pse.petadopt.entities.Mascota;
 import java.io.Serializable;
+import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
@@ -18,13 +20,18 @@ import javax.inject.Named;
 public class MascotasPageBackingBean implements Serializable {
 
     private String verMascotasFilter = "todas";
+    private Long idMascotaSelected;
+
+  
     private String nombre;
     private String especie;
     private String raza;
+
     private int edad;
     private String estadoSalud;
     private double costeAdopcion;
     private String foto;
+
 
     public String getNombre() {
         return nombre;
@@ -91,17 +98,47 @@ public class MascotasPageBackingBean implements Serializable {
 
     }
 
+    public Long getIdMascotaSelected() {
+        return idMascotaSelected;
+    }
+
+    public void setIdMascotaSelected(Long idMascotaSelected) {
+        this.idMascotaSelected = idMascotaSelected;
+    }
+
+
     public String getFilterDisplayName() {
         String text = "";
         switch (this.verMascotasFilter) {
             case "todas":
                 text = "Todas las mascotas";
                 break;
-            case "sinAdoptar":
+            case "sin_solicitud":
                 text = "Mascotas sin adoptar";
                 break;
-            case "adoptadas":
+            case "adoptada":
                 text = "Mascotas adoptadas";
+                break;
+            case "pendiente":
+                text = "Mascotas pendientes de revisar";
+                break;
+            default:
+                break;
+        }
+        return text;
+    }
+
+    public String getEstadoDisplayName(String estado) {
+        String text = "";
+        switch (estado) {
+            case "sin_solicitud":
+                text = "Sin solicitud";
+                break;
+            case "adoptada":
+                text = "Adoptada";
+                break;
+            case "pendiente":
+                text = "Pendiente de aprobar";
                 break;
             default:
                 break;

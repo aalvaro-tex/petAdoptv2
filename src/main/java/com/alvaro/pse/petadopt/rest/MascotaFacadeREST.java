@@ -6,6 +6,8 @@
 package com.alvaro.pse.petadopt.rest;
 
 import com.alvaro.pse.petadopt.entities.Mascota;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -83,6 +85,36 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    
+    /* Obtiene las mascotas de un determinado refugio */
+    @GET
+    @Path("find-by-refugio/{idRefugio}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Mascota> findByRefugio(@PathParam("idRefugio") Long idRefugio) {
+        List<Mascota> all = this.findAll();
+        List<Mascota> found = new ArrayList<>();
+        for(Mascota m : all){
+            if(m.getIdRefugio() == idRefugio){
+                found.add(m);
+            }
+        }
+        return found;
+    }
+    
+    /* Obtiene las mascotas de un determinado refugio y un determinado estado */
+    @GET
+    @Path("find-by-refugio-estado/{idRefugio}/{estado}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Mascota> findByRefugioAndEstado(@PathParam("idRefugio") Long idRefugio, @PathParam("estado") String estado) {
+        List<Mascota> all = this.findByRefugio(idRefugio);
+         List<Mascota> found = new ArrayList<>();
+        for(Mascota m : all){
+            if(m.getEstado().equalsIgnoreCase(estado)){
+                found.add(m);
+            }
+        }
+        return found;
     }
 
     @Override

@@ -73,7 +73,6 @@ public class LoginPageClientBean implements Serializable {
             // como sabemos desde qué página está accediendo, basta llamar
             // a getById de la entidad correspondiente
             if (bean.getRol().equalsIgnoreCase("Cliente")) {
-                System.out.println("Busco en la tabla de clientes");
                 target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
                 response = target.register(ClienteWriter.class)
                         .path("{id}")
@@ -82,7 +81,6 @@ public class LoginPageClientBean implements Serializable {
                         .get();
                 if (response.getStatus() == 200) {
                     Cliente c = response.readEntity(Cliente.class);
-                    System.out.println("Entro");
                     System.out.println(c.getApellidos());
                     // hemos encontrado el id del usuario que ha intentado 
                     // inicar sesión, luego sí está accediendo correctamente
@@ -92,7 +90,6 @@ public class LoginPageClientBean implements Serializable {
                 }
 
             } else if (bean.getRol().equalsIgnoreCase("Refugio")) {
-                System.out.println("Busco en la tabla de refugios");
                 target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
                 response = target.register(RefugioWriter.class)
                         .path("{id}")

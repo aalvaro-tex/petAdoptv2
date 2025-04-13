@@ -6,12 +6,15 @@
 package com.alvaro.pse.petadopt.mascotas;
 
 import com.alvaro.pse.petadopt.entities.Mascota;
+import com.alvaro.pse.petadopt.json.ClienteWriter;
 import com.alvaro.pse.petadopt.json.MascotaWritter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -23,6 +26,7 @@ import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -84,6 +88,48 @@ public class MascotasPageClientBean {
                 .post(Entity.entity(m, MediaType.APPLICATION_JSON));
 
         return success;
+    }
+
+    private List<Mascota> findByRefugio() {
+        List<Mascota> all = null;
+        Response response = target.register(ClienteWriter.class)
+                .path("find-by-refugio/{idRefugio}")
+                .resolveTemplate("idRefugio", loginBean.getUsuarioLogeado().getId())
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        if (response.getStatus() == 200) {
+            all = response.readEntity(List.class);
+        }
+        return all;
+    }
+
+    public List<Mascota> findByRefugioAndEstado() {
+        List<Mascota> all = null;
+        if (bean.getVerMascotasFilter().equalsIgnoreCase("todas")) {
+            all = this.findByRefugio();
+        } else {
+            Response response = target.register(ClienteWriter.class)
+                    .path("find-by-refugio-estado/{idRefugio}/{estado}")
+                    .resolveTemplate("idRefugio", loginBean.getUsuarioLogeado().getId())
+                    .resolveTemplate("estado", bean.getVerMascotasFilter())
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
+            if (response.getStatus() == 200) {
+                all = response.readEntity(List.class);
+            }
+
+        }
+        return all;
+    }
+    
+    public String deleteMascota(){
+        System.out.println("Mascota a eliminar: "+ bean.getIdMascotaSelected());
+        
+        target.path("{mascotaId}")
+                .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
+                .request()
+                .delete();
+        return "success";
     }
 
 }
