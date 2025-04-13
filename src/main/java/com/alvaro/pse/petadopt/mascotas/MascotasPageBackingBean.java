@@ -10,6 +10,7 @@ import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -21,7 +22,7 @@ public class MascotasPageBackingBean implements Serializable {
 
     private String verMascotasFilter = "todas";
     private Long idMascotaSelected;
-
+    private UploadedFile mascotaImg;
   
     private String nombre;
     private String especie;
@@ -106,6 +107,15 @@ public class MascotasPageBackingBean implements Serializable {
         this.idMascotaSelected = idMascotaSelected;
     }
 
+    public UploadedFile getMascotaImg() {
+        return mascotaImg;
+    }
+
+    public void setMascotaImg(UploadedFile mascotaImg) {
+        this.mascotaImg = mascotaImg;
+    }
+
+    
 
     public String getFilterDisplayName() {
         String text = "";

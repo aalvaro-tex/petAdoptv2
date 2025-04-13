@@ -1,6 +1,7 @@
 com\alvaro\pse\petadopt\entities\Cliente.class
 com\alvaro\pse\petadopt\entities\Usuario_.class
 com\alvaro\pse\petadopt\shared\Constantes.class
+com\alvaro\pse\petadopt\utils\ImageUtils.class
 com\alvaro\pse\petadopt\json\MascotaReader.class
 com\alvaro\pse\petadopt\json\UsuarioReader.class
 com\alvaro\pse\petadopt\login\LoginPageBackingBean.class

@@ -31,7 +31,6 @@
                         <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
                             <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
                         </p:menuitem>
-                        <p:menuitem outcome="/home/home" value="Inicio"/>
                         <p:menuitem outcome="mascotas" value="Mascotas"/>
                     </p:breadCrumb>
                 </h:form>
@@ -44,6 +43,16 @@
                     }
                     function handleSubmitDelete() {
                         PF('mascotaDeleteDialog').hide();
+                    }
+                    function handleSubmitUpdate() {
+                        PF('mascotaUpdateDialog').hide();
+                    }
+                    function ovBodyAuto() {
+                        $('html, body').css('overflow', 'auto');
+                    }
+
+                    function ovBodyHidden() {
+                        $('html, body').css('overflow', 'hidden');
                     }</script>
                 <div class="product card" style="margin-top:40px;">
 
@@ -168,10 +177,17 @@
                                     background: #feedaf;
                                     color: #8a5340
                                 }
+                                .mascota .mascota-list-item img {
+                                    width: 150px;
+                                    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                    margin-right: 2rem
+                                }
                             </style>
 
                             <div class="mascota">
+
                                 <div class="mascota-list-item p-5">
+                                    <img src="data:image/png;base64,#{mascota.foto}"></img>
                                     <div class="mascota-list-detail">
                                         <div class="mascota-name">Nombre: #{mascota.nombre}</div>
                                         <div class="mascota-description">Especie: #{mascota.especie}</div>
@@ -186,11 +202,11 @@
                                         <div style="display:flex;flex-direction: row; gap:5px">
                                             <p:commandButton icon="pi pi-eye">
                                             </p:commandButton>
-                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary">
+                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" onclick="PF('mascotaUpdateDialog').show()">
+                                                <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
                                             <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()">
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
-
                                             </p:commandButton>
                                         </div>
                                         <span class="mascota-badge status-#{mascota.estado.toLowerCase()}">#{mascotasPageBackingBean.getEstadoDisplayName(mascota.estado)}</span>
@@ -201,8 +217,11 @@
                     </h:form>
                 </div>
 
-                <p:dialog header="Nueva mascota" widgetVar="mascotaDialog"  width="1000" showEffect="fade"  closeOnEscape="false">
-                    <h:form>
+                <!-- Modal para crear una mascota -->
+
+                <p:dialog resizable="false" draggable="false" modal="true" header="Nueva mascota" widgetVar="mascotaDialog"  width="1000" showEffect="fade"  closeOnEscape="false" onShow="ovBodyHidden();" onHide="ovBodyAuto();">
+                    <h:form id="newMascotaForm">
+
                         <div class="grid">
                             <div class="col-4 flex align-items-center justify-content-center">
                                 <div class="ui-fluid">
@@ -241,13 +260,77 @@
                                     </div>
                                     <div class="field">
                                         <p:outputLabel value="Coste de adopción" for="coste_adopcion" />
-                                        <p:inputNumber id="coste_adopcion" symbolPosition="s"  value="#{mascotasPageBackingBean.costeAdopcion}" required="true" symbol=" €"/>
+                                        <p:inputNumber id="coste_adopcion" symbolPosition="s"  value="#{mascotasPageBackingBean.costeAdopcion}" required="true" symbol=" €" />
                                         <p:message for="@previous"/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <p:commandButton value="Añadir mascota" styleClass="ui-confirmdialog-yes" update="growlAddMascota" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)">
+                        <p:fileUpload id="upload" value="#{mascotasPageBackingBean.mascotaImg}"
+                                      mode="simple" skinSimple="true" auto="true"
+                                      process="@this" update="growlAddMascota" label="Subir imagen" chooseIcon="pi pi-image"/>
+
+                        <p:commandButton ajax="true" value="Añadir mascota" styleClass="ui-confirmdialog-yes" update="growlAddMascota" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)" icon="pi pi-plus">
+                            <p:ajax event="click" update=":form:data"/> 
+                        </p:commandButton>
+                        <p:growl id="growlAddMascota" showDetail="true"/>
+                    </h:form>
+                </p:dialog>
+
+                <!-- Modal para editar una mascota -->
+
+                <p:dialog resizable="false" draggable="false" modal="true" header="Editar mascota" widgetVar="mascotaUpdateDialog"  width="1000" showEffect="fade"  closeOnEscape="false" onShow="ovBodyHidden();" onHide="ovBodyAuto();">
+                    <h:form id="editMascotaForm">
+
+                        <div class="grid">
+                            <div class="col-4 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Nombre de la mascota" for="@next" />
+                                        <p:inputText type="text" value="#{mascotasPageBackingBean.nombre}" required="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="Especie" for="@next" />
+                                        <p:inputText type="email" value="#{mascotasPageBackingBean.especie}" required="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Raza" for="@next" />
+                                        <p:inputText  type="text" value="#{mascotasPageBackingBean.raza}" required="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="Edad" for="@next" />
+                                        <p:inputText type="number" value="#{mascotasPageBackingBean.edad}" required="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-4 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Estado de salud" for="@next" />
+                                        <p:inputText type="text" value="#{mascotasPageBackingBean.estadoSalud}" required="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="Coste de adopción" for="@next" />
+                                        <p:inputNumber  symbolPosition="s"  value="#{mascotasPageBackingBean.costeAdopcion}" required="true" symbol=" €" />
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p:fileUpload id="upload" value="#{mascotasPageBackingBean.mascotaImg}"
+                                      mode="simple" skinSimple="true" auto="true"
+                                      process="@this" update="growlAddMascota" label="Subir imagen" chooseIcon="pi pi-image"/>
+
+                        <p:commandButton ajax="true" value="Guardar cambios" styleClass="ui-confirmdialog-yes" update="growlAddMascota" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)" icon="pi pi-save">
                             <p:ajax event="click" update=":form:data"/> 
                         </p:commandButton>
                         <p:growl id="growlAddMascota" showDetail="true"/>
@@ -255,7 +338,8 @@
                 </p:dialog>
 
                 <!-- Modal para eliminar una mascota -->
-                <p:dialog header="Eliminar mascota" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
+
+                <p:dialog draggable="false" resizable="false" modal="true" header="Eliminar mascota" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
                     <h:form>
                         <p>¿Seguro que deseas eliminar la mascota seleccionada?</p>
                         <p:commandButton value="Eliminar mascota" styleClass="ui-button-danger" actionListener="#{mascotasPageClientBean.deleteMascota()}" oncomplete="handleSubmitDelete(xhr, status, args)">

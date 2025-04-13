@@ -9,6 +9,7 @@ import com.alvaro.pse.petadopt.entities.Mascota;
 import com.alvaro.pse.petadopt.json.ClienteWriter;
 import com.alvaro.pse.petadopt.json.MascotaWritter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
+import com.alvaro.pse.petadopt.utils.ImageUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -40,6 +41,8 @@ public class MascotasPageClientBean {
     MascotasPageBackingBean bean;
     @Inject
     LoginPageBackingBean loginBean;
+    @Inject
+    ImageUtils imageUtils;
 
     Client client;
     WebTarget target;
@@ -64,7 +67,7 @@ public class MascotasPageClientBean {
         m.setEstadoSalud(bean.getEstadoSalud());
         m.setRaza(bean.getRaza());
         m.setNombre(bean.getNombre());
-        m.setFoto(bean.getFoto());
+        m.setFoto(this.imageUtils.upload(bean.getMascotaImg()));
         // al crear una nueva mascota
         // el estado de la solicitud es pendiente
         m.setEstado("sin_solicitud");
@@ -72,7 +75,6 @@ public class MascotasPageClientBean {
         // el resto de campos los creamos como cadena vacia/-1
         m.setFechaAdopcion("");
         m.setIdCliente(-1);
-        m.setFoto("");
 
         // necesitamos añadir el id del rufugio que crea la mascota
         m.setIdRefugio(loginBean.getUsuarioLogeado().getId());
@@ -121,15 +123,17 @@ public class MascotasPageClientBean {
         }
         return all;
     }
-    
-    public String deleteMascota(){
-        System.out.println("Mascota a eliminar: "+ bean.getIdMascotaSelected());
-        
+
+    public String deleteMascota() {
         target.path("{mascotaId}")
                 .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
                 .request()
                 .delete();
         return "success";
+    }
+    
+    public String updateMascota(){
+       return "success";
     }
 
 }
