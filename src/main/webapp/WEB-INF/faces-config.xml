@@ -48,4 +48,19 @@
             <to-view-id>/landing/login-page.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mascotas/mascotas.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/mascotas/edit-mascota.xhtml</to-view-id>
+            <redirect/>
+        </navigation-case>
+    </navigation-rule>
+    <navigation-rule>
+        <from-view-id>/mascotas/edit-mascota.xhtml</from-view-id>
+        <navigation-case>
+            <from-outcome>success</from-outcome>
+            <to-view-id>/mascotas/mascotas.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
 </faces-config>

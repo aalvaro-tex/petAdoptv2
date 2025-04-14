@@ -197,12 +197,12 @@
                                     </div>
 
                                     <div class="mascota-list-action">
-                                        <h:outputText value="#{mascota.costeAdopcion} €" styleClass="mascota-price">
+                                        <h:outputText value="#{mascota.costeAdopcion} €" styleClass="mascota-price" >
                                         </h:outputText>
                                         <div style="display:flex;flex-direction: row; gap:5px">
-                                            <p:commandButton icon="pi pi-eye">
-                                            </p:commandButton>
-                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" onclick="PF('mascotaUpdateDialog').show()">
+                                            
+                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" >
+                                               
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
                                             <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()">
@@ -276,68 +276,6 @@
                         <p:growl id="growlAddMascota" showDetail="true"/>
                     </h:form>
                 </p:dialog>
-
-                <!-- Modal para editar una mascota -->
-
-                <p:dialog resizable="false" draggable="false" modal="true" header="Editar mascota" widgetVar="mascotaUpdateDialog"  width="1000" showEffect="fade"  closeOnEscape="false" onShow="ovBodyHidden();" onHide="ovBodyAuto();">
-                    <h:form id="editMascotaForm">
-
-                        <div class="grid">
-                            <div class="col-4 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Nombre de la mascota" for="@next" />
-                                        <p:inputText type="text" value="#{mascotasPageBackingBean.nombre}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Especie" for="@next" />
-                                        <p:inputText type="email" value="#{mascotasPageBackingBean.especie}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Raza" for="@next" />
-                                        <p:inputText  type="text" value="#{mascotasPageBackingBean.raza}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Edad" for="@next" />
-                                        <p:inputText type="number" value="#{mascotasPageBackingBean.edad}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Estado de salud" for="@next" />
-                                        <p:inputText type="text" value="#{mascotasPageBackingBean.estadoSalud}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Coste de adopción" for="@next" />
-                                        <p:inputNumber  symbolPosition="s"  value="#{mascotasPageBackingBean.costeAdopcion}" required="true" symbol=" €" />
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p:fileUpload id="upload" value="#{mascotasPageBackingBean.mascotaImg}"
-                                      mode="simple" skinSimple="true" auto="true"
-                                      process="@this" update="growlAddMascota" label="Subir imagen" chooseIcon="pi pi-image"/>
-
-                        <p:commandButton ajax="true" value="Guardar cambios" styleClass="ui-confirmdialog-yes" update="growlAddMascota" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)" icon="pi pi-save">
-                            <p:ajax event="click" update=":form:data"/> 
-                        </p:commandButton>
-                        <p:growl id="growlAddMascota" showDetail="true"/>
-                    </h:form>
-                </p:dialog>
-
-                <!-- Modal para eliminar una mascota -->
 
                 <p:dialog draggable="false" resizable="false" modal="true" header="Eliminar mascota" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
                     <h:form>

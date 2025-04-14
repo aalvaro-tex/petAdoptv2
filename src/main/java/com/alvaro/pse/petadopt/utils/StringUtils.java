@@ -5,14 +5,21 @@
  */
 package com.alvaro.pse.petadopt.utils;
 
+import java.io.Serializable;
 import java.util.Date;
+import javax.annotation.ManagedBean;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
 import org.apache.commons.lang.time.DateFormatUtils;
 
 /**
  *
  * @author alvar
  */
-public class StringUtils {
+@Named
+@ManagedBean
+@SessionScoped
+public class StringUtils  implements Serializable {
 
     public String capitalizeAllFirstLetters(String name) {
         char[] array = name.toLowerCase().toCharArray();
@@ -29,6 +36,14 @@ public class StringUtils {
     
     public String dateToString(Date date){
         return DateFormatUtils.format(date, "dd/MM/yyyy");
+    }
+    
+    public int stringToInt(String input){
+        return Integer.parseInt(input);
+    }
+    
+    public double stringToDouble(String input){
+        return Double.parseDouble(input);
     }
 
 }

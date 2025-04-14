@@ -7,8 +7,12 @@ package com.alvaro.pse.petadopt.mascotas;
 
 import com.alvaro.pse.petadopt.entities.Mascota;
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
+import javax.annotation.PostConstruct;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.model.file.UploadedFile;
 
@@ -18,11 +22,21 @@ import org.primefaces.model.file.UploadedFile;
  */
 @Named
 @SessionScoped
-public class MascotasPageBackingBean implements Serializable {
+public class MascotasPageBackingBean implements Serializable{
 
     private String verMascotasFilter = "todas";
     private Long idMascotaSelected;
+    private Mascota mascotaSelected;
     private UploadedFile mascotaImg;
+    private UploadedFile mascotaUpdateImg;
+    
+    private String nombreMascotaSeleccionada = "";
+    private String especieMascotaSeleccionada = "";
+    private String razaMascotaSeleccionada ="";
+    private String edadMascotaSeleccionada="";
+    private String estadoSaludMascotaSeleccionada="";
+    private String costeAdopcionMascotaSeleccionada="";
+    private String fotoMascotaSeleccionada="";
   
     private String nombre;
     private String especie;
@@ -32,7 +46,6 @@ public class MascotasPageBackingBean implements Serializable {
     private String estadoSalud;
     private double costeAdopcion;
     private String foto;
-
 
     public String getNombre() {
         return nombre;
@@ -113,6 +126,88 @@ public class MascotasPageBackingBean implements Serializable {
 
     public void setMascotaImg(UploadedFile mascotaImg) {
         this.mascotaImg = mascotaImg;
+    }
+
+    public String getNombreMascotaSeleccionada() {
+        return nombreMascotaSeleccionada;
+    }
+
+    public void setNombreMascotaSeleccionada(String nombreMascotaSeleccionada) {
+        this.nombreMascotaSeleccionada = nombreMascotaSeleccionada;
+    }
+
+    public String getEspecieMascotaSeleccionada() {
+        return especieMascotaSeleccionada;
+    }
+
+    public void setEspecieMascotaSeleccionada(String especieMascotaSeleccionada) {
+        this.especieMascotaSeleccionada = especieMascotaSeleccionada;
+    }
+
+    public String getRazaMascotaSeleccionada() {
+        return razaMascotaSeleccionada;
+    }
+
+    public void setRazaMascotaSeleccionada(String razaMascotaSeleccionada) {
+        this.razaMascotaSeleccionada = razaMascotaSeleccionada;
+    }
+
+    public String getEdadMascotaSeleccionada() {
+        return edadMascotaSeleccionada;
+    }
+
+    public void setEdadMascotaSeleccionada(String edadMascotaSeleccionada) {
+        this.edadMascotaSeleccionada = edadMascotaSeleccionada;
+    }
+
+    public String getEstadoSaludMascotaSeleccionada() {
+        return estadoSaludMascotaSeleccionada;
+    }
+
+    public void setEstadoSaludMascotaSeleccionada(String estadoSaludMascotaSeleccionada) {
+        this.estadoSaludMascotaSeleccionada = estadoSaludMascotaSeleccionada;
+    }
+
+    public String getCosteAdopcionMascotaSeleccionada() {
+        return costeAdopcionMascotaSeleccionada;
+    }
+
+    public void setCosteAdopcionMascotaSeleccionada(String costeAdopcionMascotaSeleccionada) {
+        this.costeAdopcionMascotaSeleccionada = costeAdopcionMascotaSeleccionada;
+    }
+
+    public String getFotoMascotaSeleccionada() {
+        return fotoMascotaSeleccionada;
+    }
+
+    public void setFotoMascotaSeleccionada(String fotoMascotaSeleccionada) {
+        this.fotoMascotaSeleccionada = fotoMascotaSeleccionada;
+    }
+
+    public Mascota getMascotaSelected() {
+        return mascotaSelected;
+    }
+
+    public void setMascotaSelected(Mascota mascotaSelected) {
+        this.mascotaSelected = mascotaSelected;
+    }
+
+    public UploadedFile getMascotaUpdateImg() {
+        return mascotaUpdateImg;
+    }
+
+    public void setMascotaUpdateImg(UploadedFile mascotaUpdateImg) {
+        this.mascotaUpdateImg = mascotaUpdateImg;
+    }    
+    
+    public void cleanInputs(){
+        this.setCosteAdopcion(0);
+        this.setEdad(0);
+        this.setEspecie("");
+        this.setEstadoSalud("");
+        this.setFoto("");
+        this.setNombre("");
+        this.setRaza("");
     }
 
     

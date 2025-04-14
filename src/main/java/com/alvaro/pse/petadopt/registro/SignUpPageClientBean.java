@@ -76,7 +76,7 @@ public class SignUpPageClientBean {
             if (response.hasEntity()) {
                 id = response.readEntity(Usuario.class).getId();
                 // aqui podemos guardar en la bbdd al refugio/cliente en su tabla correspondiente
-                if (bean.getRol().equalsIgnoreCase("Refugio")) {
+                if (loginBean.getRol().equalsIgnoreCase("Refugio")) {
                     target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
                     Refugio r = new Refugio();
                     r.setId(id);
@@ -88,7 +88,7 @@ public class SignUpPageClientBean {
                     target.register(RefugioWriter.class).request()
                             .post(Entity.entity(r, MediaType.APPLICATION_JSON));
                     success = "success";
-                } else if (bean.getRol().equalsIgnoreCase("Cliente")) {
+                } else if (loginBean.getRol().equalsIgnoreCase("Cliente")) {
                     target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
                     Cliente c = new Cliente();
                     c.setId(id);

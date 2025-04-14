@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
    
     <body>
@@ -16,6 +17,7 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
+                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                 <h:form >
                     <p:megaMenu orientation="horizontal" autoDisplay="false">
                         <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
@@ -33,14 +35,34 @@
                         <p:menuitem outcome="home" value="Inicio"/>
                     </p:breadCrumb>
                 </h:form>
-
+                </c:if>
+                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                <h:form >
+                    <p:megaMenu orientation="horizontal" autoDisplay="false">
+                        <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
+                        <p:menuitem value="Mis adopciones" outcome="/mascotas/mascotas"/>
+                        <p:menuitem value="Adoptar"/>
+                        <p:menuitem value="Mi cuenta"/>
+                    </p:megaMenu>
+                </h:form>
+                <h:form style="margin-top:10px;">
+                    <p:breadCrumb>
+                        <p:menuitem outcome="/index"/>
+                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                        </p:menuitem>
+                        <p:menuitem outcome="home" value="Inicio"/>
+                    </p:breadCrumb>
+                </h:form>
+                </c:if>
             </ui:define>
 
             <ui:define name="content">
+                <c:if test="">
                 <div class="card">
                     <p:staticMessage severity="warn" summary="IMPORTANTE" detail="Cuenta temporal" style="width: calc(100% - 10px); margin-top:10px;"/>
                 </div>
-
+                </c:if>
                 <div class="card" style="margin-top:40px;">
 
                 </div>

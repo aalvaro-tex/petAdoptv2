@@ -7,9 +7,11 @@ package com.alvaro.pse.petadopt.mascotas;
 
 import com.alvaro.pse.petadopt.entities.Mascota;
 import com.alvaro.pse.petadopt.json.ClienteWriter;
-import com.alvaro.pse.petadopt.json.MascotaWritter;
+import com.alvaro.pse.petadopt.json.MascotaReader;
+import com.alvaro.pse.petadopt.json.MascotaWriter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import com.alvaro.pse.petadopt.utils.ImageUtils;
+import com.alvaro.pse.petadopt.utils.StringUtils;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -43,6 +45,8 @@ public class MascotasPageClientBean {
     LoginPageBackingBean loginBean;
     @Inject
     ImageUtils imageUtils;
+    @Inject
+            StringUtils stringUtils;
 
     Client client;
     WebTarget target;
@@ -85,16 +89,18 @@ public class MascotasPageClientBean {
         m.setFechaPublicacion(fecha);
 
         // añadimos la mascota a la bbdd
-        target.register(MascotaWritter.class)
+        target.register(MascotaWriter.class)
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(m, MediaType.APPLICATION_JSON));
 
+        // limpiamos los inputs del formulario
+        bean.cleanInputs();
         return success;
     }
 
     private List<Mascota> findByRefugio() {
         List<Mascota> all = null;
-        Response response = target.register(ClienteWriter.class)
+        Response response = target.register(MascotaWriter.class)
                 .path("find-by-refugio/{idRefugio}")
                 .resolveTemplate("idRefugio", loginBean.getUsuarioLogeado().getId())
                 .request(MediaType.APPLICATION_JSON)
@@ -110,7 +116,7 @@ public class MascotasPageClientBean {
         if (bean.getVerMascotasFilter().equalsIgnoreCase("todas")) {
             all = this.findByRefugio();
         } else {
-            Response response = target.register(ClienteWriter.class)
+            Response response = target.register(MascotaWriter.class)
                     .path("find-by-refugio-estado/{idRefugio}/{estado}")
                     .resolveTemplate("idRefugio", loginBean.getUsuarioLogeado().getId())
                     .resolveTemplate("estado", bean.getVerMascotasFilter())
@@ -132,8 +138,47 @@ public class MascotasPageClientBean {
         return "success";
     }
     
+    public String getMascotaById(){
+        String success = "failure";
+        Mascota found;
+        Response response = target.path("{mascotaId}")
+                .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
+                .request()
+                .get();
+        if(response.getStatus() == 200){
+            found = response.readEntity(Mascota.class);
+            bean.setMascotaSelected(found);
+            success = "success";
+        }
+        
+        return success;
+    }
+    
     public String updateMascota(){
-       return "success";
+        String success = "failure";
+        Mascota m = new Mascota();
+        m.setId(bean.getIdMascotaSelected());
+        m.setCosteAdopcion(bean.getCosteAdopcionMascotaSeleccionada().isEmpty() ? bean.getMascotaSelected().getCosteAdopcion() : this.stringUtils.stringToDouble(bean.getCosteAdopcionMascotaSeleccionada()));
+        m.setEdad(bean.getEdadMascotaSeleccionada().isEmpty() ? bean.getMascotaSelected().getEdad() : this.stringUtils.stringToInt(bean.getEdadMascotaSeleccionada()));
+        m.setEspecie(bean.getEspecieMascotaSeleccionada().isEmpty() ? bean.getMascotaSelected().getEspecie()  : bean.getEspecieMascotaSeleccionada() );
+        m.setEstadoSalud(bean.getEstadoSaludMascotaSeleccionada().isEmpty() ? bean.getMascotaSelected().getEstadoSalud() : bean.getEstadoSaludMascotaSeleccionada());
+        m.setRaza(bean.getRazaMascotaSeleccionada().isEmpty() ? bean.getMascotaSelected().getRaza() : bean.getRazaMascotaSeleccionada());
+        m.setNombre(bean.getNombreMascotaSeleccionada().isEmpty() ? bean.getMascotaSelected().getNombre() : bean.getNombreMascotaSeleccionada());
+        m.setFoto(bean.getMascotaUpdateImg() == null ? bean.getMascotaSelected().getFoto() : this.imageUtils.upload(bean.getMascotaUpdateImg()));
+        m.setEstado(bean.getMascotaSelected().getEstado());
+        m.setFechaAdopcion(bean.getMascotaSelected().getFechaAdopcion());
+        m.setIdCliente(bean.getMascotaSelected().getIdCliente());
+        m.setFechaPublicacion(bean.getMascotaSelected().getFechaPublicacion());
+        m.setIdRefugio(bean.getMascotaSelected().getIdRefugio());
+        Response response = target.path("{mascotaId}")
+                .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
+                .request()
+                .put(Entity.entity(m, MediaType.APPLICATION_JSON));
+        System.out.println(response);
+        if(response.getStatus() == 204){
+            success = "success";
+        }
+       return success;
     }
 
 }

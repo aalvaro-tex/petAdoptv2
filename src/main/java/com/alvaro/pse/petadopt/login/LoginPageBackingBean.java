@@ -122,6 +122,8 @@ public class LoginPageBackingBean implements Serializable {
     public void setUsuarioLogeado(Usuario usuarioLogeado) {
         this.usuarioLogeado = usuarioLogeado;
     }
+    
+    
 
     public void showError() {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Los datos introducidos no se corresponden con ningún usuario");
