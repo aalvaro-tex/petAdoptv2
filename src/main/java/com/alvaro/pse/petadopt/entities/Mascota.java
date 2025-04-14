@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Mascota.findByFechaPublicacion", query = "SELECT m FROM Mascota m WHERE m.fechaPublicacion = :fechaPublicacion"),
     @NamedQuery(name = "Mascota.findByIdCliente", query = "SELECT m FROM Mascota m WHERE m.idCliente = :idCliente"),
     @NamedQuery(name = "Mascota.findByEstado", query = "SELECT m FROM Mascota m WHERE m.estado = :estado"),
-    @NamedQuery(name = "Mascota.findByFechaAdopcion", query = "SELECT m FROM Mascota m WHERE m.fechaAdopcion = :fechaAdopcion")})
+    @NamedQuery(name = "Mascota.findByFechaAdopcion", query = "SELECT m FROM Mascota m WHERE m.fechaAdopcion = :fechaAdopcion"),
+    @NamedQuery(name = "Mascota.findByFechaSolicitud", query = "SELECT m FROM Mascota m WHERE m.fechaSolicitud = :fechaSolicitud")})
 public class Mascota implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -77,7 +78,6 @@ public class Mascota implements Serializable {
     @NotNull
     @Column(name = "coste_adopcion")
     private double costeAdopcion;
-    @Size(max = 2147483647)
     @Column(name = "foto")
     private String foto;
     @Basic(optional = false)
@@ -99,6 +99,9 @@ public class Mascota implements Serializable {
     @Size(max = 2147483647)
     @Column(name = "fecha_adopcion")
     private String fechaAdopcion;
+    @Size(max = 2147483647)
+    @Column(name = "fecha_solicitud")
+    private String fechaSolicitud;
 
     public Mascota() {
     }
@@ -222,6 +225,14 @@ public class Mascota implements Serializable {
 
     public void setFechaAdopcion(String fechaAdopcion) {
         this.fechaAdopcion = fechaAdopcion;
+    }
+
+    public String getFechaSolicitud() {
+        return fechaSolicitud;
+    }
+
+    public void setFechaSolicitud(String fechaSolicitud) {
+        this.fechaSolicitud = fechaSolicitud;
     }
 
     @Override

@@ -24,12 +24,12 @@ import javax.ws.rs.ext.MessageBodyReader;
  * @author alvar
  */
 public class MascotaReader implements MessageBodyReader<Mascota> {
-
+    
     @Override
     public boolean isReadable(Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
         return Mascota.class.isAssignableFrom(type);
     }
-
+    
     @Override
     public Mascota readFrom(Class<Mascota> type,
             Type genericType,
@@ -38,7 +38,7 @@ public class MascotaReader implements MessageBodyReader<Mascota> {
             MultivaluedMap<String, String> httpHeaders,
             InputStream entityStream)
             throws IOException, WebApplicationException {
-
+        
         Mascota mascota = new Mascota();
         JsonParser parser = Json.createParser(entityStream);
         while (parser.hasNext()) {
@@ -83,9 +83,11 @@ public class MascotaReader implements MessageBodyReader<Mascota> {
                         case "fechaAdopcion":
                             mascota.setFechaAdopcion(parser.getString());
                             break;
-                              case "estado":
+                        case "estado":
                             mascota.setEstado(parser.getString());
                             break;
+                        case "fechaSolicitud":
+                            mascota.setFechaSolicitud(parser.getString());
                         default:
                             break;
                     }

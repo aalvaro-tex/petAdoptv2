@@ -74,7 +74,9 @@ public class SignUpPageClientBean {
                     .request()
                     .post(Entity.entity(u, MediaType.APPLICATION_JSON));
             if (response.hasEntity()) {
-                id = response.readEntity(Usuario.class).getId();
+                Usuario found = response.readEntity(Usuario.class);
+                id = found.getId();
+                loginBean.setUsuarioLogeado(found);
                 // aqui podemos guardar en la bbdd al refugio/cliente en su tabla correspondiente
                 if (loginBean.getRol().equalsIgnoreCase("Refugio")) {
                     target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
@@ -88,6 +90,7 @@ public class SignUpPageClientBean {
                     target.register(RefugioWriter.class).request()
                             .post(Entity.entity(r, MediaType.APPLICATION_JSON));
                     success = "success";
+                    loginBean.setRefugio(r);
                 } else if (loginBean.getRol().equalsIgnoreCase("Cliente")) {
                     target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
                     Cliente c = new Cliente();
@@ -102,6 +105,7 @@ public class SignUpPageClientBean {
                     target.register(ClienteWriter.class).request()
                             .post(Entity.entity(c, MediaType.APPLICATION_JSON));
                     success = "success";
+                    loginBean.setCliente(c);
                 }
             } else {
                 bean.showError();

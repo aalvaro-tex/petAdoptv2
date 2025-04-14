@@ -5,6 +5,8 @@
  */
 package com.alvaro.pse.petadopt.login;
 
+import com.alvaro.pse.petadopt.entities.Cliente;
+import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.utils.StringUtils;
 import com.alvaro.pse.petadopt.entities.Usuario;
 import java.io.Serializable;
@@ -37,6 +39,9 @@ public class LoginPageBackingBean implements Serializable {
     private String password;
 
     private boolean usuarioFound;
+    
+    private Cliente cliente;
+    private Refugio refugio;
     
     public LoginPageBackingBean(){
          this.stringUtils = new StringUtils();
@@ -121,6 +126,22 @@ public class LoginPageBackingBean implements Serializable {
 
     public void setUsuarioLogeado(Usuario usuarioLogeado) {
         this.usuarioLogeado = usuarioLogeado;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Refugio getRefugio() {
+        return refugio;
+    }
+
+    public void setRefugio(Refugio refugio) {
+        this.refugio = refugio;
     }
     
     

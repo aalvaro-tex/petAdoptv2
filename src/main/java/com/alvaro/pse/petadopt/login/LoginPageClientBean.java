@@ -6,6 +6,7 @@
 package com.alvaro.pse.petadopt.login;
 
 import com.alvaro.pse.petadopt.entities.Cliente;
+import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
 import com.alvaro.pse.petadopt.json.ClienteWriter;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
@@ -81,7 +82,8 @@ public class LoginPageClientBean implements Serializable {
                         .get();
                 if (response.getStatus() == 200) {
                     Cliente c = response.readEntity(Cliente.class);
-                    System.out.println(c.getApellidos());
+                    bean.setCliente(c);
+                    bean.setRefugio(null);
                     // hemos encontrado el id del usuario que ha intentado 
                     // inicar sesión, luego sí está accediendo correctamente
                     success = "success";
@@ -96,7 +98,12 @@ public class LoginPageClientBean implements Serializable {
                         .resolveTemplate("id", found.getId())
                         .request(MediaType.APPLICATION_JSON)
                         .get();
-                if (response.hasEntity()) {
+                if (response.getStatus() == 200) {
+                    // hemos encontrado el id del usuario que ha intentado 
+                    // inicar sesión, luego sí está accediendo correctamente
+                    Refugio r = response.readEntity(Refugio.class);
+                    bean.setRefugio(r);
+                    bean.setCliente(null);
                     // hemos encontrado el id del usuario que ha intentado 
                     // inicar sesión, luego sí está accediendo correctamente
                     success = "success";

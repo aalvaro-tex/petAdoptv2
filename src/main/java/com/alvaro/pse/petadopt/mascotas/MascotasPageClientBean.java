@@ -48,8 +48,8 @@ public class MascotasPageClientBean {
     @Inject
             StringUtils stringUtils;
 
-    Client client;
-    WebTarget target;
+    private Client client;
+    private WebTarget target;
 
     @PostConstruct
     public void init() {
@@ -79,6 +79,7 @@ public class MascotasPageClientBean {
         // el resto de campos los creamos como cadena vacia/-1
         m.setFechaAdopcion("");
         m.setIdCliente(-1);
+        m.setFechaSolicitud("");
 
         // necesitamos añadir el id del rufugio que crea la mascota
         m.setIdRefugio(loginBean.getUsuarioLogeado().getId());
@@ -100,6 +101,7 @@ public class MascotasPageClientBean {
 
     private List<Mascota> findByRefugio() {
         List<Mascota> all = null;
+        System.out.println(loginBean.getUsuarioLogeado().getId());
         Response response = target.register(MascotaWriter.class)
                 .path("find-by-refugio/{idRefugio}")
                 .resolveTemplate("idRefugio", loginBean.getUsuarioLogeado().getId())
@@ -170,6 +172,7 @@ public class MascotasPageClientBean {
         m.setIdCliente(bean.getMascotaSelected().getIdCliente());
         m.setFechaPublicacion(bean.getMascotaSelected().getFechaPublicacion());
         m.setIdRefugio(bean.getMascotaSelected().getIdRefugio());
+        m.setFechaSolicitud(bean.getMascotaSelected().getFechaSolicitud());
         Response response = target.path("{mascotaId}")
                 .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
                 .request()

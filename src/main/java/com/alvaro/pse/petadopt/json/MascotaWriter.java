@@ -55,6 +55,7 @@ public class MascotaWriter  implements MessageBodyWriter<Mascota>{
                 .write("idCliente", t.getIdCliente())
                 .write("estado", t.getEstado())
                 .write("fechaAdopcion", t.getFechaAdopcion())
+                .write("fechaSolicitud", t.getFechaSolicitud())
                 .writeEnd();
         gen.flush();
     }

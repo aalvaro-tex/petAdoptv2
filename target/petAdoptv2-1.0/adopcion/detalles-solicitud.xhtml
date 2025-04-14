@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
+
+            <ui:define name="top">
+                <h:form >
+                    <p:megaMenu orientation="horizontal" autoDisplay="false">
+                        <p:menuitem value="Inicio" outcome="/home/home" />
+                        <p:menuitem value="Mis adopciones"/>
+                        <p:menuitem value="Adoptar" style="font-weight: 600"/>
+                        <p:menuitem value="Mi cuenta"/>
+                    </p:megaMenu>
+                </h:form>
+                <h:form style="margin-top:10px;">
+                    <p:breadCrumb>
+                        <p:menuitem outcome="/index"/>
+                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                        </p:menuitem>
+                        <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
+                    </p:breadCrumb>
+                </h:form>
+                <h:form>
+                    <div class="card">
+                        <p:steps activeIndex="2">
+                            <p:menuitem value="Elige tu mascota"/>
+                            <p:menuitem value="Confirma tu solicitud"/>
+                            <p:menuitem value="Detalles de la solicitud"/>
+                        </p:steps>
+                    </div>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="content">
+                <div class="card" style="margin-top:40px;">
+                    <p:staticMessage severity="info" summary="INFO" detail="Tu solicitud ha sido enviada al refugio. Puedes consultar el estado de tu solicitud en Mis adopciones." style="width: calc(100% - 10px);"/>
+                    <p:fieldset legend="Detalles de la mascota" toggleable="true" toggleSpeed="500" style="margin-top:10px;" collapsed="true">
+                        <p:outputLabel value="Nombre: #{adopcionBackingBean.mascotaSelected.nombre}"/>
+                        <br></br>
+                        <p:outputLabel value="Especie: #{adopcionBackingBean.mascotaSelected.especie}"/>
+                        <br></br>
+                        <p:outputLabel value="Precio: #{adopcionBackingBean.mascotaSelected.costeAdopcion}"/>
+                    </p:fieldset>
+                    <p:fieldset legend="Detalles del refugio" toggleable="true" toggleSpeed="500" collapsed="true" style="margin-top:10px;" >
+                        <p:outputLabel value="Nombre del refugio: #{adopcionBackingBean.refugio.nombre}"/>
+                        <br></br>
+                        <p:outputLabel value="Dirección:  #{adopcionBackingBean.refugio.domicilioSocial}"/>
+                        <br></br>
+                        <p:outputLabel value="Teléfono de contacto: #{adopcionBackingBean.refugio.telefono}"/>
+                    </p:fieldset>
+                    <p:fieldset legend="Tus datos" toggleable="true" toggleSpeed="500" collapsed="true" >
+                        <p:outputLabel value="Nombre: #{loginPageBackingBean.cliente.nombre}"/>
+                        <br></br>
+                        <p:outputLabel value="DNI:  #{loginPageBackingBean.cliente.nif}"/>
+                        <br></br>
+                        <p:outputLabel value="Teléfono de contacto: #{loginPageBackingBean.cliente.telefono}"/>
+                    </p:fieldset>
+                </div>
+                <div class="grid">
+                            <div class="col-12 flex align-items-center justify-content-center">
+                                
+                                <p:linkButton style="margin-top:10px" value="Volver a Inicio" styleClass="ui-confirmdialog-yes" outcome="/home/home" icon="pi pi-home">
+                                </p:linkButton>
+                               
+                            </div>
+                        </div>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
