@@ -21,7 +21,7 @@
                     <p:megaMenu orientation="horizontal" autoDisplay="false">
                         <p:menuitem value="Inicio" outcome="/home/home"/>
                         <p:menuitem value="Mascotas" outcome="mascotas" style="font-weight: 600;"/>
-                        <p:menuitem value="Adopciones"/>
+                        <p:menuitem value="Adopciones" outcome="/solicitudes/solicitudes" />
                         <p:menuitem value="Mi cuenta"/>
                     </p:megaMenu>
                 </h:form>
@@ -58,7 +58,7 @@
 
                     <div class="field" style="display:flex; gap:10px; ">
                         <h:form>                    
-                            <p:commandButton value="Añadir nueva mascota" icon="pi pi-plus" style="margin-bottom:10px; heigth:40px;" onclick="PF('mascotaDialog').show()"></p:commandButton>
+                            <p:commandButton value="Añadir nueva mascota" icon="pi pi-plus" style="margin-bottom:10px; heigth:40px;" onclick="PF('mascotaDialog').show()" disabled="#{loginPageBackingBean.refugio.verificado == false}"></p:commandButton>
                         </h:form>    
                         <h:form>
                             <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{mascotasPageBackingBean.verMascotasFilter}" >
@@ -66,6 +66,7 @@
                                 <f:selectItem itemLabel="Sin adoptar" itemValue="sin_solicitud"/>
                                 <f:selectItem itemLabel="Adoptadas" itemValue="adoptada"/>
                                 <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
+                                
                                 <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
                                 <p:ajax event="itemSelect" update=":form:data"/> 
                             </p:selectOneMenu>
@@ -168,11 +169,14 @@
                                     color: #256029
                                 }
 
-                                .status-pendiente {
+                                .status-rechazada {
                                     background: #ffcdd2;
                                     color: #c63737
                                 }
-
+                                .status-pendiente {
+                                    background: #EFC3CA;
+                                    color: #CC6CE7
+                                }
                                 .status-sin_solicitud {
                                     background: #feedaf;
                                     color: #8a5340
@@ -200,13 +204,13 @@
                                     <div class="mascota-list-action">
                                         <h:outputText value="#{mascota.costeAdopcion} €" styleClass="mascota-price" >
                                         </h:outputText>
-                                        <div style="display:flex;flex-direction: row; gap:5px">
+                                        <div style="display:flex;flex-direction: row; gap:5px; justify-content: center">
                                             
-                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" >
+                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" rendered="#{mascota.estado != 'adoptada'}">
                                                
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
-                                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()">
+                                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" rendered="#{mascota.estado != 'adoptada'}">
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
                                         </div>

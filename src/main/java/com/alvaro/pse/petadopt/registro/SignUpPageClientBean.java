@@ -12,6 +12,7 @@ import com.alvaro.pse.petadopt.json.ClienteWriter;
 import com.alvaro.pse.petadopt.json.UsuarioWriter;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
+import com.alvaro.pse.petadopt.utils.ImageUtils;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -39,6 +40,8 @@ public class SignUpPageClientBean {
     SignUpPageBackingBean bean;
     @Inject
     LoginPageBackingBean loginBean;
+    @Inject
+    ImageUtils imageUtils;
 
     @PostConstruct
     public void init() {
@@ -63,7 +66,7 @@ public class SignUpPageClientBean {
             Usuario u = new Usuario();
             u.setEmail(bean.getEmail());
             u.setPassword(bean.getPassword1()); // da igual, las dos coinciden
-            u.setFoto("aux");
+            u.setFoto(this.imageUtils.upload(bean.getFotoPerfil()));
             target.register(UsuarioWriter.class)
                     .request(MediaType.APPLICATION_JSON)
                     .post(Entity.entity(u, MediaType.APPLICATION_JSON));
@@ -98,7 +101,7 @@ public class SignUpPageClientBean {
                     c.setNif(bean.getNif());
                     c.setNombre(bean.getNombreCliente());
                     //c.setApellidos(bean.getApellidos());
-                    c.setApellidos("FIJO");
+                    c.setApellidos(bean.getApellidos());
                     c.setDomicilio(bean.getDomicilio());
                     c.setTelefono(bean.getTelefono());
                     c.setFechaNacimiento(bean.getFechaNacimiento());

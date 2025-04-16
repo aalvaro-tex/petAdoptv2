@@ -11,7 +11,7 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                 <h:form >
+                <h:form >
                     <p:megaMenu orientation="horizontal" autoDisplay="false">
                         <p:menuitem value="Inicio" outcome="/home/home" />
                         <p:menuitem value="Mis adopciones"/>
@@ -29,18 +29,18 @@
                     </p:breadCrumb>
                 </h:form>
                 <h:form>
-                <div class="card">
-                    <p:steps activeIndex="1">
-                        <p:menuitem value="Elige tu mascota"/>
-                        <p:menuitem value="Confirma tu solicitud"/>
-                        <p:menuitem value="Detalles de la solicitud"/>
-                    </p:steps>
-                </div>
+                    <div class="card">
+                        <p:steps activeIndex="1">
+                            <p:menuitem value="Elige tu mascota"/>
+                            <p:menuitem value="Confirma tu solicitud"/>
+                            <p:menuitem value="Detalles de la solicitud"/>
+                        </p:steps>
+                    </div>
                 </h:form>
             </ui:define>
 
             <ui:define name="content">
-                 <div class="card" style="margin-top:40px;">
+                <div class="card" style="margin-top:40px;">
                     <h:form>
                         <div class="grid">
                             <div class="col-2 flex align-items-center justify-content-center">
@@ -104,6 +104,11 @@
                             <div class="col-12 flex align-items-center justify-content-center" style="gap:10px;">
                                 <p:commandButton ajax="true" value="Volver" styleClass="ui-button-outlined ui-button-info" update="growlAddMascota" action="lista-mascotas"  icon="pi pi-arrow-left">
                                 </p:commandButton>
+                                <p:outputPanel id="input">
+                                    <p:outputLabel for="@next" value="Signature:" style="font-size:1.5rem" styleClass="block mb-2" />
+                                    <p:signature id="signature" widgetVar="sig" style="width:400px;height:200px" value="#{signatureView.value}" required="true" guideline="true"
+                                                  base64Value="#{signatureView.base64}" />
+                                </p:outputPanel>
                                 <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-confirmdialog-yes" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check">
                                 </p:commandButton>
                                 <p:growl id="growlAddMascota" showDetail="true"/>

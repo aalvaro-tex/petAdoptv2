@@ -105,6 +105,9 @@
                             </div>
                             <div class="grid">
                                 <div class="col-12 flex align-items-center justify-content-center">
+                                    <p:fileUpload id="upload" value="#{signUpPageBackingBean.fotoPerfil}"
+                                      mode="simple" skinSimple="true" auto="true"
+                                      process="@this" label="Subir imagen" chooseIcon="pi pi-image"/>
                                     <p:commandButton ajax="false" action="#{signUpPageClientBean.addUsuario()}" update="growlSignUp" value="Darse de alta">      
                                     </p:commandButton>
                                     <p:growl id="growlSignUp" showDetail="true"/>
@@ -116,7 +119,7 @@
                     <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
                         <h:form>
                             <div class="grid">
-                                <div class="col-3 flex align-items-center justify-content-center">
+                                <div class="col-4 flex align-items-center justify-content-center">
                                     <div class="ui-fluid">
                                         <div class="field">
                                             <p:outputLabel value="Nombre" for="nombre" />
@@ -124,32 +127,27 @@
                                             <p:message for="@previous"/>
                                         </div>
                                         <div class="field">
-                                            <p:outputLabel value="Correo electrónico" for="email" />
-                                            <p:inputText id="email" type="email" value="#{signUpPageBackingBean.email}" required="true"/>
+                                            <p:outputLabel value="Apellidos" for="apellidos" />
+                                            <p:inputText id="apellidos" type="text" value="#{signUpPageBackingBean.apellidos}" required="true"/>
                                             <p:message for="@previous"/>
-                                            <h:outputText value="#{signUpPageValidator.email}"/>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-3 flex align-items-center justify-content-center">
-                                    <div class="ui-fluid">
-
                                         <div class="field">
                                             <p:outputLabel value="NIF" for="nif" />
                                             <p:inputText id="nif" type="text" value="#{signUpPageBackingBean.nif}" required="true"/>
                                             <p:message for="@previous"/>
                                             <h:outputText value="#{signUpPageValidator.nif}"/>
                                         </div>
+
+                                    </div>
+                                </div>
+
+                                <div class="col-4 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
                                         <div class="field">
                                             <p:outputLabel value="Domicilio" for="domicilio" />
                                             <p:inputText id="domicilio" type="text" value="#{signUpPageBackingBean.domicilio}" required="true"/>
                                             <p:message for="@previous"/>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="col-3 flex align-items-center justify-content-center">
-                                    <div class="ui-fluid">
-
                                         <div class="field">
                                             <p:outputLabel value="Teléfono" for="telefono" />
                                             <p:inputText id="telefono" type="number" value="#{signUpPageBackingBean.telefono}" required="true"/>
@@ -163,9 +161,14 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-3 flex align-items-center justify-content-center">
+                                <div class="col-4 flex align-items-center justify-content-center">
                                     <div class="ui-fluid">
-
+<div class="field">
+                                            <p:outputLabel value="Correo electrónico" for="email" />
+                                            <p:inputText id="email" type="email" value="#{signUpPageBackingBean.email}" required="true"/>
+                                            <p:message for="@previous"/>
+                                            <h:outputText value="#{signUpPageValidator.email}"/>
+                                        </div>
                                         <div class="field">
                                             <p:outputLabel value="Contraseña" for="password1" />
                                             <p:inputText id="password1" type="password" value="#{signUpPageBackingBean.password1}" required="true"/>
@@ -183,6 +186,9 @@
                             </div>
                             <div class="grid">
                                 <div class="col-12 flex align-items-center justify-content-center">
+                                    <p:fileUpload id="upload" value="#{signUpPageBackingBean.fotoPerfil}"
+                                      mode="simple" skinSimple="true" auto="true"
+                                      process="@this" label="Subir imagen" chooseIcon="pi pi-image"/>
                                     <p:commandButton ajax="false" action="#{signUpPageClientBean.addUsuario()}" update="growlSignUp" value="Darse de alta">      
                                     </p:commandButton>
                                     <p:growl id="growlSignUp" showDetail="true"/>

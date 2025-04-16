@@ -74,21 +74,44 @@ public class LoginPageClientBean implements Serializable {
             // como sabemos desde qué página está accediendo, basta llamar
             // a getById de la entidad correspondiente
             if (bean.getRol().equalsIgnoreCase("Cliente")) {
-                target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
+                // antes de buscar en la tabla de clientes, debemos comprobar
+                // si es administrador o no
+
+                target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.administrador");
                 response = target.register(ClienteWriter.class)
                         .path("{id}")
                         .resolveTemplate("id", found.getId())
                         .request(MediaType.APPLICATION_JSON)
                         .get();
                 if (response.getStatus() == 200) {
+                    // es administrador 
+                    // creamos un nuevo cliente pero asignamos el rol de la 
+                    // aplicación pasa a ser 'Administrador'
+
                     Cliente c = response.readEntity(Cliente.class);
                     bean.setCliente(c);
                     bean.setRefugio(null);
-                    // hemos encontrado el id del usuario que ha intentado 
-                    // inicar sesión, luego sí está accediendo correctamente
+                    bean.setRol("Administrador");
                     success = "success";
                 } else {
-                    bean.showError();
+
+                    // no es administrador luego debe ser cliente 'normal'
+                    target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
+                    response = target.register(ClienteWriter.class)
+                            .path("{id}")
+                            .resolveTemplate("id", found.getId())
+                            .request(MediaType.APPLICATION_JSON)
+                            .get();
+                    if (response.getStatus() == 200) {
+                        Cliente c = response.readEntity(Cliente.class);
+                        bean.setCliente(c);
+                        bean.setRefugio(null);
+                        // hemos encontrado el id del usuario que ha intentado 
+                        // inicar sesión, luego sí está accediendo correctamente
+                        success = "success";
+                    } else {
+                        bean.showError();
+                    }
                 }
 
             } else if (bean.getRol().equalsIgnoreCase("Refugio")) {

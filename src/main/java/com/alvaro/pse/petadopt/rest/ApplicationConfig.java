@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.alvaro.pse.petadopt.json.ClienteWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.ComunidadReader.class);
+        resources.add(com.alvaro.pse.petadopt.json.HistoricoSolicitudesWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.MascotaWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.RefugioReader.class);
         resources.add(com.alvaro.pse.petadopt.json.RefugioWriter.class);
@@ -38,6 +39,8 @@ public class ApplicationConfig extends Application {
         resources.add(com.alvaro.pse.petadopt.json.UsuarioWriter.class);
         resources.add(com.alvaro.pse.petadopt.rest.AdministradorFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.ClienteFacadeREST.class);
+        resources.add(com.alvaro.pse.petadopt.rest.EspeciesFacadeREST.class);
+        resources.add(com.alvaro.pse.petadopt.rest.HistoricoSolicitudesFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.MascotaFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.RefugioFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.UsuarioFacadeREST.class);

@@ -142,6 +142,7 @@ public class Cliente implements Serializable {
         this.nif = nif;
     }
 
+
     @Override
     public int hashCode() {
         int hash = 0;

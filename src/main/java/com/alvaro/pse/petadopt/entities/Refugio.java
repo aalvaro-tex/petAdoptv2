@@ -67,6 +67,7 @@ public class Refugio implements Serializable {
     @Column(name = "verificado")
     private boolean verificado;
 
+
     public Refugio() {
     }
 
@@ -81,6 +82,7 @@ public class Refugio implements Serializable {
         this.telefono = telefono;
         this.domicilioSocial = domicilioSocial;
         this.verificado = verificado;
+
     }
 
     public Long getId() {
@@ -130,6 +132,9 @@ public class Refugio implements Serializable {
     public void setVerificado(boolean verificado) {
         this.verificado = verificado;
     }
+
+    
+    
 
     @Override
     public int hashCode() {

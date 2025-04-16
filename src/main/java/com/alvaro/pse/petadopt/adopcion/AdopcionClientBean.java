@@ -123,12 +123,12 @@ public class AdopcionClientBean{
         m.setIdCliente(loginBean.getUsuarioLogeado().getId());
         // el estado de la solicitud pasa a ser 'pendiente'
         m.setEstado("pendiente");
-        System.out.println("Mascota: " +m.getId());
+        //System.out.println("Mascota: " +m.getId());
         Response response = target.path("{mascotaId}")
                 .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
                 .request()
                 .put(Entity.entity(m, MediaType.APPLICATION_JSON));
-        System.out.println("respuesta: "+response);
+        //System.out.println("respuesta: "+response);
         if (response.getStatus() == 204) {
             success = "success";
         }

@@ -22,7 +22,7 @@
                     <p:megaMenu orientation="horizontal" autoDisplay="false">
                         <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
                         <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
-                        <p:menuitem value="Adopciones"/>
+                        <p:menuitem value="Adopciones" outcome="/solicitudes/solicitudes" />
                         <p:menuitem value="Mi cuenta"/>
                     </p:megaMenu>
                 </h:form>
@@ -40,9 +40,28 @@
                 <h:form >
                     <p:megaMenu orientation="horizontal" autoDisplay="false">
                         <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
-                        <p:menuitem value="Mis adopciones" />
+                        <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
                         <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
                         <p:menuitem value="Mi cuenta"/>
+                    </p:megaMenu>
+                </h:form>
+                <h:form style="margin-top:10px;">
+                    <p:breadCrumb>
+                        <p:menuitem outcome="/index"/>
+                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                        </p:menuitem>
+                        <p:menuitem outcome="home" value="Inicio"/>
+                    </p:breadCrumb>
+                </h:form>
+                </c:if>
+                 <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
+                <h:form >
+                    <p:megaMenu orientation="horizontal" autoDisplay="false">
+                        <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
+                        <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
+                        <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
+                        <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
                     </p:megaMenu>
                 </h:form>
                 <h:form style="margin-top:10px;">
@@ -58,7 +77,7 @@
             </ui:define>
 
             <ui:define name="content">
-                <c:if test="">
+                <c:if test="${loginPageBackingBean.refugio.verificado eq false}">
                 <div class="card">
                     <p:staticMessage severity="warn" summary="IMPORTANTE" detail="Cuenta temporal" style="width: calc(100% - 10px); margin-top:10px;"/>
                 </div>

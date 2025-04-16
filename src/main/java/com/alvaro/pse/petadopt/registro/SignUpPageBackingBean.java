@@ -13,6 +13,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import org.primefaces.model.file.UploadedFile;
 
 /**
  *
@@ -30,6 +31,7 @@ public class SignUpPageBackingBean implements Serializable {
     private String email;
     private String password1;
     private String password2;
+    private UploadedFile fotoPerfil;
 
     /* Atributos del registro de refugio */
     private String nombreRefugio;
@@ -38,12 +40,22 @@ public class SignUpPageBackingBean implements Serializable {
     private String telefonoRefugio;
     private String comunidadRefugio;
 
+
     /* Atributos del registro de cliente */
     private String nombreCliente;
     private String apellidos;
     private String domicilio;
     private String nif;
     private String fechaNacimiento;
+
+    public UploadedFile getFotoPerfil() {
+        return fotoPerfil;
+    }
+
+    public void setFotoPerfil(UploadedFile fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
+    }
+
 
     public SignUpPageBackingBean() {
 

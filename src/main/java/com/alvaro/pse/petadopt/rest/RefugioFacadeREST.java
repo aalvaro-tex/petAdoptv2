@@ -6,6 +6,7 @@
 package com.alvaro.pse.petadopt.rest;
 
 import com.alvaro.pse.petadopt.entities.Refugio;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -84,6 +85,21 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
     public String countREST() {
         return String.valueOf(super.count());
     }
+    
+    @GET
+    @Path("find-by-estado/{estado}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Refugio> findByEstado(@PathParam("estado") boolean estado){
+        List<Refugio> all = this.findAll();
+        List<Refugio> found = new ArrayList<>();
+        for(Refugio r : all){
+            if(r.getVerificado() == estado ){
+                found.add(r);
+            }
+        }
+        return found;
+    }
+
 
     @Override
     protected EntityManager getEntityManager() {

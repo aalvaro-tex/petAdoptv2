@@ -11,35 +11,37 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
-                        <p:menuitem value="Inicio" outcome="/home/home" />
-                        <p:menuitem value="Mis adopciones"/>
-                        <p:menuitem value="Adoptar" style="font-weight: 600"/>
-                        <p:menuitem value="Mi cuenta"/>
-                    </p:megaMenu>
-                </h:form>
-                <h:form style="margin-top:10px;">
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                        <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
-                    </p:breadCrumb>
-                </h:form>
-                <div class="card">
-                    <p:steps activeIndex="0">
-                        <p:menuitem value="Elige tu mascota"/>
-                        <p:menuitem value="Confirma tu solicitud"/>
-                        <p:menuitem value="Detalles de la solicitud"/>
+                    <h:form >
+                        <p:sticky target="navMenu"/>
+                        <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                            <p:menuitem value="Inicio" outcome="/home/home" />
+                            <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
+                            <p:menuitem value="Adoptar" style="font-weight: 600"/>
+                            <p:menuitem value="Mi cuenta"/>
+                        </p:megaMenu>
+                    </h:form>
+                    <h:form style="margin-top:10px;">
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/index"/>
+                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                            </p:menuitem>
+                            <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
+                        </p:breadCrumb>
+                    </h:form>
+                    <div class="card">
+                        <p:steps activeIndex="0">
+                            <p:menuitem value="Elige tu mascota"/>
+                            <p:menuitem value="Confirma tu solicitud"/>
+                            <p:menuitem value="Detalles de la solicitud"/>
 
-                    </p:steps>
-                </div>
+                        </p:steps>
+                    </div>
+                
             </ui:define>
 
             <ui:define name="content">
-               <div class="card" style="margin-top:40px;">
+                <div class="card" style="margin-top:40px;">
 
                     <div class="field" style="display:flex; gap:10px; ">   
                         <h:form>
@@ -182,9 +184,9 @@
                                             <p:commandButton icon="pi pi-arrow-right" styleClass="ui-button-primary" style="width:100%" id="selectBtn" action="#{adopcionClientBean.getMascotaById()}">
                                                 <f:setPropertyActionListener target="#{adopcionBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
-                                             <p:tooltip for="selectBtn" value="Seleccionar" position="bottom"/>
+                                            <p:tooltip for="selectBtn" value="Seleccionar" position="bottom"/>
                                         </div>
-                                
+
                                     </div>
                                 </div>
                             </div>
