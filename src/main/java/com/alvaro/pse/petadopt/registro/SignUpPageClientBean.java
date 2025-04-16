@@ -13,11 +13,16 @@ import com.alvaro.pse.petadopt.json.UsuarioWriter;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import com.alvaro.pse.petadopt.utils.ImageUtils;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.Resource;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -40,6 +45,10 @@ public class SignUpPageClientBean {
     SignUpPageBackingBean bean;
     @Inject
     LoginPageBackingBean loginBean;
+    @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
+    private EntityManager em;
+    @Resource
+    private javax.transaction.UserTransaction utx;
     @Inject
     ImageUtils imageUtils;
 
@@ -114,8 +123,9 @@ public class SignUpPageClientBean {
                 bean.showError();
             }
         }
-        System.out.println(success);
+ 
         return success;
     }
-
+    
+   
 }

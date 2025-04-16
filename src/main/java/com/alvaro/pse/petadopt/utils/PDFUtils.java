@@ -24,6 +24,7 @@ import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.graphics.color.PDColor;
 import org.apache.pdfbox.pdmodel.graphics.color.PDDeviceRGB;
+import org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAnnotationWidget;
 import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceCharacteristicsDictionary;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
@@ -57,7 +58,8 @@ public class PDFUtils implements Serializable {
             String idOperacion,
             String fechaAdopcion,
             String direccionRefugio,
-            String telefonoRefugio
+            String telefonoRefugio,
+            String base64firma
     ) throws IOException {
         File file = new File("C:/Users/alvar/OneDrive/Documentos/NetBeansProjects/petAdoptv2/src/main/java/com/alvaro/pse/petadopt/utils/certificadoPlantilla.pdf");
         PDDocument document = PDDocument.load(file);
@@ -82,7 +84,7 @@ public class PDFUtils implements Serializable {
         contentStream.beginText();
         //Setting the font to the Content stream  
         contentStream.setFont(PDType1Font.HELVETICA, 12);
-        contentStream.setNonStrokingColor(Color.WHITE);
+        contentStream.setNonStrokingColor(Color.BLACK);
         //Setting the position for the line 
         contentStream.newLineAtOffset(305, 609);
         text = idOperacion;
@@ -220,7 +222,13 @@ public class PDFUtils implements Serializable {
         contentStream.showText(text);
         //Ending the content stream
         contentStream.endText();
-
+        
+        // Firma del cliente
+        System.out.println(base64firma);
+        byte[] ba = java.util.Base64.getDecoder().decode(base64firma);
+        PDImageXObject sigimg = PDImageXObject.createFromByteArray(document,ba,"signature");
+        contentStream.drawImage(sigimg,260,45);
+        
         //Closing the content stream
         contentStream.close();
 

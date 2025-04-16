@@ -112,6 +112,7 @@ public class AdopcionClientBean{
         m.setIdRefugio(bean.getMascotaSelected().getIdRefugio());
         m.setFechaPublicacion(bean.getMascotaSelected().getFechaPublicacion());
         m.setFechaAdopcion(bean.getMascotaSelected().getFechaAdopcion());
+        m.setFirma(bean.getBase64firma().substring(22));
 
         // la fecha de solicitud es la actual
         LocalDate hoy = LocalDate.now();
@@ -133,6 +134,8 @@ public class AdopcionClientBean{
             success = "success";
         }
         this.getRefugioById();
+        bean.setBase64firma("");
+        bean.setValueFirma("");
         return success;
     }
     

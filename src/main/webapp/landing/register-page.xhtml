@@ -107,7 +107,7 @@
                                 <div class="col-12 flex align-items-center justify-content-center">
                                     <p:fileUpload id="upload" value="#{signUpPageBackingBean.fotoPerfil}"
                                       mode="simple" skinSimple="true" auto="true"
-                                      process="@this" label="Subir imagen" chooseIcon="pi pi-image"/>
+                                      process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true"/>
                                     <p:commandButton ajax="false" action="#{signUpPageClientBean.addUsuario()}" update="growlSignUp" value="Darse de alta">      
                                     </p:commandButton>
                                     <p:growl id="growlSignUp" showDetail="true"/>

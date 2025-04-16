@@ -30,7 +30,7 @@ public class FileDownloadView {
                 .stream(new SerializableSupplier<InputStream>() {
                     @Override
                     public InputStream get() {
-                        return getClass().getResourceAsStream("certificadoPlantilla.pdf");
+                        return getClass().getResourceAsStream(ruta);
                     }
                 }).build();
     }

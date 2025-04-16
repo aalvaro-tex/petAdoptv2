@@ -5,12 +5,14 @@ com\alvaro\pse\petadopt\json\UsuarioReader$1.class
 com\alvaro\pse\petadopt\login\LoginPageClientBean.class
 com\alvaro\pse\petadopt\entities\Refugio_.class
 com\alvaro\pse\petadopt\rest\UsuarioFacadeREST.class
+com\alvaro\pse\petadopt\entities\Especies_.class
 com\alvaro\pse\petadopt\entities\Usuario.class
 com\alvaro\pse\petadopt\json\HistoricoSolicitudesReader$1.class
 com\alvaro\pse\petadopt\rest\RefugioFacadeREST.class
 com\alvaro\pse\petadopt\entities\Mascota.class
 com\alvaro\pse\petadopt\registro\SignUpPageBackingBean.class
 com\alvaro\pse\petadopt\entities\Mascota_.class
+com\alvaro\pse\petadopt\rest\EspeciesFacadeREST.class
 com\alvaro\pse\petadopt\administrador\AdministradorBackingBean.class
 com\alvaro\pse\petadopt\external\ComunidadesAPI.class
 com\alvaro\pse\petadopt\registro\SignUpPageClientBean.class
@@ -20,6 +22,7 @@ com\alvaro\pse\petadopt\rest\ApplicationConfig.class
 com\alvaro\pse\petadopt\entities\Administrador.class
 com\alvaro\pse\petadopt\entities\Refugio.class
 com\alvaro\pse\petadopt\home\HomePageBackingBean.class
+com\alvaro\pse\petadopt\entities\Especies.class
 com\alvaro\pse\petadopt\json\RefugioReader$1.class
 com\alvaro\pse\petadopt\utils\FileDownloadView.class
 com\alvaro\pse\petadopt\json\RefugioReader.class

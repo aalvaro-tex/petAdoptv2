@@ -23,6 +23,8 @@ public class AdopcionBackingBean implements Serializable {
     private String mascotaFilter = "todas";
     private Long idMascotaSelected;
     private Mascota mascotaSelected;
+    private String base64firma = "";
+    private String valueFirma = "";
     
     private Refugio refugio;
 
@@ -56,6 +58,22 @@ public class AdopcionBackingBean implements Serializable {
 
     public void setRefugio(Refugio refugio) {
         this.refugio = refugio;
+    }
+
+    public String getBase64firma() {
+        return base64firma;
+    }
+
+    public void setBase64firma(String base64firma) {
+        this.base64firma = base64firma;
+    }
+
+    public String getValueFirma() {
+        return valueFirma;
+    }
+
+    public void setValueFirma(String valueFirma) {
+        this.valueFirma = valueFirma;
     }
     
     

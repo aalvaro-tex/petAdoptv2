@@ -101,18 +101,24 @@
                             </div>
                         </div>
                         <div class="grid">
-                            <div class="col-12 flex align-items-center justify-content-center" style="gap:10px;">
-                                <p:commandButton ajax="true" value="Volver" styleClass="ui-button-outlined ui-button-info" update="growlAddMascota" action="lista-mascotas"  icon="pi pi-arrow-left">
+                            <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
+                               
+                                
+                                <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-confirmdialog-yes" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check"  oncomplete="PF('sig').clear()">
                                 </p:commandButton>
                                 <p:outputPanel id="input">
-                                    <p:outputLabel for="@next" value="Signature:" style="font-size:1.5rem" styleClass="block mb-2" />
-                                    <p:signature id="signature" widgetVar="sig" style="width:400px;height:200px" value="#{signatureView.value}" required="true" guideline="true"
-                                                  base64Value="#{signatureView.base64}" />
+                                    <p:outputLabel for="@next" value="Firma:" style="font-size:1.5rem" styleClass="block mb-2" />
+                                    <p:signature id="signature" widgetVar="sig" style="width:300px;height:150px" value="#{adopcionBackingBean.valueFirma}" required="true" guideline="true"
+                                                 base64Value="#{adopcionBackingBean.base64firma}" />
                                 </p:outputPanel>
-                                <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-confirmdialog-yes" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check">
-                                </p:commandButton>
                                 <p:growl id="growlAddMascota" showDetail="true"/>
                             </div>
+                        </div>
+                    </h:form>
+                    <h:form>
+                        <div class="col-12 flex align-items-end justify-content-center">
+                    <p:commandButton style="width:500px;margin-right: 10px;" ajax="true" value="Volver" styleClass="ui-button-outlined ui-button-info"  action="lista-mascotas"  icon="pi pi-arrow-left">
+                                </p:commandButton>
                         </div>
                     </h:form>
                 </div>

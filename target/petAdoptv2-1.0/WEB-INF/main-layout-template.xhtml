@@ -10,7 +10,7 @@
 
         <title>petAdopt - v2</title>
     </h:head>
-     <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
+    <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
 
 
     <h:body>
@@ -20,7 +20,27 @@
         </div>
 
         <div id="content" class="center_content">
-            <ui:insert name="content">Content</ui:insert>
+            <style>
+                #nonAjaxLoad {
+                    width: 50px;
+                    height: 50px;
+                    position: fixed;
+                    bottom: 30px;
+                    right: 30px;
+                }
+            </style>
+            <script>
+                $(document).ready(function () {
+                    $('#nonAjaxLoad').hide();
+                });
+
+                $(window).bind('beforeunload', function () {
+                    $('#nonAjaxLoad').show();
+                });
+            </script>
+            <ui:insert name="content"><div id="nonAjaxLoad">
+                    <img src="../images/ajaxload.gif"/>
+                </div></ui:insert>
         </div>
 
     </h:body>

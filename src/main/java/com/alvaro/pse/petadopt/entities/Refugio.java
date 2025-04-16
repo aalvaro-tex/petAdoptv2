@@ -36,6 +36,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Refugio.findByVerificado", query = "SELECT r FROM Refugio r WHERE r.verificado = :verificado")})
 public class Refugio implements Serializable {
 
+    @Column(name = "verificado")
+    private Boolean verificado;
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -62,10 +65,6 @@ public class Refugio implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "domicilio_social")
     private String domicilioSocial;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "verificado")
-    private boolean verificado;
 
 
     public Refugio() {
@@ -125,13 +124,6 @@ public class Refugio implements Serializable {
         this.domicilioSocial = domicilioSocial;
     }
 
-    public boolean getVerificado() {
-        return verificado;
-    }
-
-    public void setVerificado(boolean verificado) {
-        this.verificado = verificado;
-    }
 
     
     
@@ -159,6 +151,14 @@ public class Refugio implements Serializable {
     @Override
     public String toString() {
         return "com.alvaro.pse.petadoptv2.entities.Refugio[ id=" + id + " ]";
+    }
+
+    public Boolean getVerificado() {
+        return verificado;
+    }
+
+    public void setVerificado(Boolean verificado) {
+        this.verificado = verificado;
     }
     
 }

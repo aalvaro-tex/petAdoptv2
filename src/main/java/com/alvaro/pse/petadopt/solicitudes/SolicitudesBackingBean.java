@@ -20,6 +20,8 @@ import org.primefaces.model.StreamedContent;
 public class SolicitudesBackingBean implements Serializable {
 
     private String verMascotasFilter = "pendiente";
+    
+    private String rutaCertificado;
 
     private StreamedContent file;
 
@@ -49,6 +51,24 @@ public class SolicitudesBackingBean implements Serializable {
     public void setVerMascotasFilter(String verMascotasFilter) {
         this.verMascotasFilter = verMascotasFilter;
     }
+
+    public String getRutaCertificado() {
+        return rutaCertificado;
+    }
+
+    public void setRutaCertificado(String rutaCertificado) {
+        this.rutaCertificado = rutaCertificado;
+    }
+
+    public StreamedContent getFile() {
+        return file;
+    }
+
+    public void setFile(StreamedContent file) {
+        this.file = file;
+    }
+    
+    
 
     public String getFilterDisplayName() {
         String text = "";

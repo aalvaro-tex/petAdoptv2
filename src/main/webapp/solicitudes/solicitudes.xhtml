@@ -13,12 +13,29 @@
 
             <ui:define name="top">
                 <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                    <script>
+                        function handleSubmitAdd() {
+                            PF('mascotaDialog').hide();
+                        }
+                        function handleSubmitDelete() {
+                            PF('mascotaDeleteDialog').hide();
+                        }
+                        function handleSubmitUpdate() {
+                            PF('mascotaUpdateDialog').hide();
+                        }
+                        function ovBodyAuto() {
+                            $('html, body').css('overflow', 'auto');
+                        }
+
+                        function ovBodyHidden() {
+                            $('html, body').css('overflow', 'hidden');
+                        }</script>
                     <h:form >
                         <p:megaMenu orientation="horizontal" autoDisplay="false">
                             <p:menuitem value="Inicio" outcome="/home/home"/>
                             <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
                             <p:menuitem value="Adopciones" outcome="solicitudes" style="font-weight: 600"/>
-                            <p:menuitem value="Mi cuenta"/>
+                            <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
                         </p:megaMenu>
                     </h:form>
                     <h:form style="margin-top:10px;">
@@ -37,7 +54,7 @@
                             <p:menuitem value="Inicio" outcome="/home/home"/>
                             <p:menuitem value="Mis adopciones" outcome="solicitudes" style="font-weight: 600"/>
                             <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
-                            <p:menuitem value="Mi cuenta"/>
+                            <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
                         </p:megaMenu>
                     </h:form>
                     <h:form style="margin-top:10px;">
@@ -154,23 +171,23 @@
                                         margin-right: 2rem
                                     }
 
-                               .status-adoptada {
-                                    background: #c8e6c9;
-                                    color: #256029
-                                }
+                                    .status-adoptada {
+                                        background: #c8e6c9;
+                                        color: #256029
+                                    }
 
-                                .status-rechazada {
-                                    background: #ffcdd2;
-                                    color: #c63737
-                                }
-                                .status-pendiente {
-                                    background: #EFC3CA;
-                                    color: #CC6CE7
-                                }
-                                .status-sin_solicitud {
-                                    background: #feedaf;
-                                    color: #8a5340
-                                }
+                                    .status-rechazada {
+                                        background: #ffcdd2;
+                                        color: #c63737
+                                    }
+                                    .status-pendiente {
+                                        background: #EFC3CA;
+                                        color: #CC6CE7
+                                    }
+                                    .status-sin_solicitud {
+                                        background: #feedaf;
+                                        color: #8a5340
+                                    }
                                 </style>
 
                                 <div class="solicitud">
@@ -187,8 +204,9 @@
                                                     <p:ajax event="click" update=":form:data"/> 
                                                 </p:commandButton>
                                                 <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
-                                                <p:commandButton icon="pi pi-times" styleClass="ui-button-danger" action="#{solicitudesClientBean.rechazarSolicitud(solicitud.id)}" id="rejectBtn"  rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}">
+                                                <p:commandButton icon="pi pi-times" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" id="rejectBtn"  rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}">
                                                     <p:ajax event="click" update=":form:data"/> 
+                                                    <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" />
                                                 </p:commandButton>
                                                 <p:tooltip for="rejectBtn" value="Rechazar" position="bottom"/>
                                             </div>
@@ -196,9 +214,19 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </p:dataScroller>
                         </h:form>
+                        <p:dialog draggable="false" resizable="false" modal="true" header="Rechazar adopción" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade" closeOnEscape="false">
+                            <h:form>
+                                <p>¿Seguro que deseas rechazar la adopción?</p>
+                                <p:commandButton value="Eliminar mascota" styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.rechazarSolicitud(solicitudesBackingBean.idMascotaSelected)}" oncomplete="handleSubmitDelete(xhr, status, args)">
+                                    <p:ajax event="click" update=":form:data"/> 
+                                </p:commandButton>
+                            </h:form>
+                        </p:dialog>
                     </div>
+
                 </c:if>
                 <!-- Para clientes -->
                 <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
@@ -323,15 +351,15 @@
                                     <div class="solicitud-list-item">
 
                                         <div class="solicitud-list-detail">
-                                            
+
                                             Has solicitado la adopción de <strong>#{solicitud.nombre ? solicitud.nombre : solicitudesClientBean.findMascotaById(solicitud.id).nombre}</strong>
                                         </div>
 
                                         <div class="solicitud-list-action">
                                             <!-- <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitud.estado}</span> -->
                                             <div style="display:flex;flex-direction: row; gap:10px;">
-                                                <p:commandButton onclick="PrimeFaces.monitorDownload(start, stop);" icon="pi pi-download" styleClass="ui-button-primary" action="#{solicitudesClientBean.descargarCertificado(solicitud.id)}" style="width:40px; margin-top:5px;" id="downloadCertificado" rendered="#{solicitud.estado.equalsIgnoreCase('adoptada')}"  ajax="false">
-                                            <p:fileDownload value="#{fileDownloadView.file}"/>
+                                                <p:commandButton icon="pi pi-download" styleClass="ui-button-primary" action="#{solicitudesClientBean.descargarCertificado(solicitud.id)}" style="width:40px; margin-top:5px;" id="downloadCertificado" rendered="#{solicitud.estado.equalsIgnoreCase('adoptada')}" >
+
                                                 </p:commandButton>
                                                 <p:tooltip for="downloadCertificado" value="Descargar certificado de adopción"/>
                                             </div>

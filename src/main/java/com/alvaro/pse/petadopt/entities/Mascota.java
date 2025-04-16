@@ -6,6 +6,7 @@
 package com.alvaro.pse.petadopt.entities;
 
 import java.io.Serializable;
+import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -43,6 +44,14 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Mascota.findByFechaAdopcion", query = "SELECT m FROM Mascota m WHERE m.fechaAdopcion = :fechaAdopcion"),
     @NamedQuery(name = "Mascota.findByFechaSolicitud", query = "SELECT m FROM Mascota m WHERE m.fechaSolicitud = :fechaSolicitud")})
 public class Mascota implements Serializable {
+
+    @Column(name = "id_cliente")
+    private Long idCliente;
+    @Column(name = "id_refugio")
+    private Long idRefugio;
+    @Size(max = 2147483647)
+    @Column(name = "firma")
+    private String firma;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -82,17 +91,9 @@ public class Mascota implements Serializable {
     private String foto;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_refugio")
-    private long idRefugio;
-    @Basic(optional = false)
-    @NotNull
     @Size(min = 1, max = 2147483647)
     @Column(name = "fecha_publicacion")
     private String fechaPublicacion;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_cliente")
-    private long idCliente;
     @Size(max = 2147483647)
     @Column(name = "estado")
     private String estado;
@@ -110,7 +111,7 @@ public class Mascota implements Serializable {
         this.id = id;
     }
 
-    public Mascota(Long id, String nombre, String especie, String raza, long edad, String estadoSalud, double costeAdopcion, long idRefugio, String fechaPublicacion, long idCliente) {
+    public Mascota(Long id, String nombre, String especie, String raza, Long edad, String estadoSalud, double costeAdopcion, Long idRefugio, String fechaPublicacion, Long idCliente) {
         this.id = id;
         this.nombre = nombre;
         this.especie = especie;
@@ -258,6 +259,14 @@ public class Mascota implements Serializable {
     @Override
     public String toString() {
         return "com.alvaro.pse.petadoptv2.entities.Mascota[ id=" + id + " ]";
+    }
+
+    public String getFirma() {
+        return firma;
+    }
+
+    public void setFirma(String firma) {
+        this.firma = firma;
     }
 
 }

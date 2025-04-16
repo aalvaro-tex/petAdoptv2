@@ -233,6 +233,7 @@ public class SolicitudesClientBean {
             m.setIdRefugio(bean.getMascotaSelected().getIdRefugio());
             m.setFechaPublicacion(bean.getMascotaSelected().getFechaPublicacion());
             m.setFechaSolicitud(bean.getMascotaSelected().getFechaSolicitud());
+            m.setFirma(bean.getMascotaSelected().getFirma());
 
             // la fecha de adopcion es la actual
             LocalDate hoy = LocalDate.now();
@@ -359,12 +360,15 @@ public class SolicitudesClientBean {
         String nombreMascota = m.getNombre();
         String fechaAdopcion = m.getFechaAdopcion();
         String coste = String.valueOf(m.getCosteAdopcion());
-        String idOperacion = "ADP" + this.getAllSoliciutdesCount() + String.valueOf(m.getId());
+        String idOperacion = "ADP" + String.valueOf(m.getId()) + String.valueOf(r.getId()) + String.valueOf(this.findClienteById(m.getIdCliente()).getId());
         String direccionRefugio = r.getDomicilioSocial();
         String telefonoRefugio = r.getTelefono();
+        String base64firma = m.getFirma();
+        System.out.println(base64firma);
         try {
-            String ruta = this.pdfUtils.generateCertificadoAdopcionPDF(nombreCliente, nombreMascota, nombreRefugio, coste, idOperacion, fechaAdopcion, direccionRefugio, telefonoRefugio);
+            String ruta = this.pdfUtils.generateCertificadoAdopcionPDF(nombreCliente, nombreMascota, nombreRefugio, coste, idOperacion, fechaAdopcion, direccionRefugio, telefonoRefugio, base64firma);
             this.fileDownload.download(ruta);
+            bean.setRutaCertificado("C:/Users/alvar/OneDrive/Documentos/NetBeansProjects/petAdoptv2/src/main/java/com/alvaro/pse/petadopt/utils/certificado_" + idOperacion+ ".pdf");
         } catch (IOException ex) {
             Logger.getLogger(SolicitudesClientBean.class.getName()).log(Level.SEVERE, null, ex);
         }

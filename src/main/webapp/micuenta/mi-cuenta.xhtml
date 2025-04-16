@@ -1,0 +1,187 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
+
+            <ui:define name="top">
+                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                    <h:form >
+                        <p:megaMenu orientation="horizontal" autoDisplay="false">
+                            <p:menuitem value="Inicio" outcome="/home/home"/>
+                            <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
+                            <p:menuitem value="Adopciones" outcome="/solicitudes/solicitudes" />
+                            <p:menuitem value="Mi cuenta" style="font-weight: 600"/>
+                        </p:megaMenu>
+                    </h:form>
+                    <h:form style="margin-top:10px;">
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/index"/>
+                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                            </p:menuitem>
+                            <p:menuitem outcome="mi-cuenta" value="Mi cuenta"/>
+                        </p:breadCrumb>
+                    </h:form>
+                </c:if>
+                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                    <h:form >
+                        <p:megaMenu orientation="horizontal" autoDisplay="false">
+                            <p:menuitem value="Inicio" outcome="/home/home"/>
+                            <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
+                            <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
+                            <p:menuitem value="Mi cuenta" style="font-weight: 600"/>
+                        </p:megaMenu>
+                    </h:form>
+                    <h:form style="margin-top:10px;">
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/index"/>
+                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                            </p:menuitem>
+                            <p:menuitem outcome="mi-cuenta" value="Mi cuenta"/>
+                        </p:breadCrumb>
+                    </h:form>
+                </c:if>
+            </ui:define>
+
+            <ui:define name="content">
+                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                    <div class="card" style="margin-top:40px;">
+                    <h:form>
+                        <div class="grid">
+                            <div class="col-2 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <style>
+                                        img {
+                                            width: 150px;
+                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                            margin-right: 10px;
+                                        } #upload{
+                                            width: 150px;
+                                        }
+                                    </style>
+                                    <img src="data:image/png;base64,#{loginPageBackingBean.usuarioLogeado.foto}" ></img>
+                                </div>
+                            </div>
+                            <div class="col-3 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Nombre del refugio" for="nombreRefugio" />
+                                        <p:inputText id="nombreRefugio" type="text"  placeholder="#{loginPageBackingBean.refugio.nombre}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="CIF" for="cif" />
+                                        <p:inputText id="cif" type="text"  placeholder="#{loginPageBackingBean.refugio.cif}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Domicilio social" for="dir" />
+                                        <p:inputText id="dir" type="text"  placeholder="#{loginPageBackingBean.refugio.domicilioSocial}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="Teléfono" for="tlf" />
+                                        <p:inputText id="tlf" placeholder="#{loginPageBackingBean.refugio.telefono}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="grid">
+                            <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
+                                
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+                </c:if>
+                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                    <div class="card" style="margin-top:40px;">
+                    <h:form>
+                        <div class="grid">
+                            <div class="col-2 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <style>
+                                        img {
+                                            width: 150px;
+                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                            margin-right: 10px;
+                                        } #upload{
+                                            width: 150px;
+                                        }
+                                    </style>
+                                    <img src="data:image/png;base64,#{loginPageBackingBean.usuarioLogeado.foto}" ></img>
+                                </div>
+                            </div>
+                            <div class="col-3 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Nombre y apellidos" for="nombre" />
+                                        <p:inputText id="nombre" type="text"  placeholder="#{loginPageBackingBean.cliente.nombre}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="Apellidos" for="apellidos" />
+                                        <p:inputText id="apellidos" type="text"  placeholder="#{loginPageBackingBean.cliente.apellidos}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-3 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Domicilio" for="dom" />
+                                        <p:inputText id="dom" type="text"  placeholder="#{loginPageBackingBean.cliente.domicilio}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="Teléfono" for="tlfcl" />
+                                        <p:inputText id="tlfcl" placeholder="#{loginPageBackingBean.cliente.telefono}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                              <div class="col-3 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <div class="field">
+                                        <p:outputLabel value="Fecha de nacimiento" for="fecha" />
+                                        <p:inputText id="fecha" type="text"  placeholder="#{loginPageBackingBean.cliente.fechaNacimiento}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                    <div class="field">
+                                        <p:outputLabel value="NIF" for="nif" />
+                                        <p:inputText id="nif" type="text"  placeholder="#{loginPageBackingBean.cliente.nif}" disabled="true"/>
+                                        <p:message for="@previous"/>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="grid">
+                            <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
+                                
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+                </c:if>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
