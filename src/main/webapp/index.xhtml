@@ -15,11 +15,11 @@ and open the template in the editor.
         <title>petAdopt - Landing</title>
     </h:head>
 
-    <h:body>
+    <h:body onload="#{loginPageClientBean.init()}" >
         <div class="container">
             <p:card>
                 <f:facet name="header">
-                    <img class="card-img" alt="refugio img" src="landing/refugio-card.jpg"/>
+                    <img class="card-img" alt="refugio img" src="#{resource['images/refugio-card.jpg']}"/>
                 </f:facet>
                 <f:facet name="title">
                     Soy refugio
@@ -33,12 +33,12 @@ and open the template in the editor.
 
             <p:card >
                 <f:facet name="header">
-                    <img class="card-img" alt="user img" src="landing/usuario-card.jpg"/>
+                    <img class="card-img" alt="user img" src="#{resource['images/usuario-card.jpg']}"/>
                 </f:facet>
                 <f:facet name="title">
                     Soy cliente
                 </f:facet>
-                                <f:facet name="footer">
+                <f:facet name="footer">
                     <p:linkButton icon="pi pi-arrow-circle-right" styleClass="ui-button-secondary" class="landing-buttton" outcome="/landing/login-page" value="Entrar">
                         <f:param name="rol" value="cliente"/>
                     </p:linkButton>

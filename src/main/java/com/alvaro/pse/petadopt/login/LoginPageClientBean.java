@@ -46,6 +46,9 @@ public class LoginPageClientBean implements Serializable {
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
+        bean.setCliente(null);
+        bean.setRefugio(null);
+        bean.setUsuarioLogeado(null);
     }
 
     @PreDestroy

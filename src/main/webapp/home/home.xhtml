@@ -5,9 +5,10 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:c2="http://java.sun.com/jsp/jstl/core">
 
-   
+
     <body>
         <f:metadata>
             <f:viewParam name="rol" value="#{loginPageBackingBean.rol}" />
@@ -16,75 +17,83 @@
 
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
-            <ui:define name="top">
-                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
-                <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
-                        <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
-                        <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
-                        <p:menuitem value="Adopciones" outcome="/solicitudes/solicitudes" />
-                        <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
-                    </p:megaMenu>
-                </h:form>
-                <h:form style="margin-top:10px;">
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                        <p:menuitem outcome="home" value="Inicio"/>
-                    </p:breadCrumb>
-                </h:form>
+            <ui:define name="top"> 
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                        <h:form >
+                            <p:megaMenu orientation="horizontal" autoDisplay="false">
+                                <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
+                                <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
+                                <p:menuitem value="Adopciones" outcome="/solicitudes/solicitudes" />
+                                <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem outcome="home" value="Inicio"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                    <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                        <h:form >
+                            <p:megaMenu orientation="horizontal" autoDisplay="false">
+                                <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
+                                <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
+                                <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
+                                <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem outcome="home" value="Inicio"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                    <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
+                        <h:form >
+                            <p:megaMenu orientation="horizontal" autoDisplay="false">
+                                <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
+                                <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
+                                <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
+                                <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem outcome="home" value="Inicio"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
                 </c:if>
-                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
-                <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
-                        <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
-                        <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
-                        <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
-                        <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
-                    </p:megaMenu>
-                </h:form>
-                <h:form style="margin-top:10px;">
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                        <p:menuitem outcome="home" value="Inicio"/>
-                    </p:breadCrumb>
-                </h:form>
-                </c:if>
-                 <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
-                <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
-                        <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
-                        <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
-                        <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
-                        <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
-                    </p:megaMenu>
-                </h:form>
-                <h:form style="margin-top:10px;">
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                        <p:menuitem outcome="home" value="Inicio"/>
-                    </p:breadCrumb>
-                </h:form>
+                <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                    <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-raised ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
             </ui:define>
 
             <ui:define name="content">
-                <c:if test="${loginPageBackingBean.refugio.verificado eq false}">
-                <div class="card">
-                    <p:staticMessage severity="warn" summary="IMPORTANTE" detail="Cuenta temporal" style="width: calc(100% - 10px); margin-top:10px;"/>
-                </div>
-                </c:if>
-                <div class="card" style="margin-top:40px;">
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <c:if test="${loginPageBackingBean.refugio.verificado eq false}">
+                        <div class="card">
+                            <p:staticMessage severity="warn" summary="IMPORTANTE" detail="Cuenta temporal" style="width: calc(100% - 10px); margin-top:10px;"/>
+                        </div>
+                    </c:if>
+                    <div class="card" style="margin-top:40px;">
 
-                </div>
+                    </div>
+                </c:if>
             </ui:define>
 
         </ui:composition>

@@ -4,7 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
 
     <body>
@@ -17,62 +18,64 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                <h:form>
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                    </p:breadCrumb>
-                </h:form>
+                
+                    <h:form>
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/index"/>
+                            <p:menuitem outcome="login-page" value="#{loginPageBackingBean.rol}" >
+                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                            </p:menuitem>
+                        </p:breadCrumb>
+                    </h:form>
+                
             </ui:define>
 
             <ui:define name="content">
+                
+                    <div class="card" style="margin-top:40px;">
+                        <div class="grid">
+                            <div class="col-5 flex align-items-center justify-content-center">
+                                <div class="ui-fluid">
+                                    <h:form>
+                                        <div class="field">
+                                            <p:outputLabel value="Correo electrónico" for="usuario" />
+                                            <p:inputText id="usuario" type="email" value="#{loginPageBackingBean.email}" required="true"/>
+                                            <p:message for="@previous"/>
+                                            <h:outputText value="#{loginPageValidator.email}"/>
+                                        </div>
+                                        <div class="field">
+                                            <p:outputLabel value="Contraseña" for="contraseña" />
+                                            <p:inputText id="contraseña" type="password" value="#{loginPageBackingBean.password}" required="true"/>
+                                            <p:message for="@previous"/>
+                                            <h:outputText value="#{loginPageValidator.password}"/>
+                                        </div>
 
-                <div class="card" style="margin-top:40px;">
-                    <div class="grid">
-                        <div class="col-5 flex align-items-center justify-content-center">
-                            <div class="ui-fluid">
-                                <h:form>
-                                    <div class="field">
-                                        <p:outputLabel value="Correo electrónico" for="usuario" />
-                                        <p:inputText id="usuario" type="email" value="#{loginPageBackingBean.email}" required="true"/>
-                                        <p:message for="@previous"/>
-                                        <h:outputText value="#{loginPageValidator.email}"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Contraseña" for="contraseña" />
-                                        <p:inputText id="contraseña" type="password" value="#{loginPageBackingBean.password}" required="true"/>
-                                        <p:message for="@previous"/>
-                                        <h:outputText value="#{loginPageValidator.password}"/>
-                                    </div>
+                                        <p:commandButton ajax="false" action="#{loginPageClientBean.findUsuario()}" value="Iniciar sesión">      
+                                        </p:commandButton>
+                                        <p:growl id="growl" showDetail="true"/>
 
-                                    <p:commandButton ajax="false" action="#{loginPageClientBean.findUsuario()}" value="Iniciar sesión">      
-                                    </p:commandButton>
-                                    <p:growl id="growl" showDetail="true"/>
-
-                                </h:form>
-
-
+                                    </h:form>
 
 
+
+
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <p:divider layout="vertical">
+                                    <b>O BIEN</b>
+                                </p:divider>
+                            </div>
+                            <div class="col-5 flex align-items-center justify-content-center">
+                                <p:linkButton icon="pi pi-user-plus" styleClass="ui-button-secondary" class="ui-button-success" outcome="register-page" value="Darse de alta">
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:linkButton>
                             </div>
                         </div>
-                        <div class="col-2">
-                            <p:divider layout="vertical">
-                                <b>O BIEN</b>
-                            </p:divider>
-                        </div>
-                        <div class="col-5 flex align-items-center justify-content-center">
-                            <p:linkButton icon="pi pi-user-plus" styleClass="ui-button-secondary" class="ui-button-success" outcome="register-page" value="Darse de alta">
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:linkButton>
-                        </div>
                     </div>
-                </div>
 
 
-
+             
             </ui:define>
 
         </ui:composition>
