@@ -39,6 +39,7 @@ public class LoginPageBackingBean implements Serializable {
     private String password;
 
     private boolean usuarioFound;
+    private boolean tieneNotificaciones;
     
     private Cliente cliente;
     private Refugio refugio;
@@ -143,6 +144,15 @@ public class LoginPageBackingBean implements Serializable {
     public void setRefugio(Refugio refugio) {
         this.refugio = refugio;
     }
+
+    public boolean isTieneNotificaciones() {
+        return tieneNotificaciones;
+    }
+
+    public void setTieneNotificaciones(boolean tieneNotificaciones) {
+        this.tieneNotificaciones = tieneNotificaciones;
+    }
+    
     
     
 

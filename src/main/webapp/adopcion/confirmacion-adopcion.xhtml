@@ -12,126 +12,137 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
-                        <p:menuitem value="Inicio" outcome="/home/home" />
-                        <p:menuitem value="Mis adopciones"/>
-                        <p:menuitem value="Adoptar" style="font-weight: 600"/>
-                        <p:menuitem value="Mi cuenta"/>
-                    </p:megaMenu>
-                </h:form>
-                <h:form style="margin-top:10px;">
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                        <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
-                    </p:breadCrumb>
-                </h:form>
-                <h:form>
-                    <div class="card">
-                        <p:steps activeIndex="1">
-                            <p:menuitem value="Elige tu mascota"/>
-                            <p:menuitem value="Confirma tu solicitud"/>
-                            <p:menuitem value="Detalles de la solicitud"/>
-                        </p:steps>
-                    </div>
-                </h:form>
-                 </c:if>
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <h:form >
+                        <p:sticky target="navMenu"/>
+                        <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                            <p:menuitem value="Inicio" outcome="/home/home" />
+                            <p:menuitem value="Mis adopciones"/>
+                            <p:menuitem value="Adoptar" style="font-weight: 600"/>
+                            <p:menuitem value="Mi cuenta"/>
+                        </p:megaMenu>
+                    </h:form>
+                    <h:form style="margin-top:10px;">
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/index"/>
+                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                            </p:menuitem>
+                            <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
+                        </p:breadCrumb>
+                    </h:form>
+                    <h:form>
+                        <div class="card">
+                            <p:steps activeIndex="1">
+                                <p:menuitem value="Elige tu mascota"/>
+                                <p:menuitem value="Confirma tu solicitud"/>
+                                <p:menuitem value="Detalles de la solicitud"/>
+                            </p:steps>
+                        </div>
+                    </h:form>
+                </c:if>
                 <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
-                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-raised ui-button-secondary ui-button-flat"></p:linkButton>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
             </ui:define>
 
             <ui:define name="content">
-                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <div class="card" style="margin-top:40px;">
-                    <h:form>
-                        <div class="grid">
-                            <div class="col-2 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <style>
-                                        img {
-                                            width: 150px;
-                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                            margin-right: 10px;
-                                        } #upload{
-                                            width: 150px;
-                                        }
-                                    </style>
-                                    <img src="data:image/png;base64,#{adopcionBackingBean.mascotaSelected.foto}" ></img>
-                                </div>
-                            </div>
-                            <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Nombre de la mascota" for="nombreMascota" />
-                                        <p:inputText id="nombreMascota" type="text"  placeholder="#{adopcionBackingBean.mascotaSelected.nombre}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Especie" for="especie" />
-                                        <p:inputText id="especie" type="email"  placeholder="#{adopcionBackingBean.mascotaSelected.especie}" disabled="true"/>
-                                        <p:message for="@previous"/>
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <div class="card" style="margin-top:40px;">
+                        <h:form>
+                            <div class="grid">
+                                <div class="col-2 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
+                                        <style>
+                                            img {
+                                                width: 150px;
+                                                box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                                margin-right: 10px;
+                                            } #upload{
+                                                width: 150px;
+                                            }
+                                        </style>
+                                        <img src="data:image/png;base64,#{adopcionBackingBean.mascotaSelected.foto}" ></img>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Raza" for="raza" />
-                                        <p:inputText id="raza" type="text"  placeholder="#{adopcionBackingBean.mascotaSelected.raza}" disabled="true"/>
-                                        <p:message for="@previous"/>
+                                <div class="col-3 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
+                                        <div class="field">
+                                            <p:outputLabel value="Nombre de la mascota" for="nombreMascota" />
+                                            <p:inputText id="nombreMascota" type="text"  placeholder="#{adopcionBackingBean.mascotaSelected.nombre}" disabled="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                        <div class="field">
+                                            <p:outputLabel value="Especie" for="especie" />
+                                            <p:inputText id="especie" type="email"  placeholder="#{adopcionBackingBean.mascotaSelected.especie}" disabled="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
                                     </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Edad" for="edad" />
-                                        <p:inputNumber id="edad" symbolPosition="s"   symbol=" años" emptyValue="#{adopcionBackingBean.mascotaSelected.edad}" decimalPlaces="0" disabled="true"/>
-                                        <p:message for="@previous"/>
+                                </div>
+                                <div class="col-3 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
+                                        <div class="field">
+                                            <p:outputLabel value="Raza" for="raza" />
+                                            <p:inputText id="raza" type="text"  placeholder="#{adopcionBackingBean.mascotaSelected.raza}" disabled="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                        <div class="field">
+                                            <p:outputLabel value="Edad" for="edad" />
+                                            <p:inputNumber id="edad" symbolPosition="s"   symbol=" años" emptyValue="#{adopcionBackingBean.mascotaSelected.edad}" decimalPlaces="0" disabled="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-3 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
+                                        <div class="field">
+                                            <p:outputLabel value="Estado de salud" for="estado_salud" />
+                                            <p:inputText id="estado_salud" type="text" placeholder="#{adopcionBackingBean.mascotaSelected.estadoSalud}" disabled="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                        <div class="field">
+                                            <p:outputLabel value="Coste de adopción" for="coste_adopcion" />
+                                            <p:inputNumber id="coste_adopcion" symbolPosition="s"   symbol=" €" emptyValue="#{adopcionBackingBean.mascotaSelected.costeAdopcion}" disabled="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Estado de salud" for="estado_salud" />
-                                        <p:inputText id="estado_salud" type="text" placeholder="#{adopcionBackingBean.mascotaSelected.estadoSalud}" disabled="true"/>
-                                        <p:message for="@previous"/>
+                            <style>
+                                .btn-container{
+                                    display:flex;
+                                    flex-direction: column;
+                                    gap:10px;
+                                }
+                            </style>
+                            <div class="grid">
+                                <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
+                                    <div class="btn-container" >
+                                        <p:linkButton  value="Volver" styleClass="ui-button-outlined ui-button-info"  outcome="lista-mascotas"  icon="pi pi-arrow-left" style="text-decoration: none;">
+                                        </p:linkButton>
+                                        <p:commandButton ajax="true" value="Hablar con el refugio" styleClass="ui-confirmdialog-yes" update="growlAddMascota" icon="pi pi-envelope">
+                                        </p:commandButton>
+
+                                        <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-confirmdialog-yes" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check"  oncomplete="PF('sig').clear()">
+                                        </p:commandButton>
                                     </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Coste de adopción" for="coste_adopcion" />
-                                        <p:inputNumber id="coste_adopcion" symbolPosition="s"   symbol=" €" emptyValue="#{adopcionBackingBean.mascotaSelected.costeAdopcion}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
+                                    <p:outputPanel id="input">
+                                        <p:outputLabel for="@next" value="Firma:" style="font-size:1.5rem" styleClass="block mb-2" />
+                                        <p:signature id="signature" widgetVar="sig" style="width:300px;height:150px" value="#{adopcionBackingBean.valueFirma}" required="true" guideline="true"
+                                                     base64Value="#{adopcionBackingBean.base64firma}" />
+                                    </p:outputPanel>
+                                    <p:growl id="growlAddMascota" showDetail="true"/>
                                 </div>
                             </div>
-                        </div>
-                        <div class="grid">
-                            <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
-                               
-                                
-                                <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-confirmdialog-yes" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check"  oncomplete="PF('sig').clear()">
-                                </p:commandButton>
-                                <p:outputPanel id="input">
-                                    <p:outputLabel for="@next" value="Firma:" style="font-size:1.5rem" styleClass="block mb-2" />
-                                    <p:signature id="signature" widgetVar="sig" style="width:300px;height:150px" value="#{adopcionBackingBean.valueFirma}" required="true" guideline="true"
-                                                 base64Value="#{adopcionBackingBean.base64firma}" />
-                                </p:outputPanel>
-                                <p:growl id="growlAddMascota" showDetail="true"/>
-                            </div>
-                        </div>
-                    </h:form>
-                    <h:form>
-                        <div class="col-12 flex align-items-end justify-content-center">
-                    <p:commandButton style="width:500px;margin-right: 10px;" ajax="true" value="Volver" styleClass="ui-button-outlined ui-button-info"  action="lista-mascotas"  icon="pi pi-arrow-left">
-                                </p:commandButton>
-                        </div>
-                    </h:form>
-                </div>
+                        </h:form>
+                        <h:form>
+
+                        </h:form>
+                    </div>
+                </c:if>
             </ui:define>
-</c:if>
+
         </ui:composition>
 
     </body>

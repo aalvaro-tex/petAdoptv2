@@ -1,0 +1,11 @@
+.notification-dot {
+                        height: 7px;
+                        width: 7px;
+                        background-color: red;
+                        border-radius: 50%;
+                        border: 1px solid red;
+                        display: inline-block;
+                        position: relative;
+                        top: -8px;
+                        left: 1px;
+                    }

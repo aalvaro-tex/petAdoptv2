@@ -69,7 +69,7 @@ public class MascotasPageClientBean {
         m.setEdad(bean.getEdad());
         m.setEspecie(bean.getEspecie());
         m.setEstadoSalud(bean.getEstadoSalud());
-        m.setRaza(bean.getRaza());
+        m.setRaza(bean.getRaza() != null ? bean.getRaza() : "");
         m.setNombre(bean.getNombre());
         m.setFoto(this.imageUtils.upload(bean.getMascotaImg()));
         // al crear una nueva mascota

@@ -10,8 +10,12 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
+import static java.lang.Thread.sleep;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import org.apache.pdfbox.cos.COSDictionary;
 import org.apache.pdfbox.cos.COSName;
@@ -30,6 +34,8 @@ import org.apache.pdfbox.pdmodel.interactive.annotation.PDAppearanceCharacterist
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -48,9 +54,12 @@ public class PDFUtils implements Serializable {
      * @param precio
      * @param idOperacion
      * @param fechaAdopcion
+     * @param direccionRefugio
+     * @param telefonoRefugio
+     * @param base64firma
      * @throws IOException
      */
-    public String generateCertificadoAdopcionPDF(
+    public DefaultStreamedContent generateCertificadoAdopcionPDF(
             String nombreCliente,
             String nombreMascota,
             String nombreRefugio,
@@ -164,7 +173,7 @@ public class PDFUtils implements Serializable {
         contentStream.setFont(PDType1Font.HELVETICA, 12);
         contentStream.setNonStrokingColor(Color.BLACK);
         //Setting the position for the line 
-        contentStream.newLineAtOffset(190, 452);
+        contentStream.newLineAtOffset(190, 453);
         text = direccionRefugio;
         //Adding text in the form of string 
         contentStream.showText(text);
@@ -233,12 +242,23 @@ public class PDFUtils implements Serializable {
         contentStream.close();
 
         //Saving the document
-        document.save(new File("C:/Users/alvar/OneDrive/Documentos/NetBeansProjects/petAdoptv2/src/main/java/com/alvaro/pse/petadopt/utils/certificado_" + idOperacion + ".pdf"));
+        document.save(new File("C:/Users/alvar/OneDrive/Documentos/NetBeansProjects/petAdoptv2/src/main/webapp/resources/certificados/certificado_" + idOperacion + ".pdf"));
 
         //Closing the document
         document.close();
-        return "C:/Users/alvar/OneDrive/Documentos/NetBeansProjects/petAdoptv2/src/main/java/com/alvaro/pse/petadopt/utils/certificado_" + idOperacion + ".pdf";
-
+        
+        try {
+            sleep(1000);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(PDFUtils.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        DefaultStreamedContent pdf = DefaultStreamedContent.builder()
+                .name("certificado_" + idOperacion + "_" + nombreMascota + ".pdf")
+                .contentType("application/pdf")
+                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/certificados/certificado_" +idOperacion + ".pdf"))
+                .build();
+        return pdf;
+        
     }
 
     private String numberToMes(String monthNumber) {
@@ -285,5 +305,5 @@ public class PDFUtils implements Serializable {
         }
         return monthName;
     }
-
+    
 }

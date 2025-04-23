@@ -27,6 +27,8 @@ public class SignUpPageBackingBean implements Serializable {
     private ComunidadesAPI api;
     private String rol;
 
+    private boolean terminosAceptados;
+
     /* Atributos de usuario, comunes a refugio y cliente */
     private String email;
     private String password1;
@@ -55,7 +57,6 @@ public class SignUpPageBackingBean implements Serializable {
     public void setFotoPerfil(UploadedFile fotoPerfil) {
         this.fotoPerfil = fotoPerfil;
     }
-
 
     public SignUpPageBackingBean() {
 
@@ -204,9 +205,34 @@ public class SignUpPageBackingBean implements Serializable {
         this.comunidadRefugio = comunidad;
     }
 
+    public boolean isTerminosAceptados() {
+        return terminosAceptados;
+    }
+
+    public void setTerminosAceptados(boolean terminosAceptados) {
+        this.terminosAceptados = terminosAceptados;
+    }
+
     public void showError() {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden");
         FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+    public void clearValues() {
+        setCif(null);
+        setEmail(null);
+        setPassword1(null);
+        setPassword2(null);
+        setFotoPerfil(null);
+        setNombreRefugio(null);
+        setDomicilioSocial(null);
+        setTelefonoRefugio(null);
+        setComunidadRefugio(null);
+        setNombreCliente(null);
+        setApellidos(null);
+        setDomicilio(null);
+        setNif(null);
+        setFechaNacimiento(null);
     }
 
 }

@@ -19,10 +19,16 @@
             <ui:define name="top">
                  <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                 <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
+                    <p:sticky target="navMenu"/>
+                    <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
                         <p:menuitem value="Inicio" outcome="/home/home"/>
                         <p:menuitem value="Mascotas" outcome="mascotas" style="font-weight: 600;"/>
-                        <p:menuitem value="Adopciones" outcome="/solicitudes/solicitudes" />
+                        <p:menuitem outcome="/solicitudes/solicitudes" >
+                                    Solicitudes de adopción 
+                                    <c:if test="${loginPageBackingBean.tieneNotificaciones eq true}">
+                                        <span class="notification-dot"></span>
+                                    </c:if>
+                                </p:menuitem>
                         <p:menuitem value="Mi cuenta"/>
                     </p:megaMenu>
                 </h:form>
@@ -38,7 +44,7 @@
                  </c:if>
                 <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
-                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-raised ui-button-secondary ui-button-flat"></p:linkButton>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
             </ui:define>
 
@@ -213,11 +219,11 @@
                                         </h:outputText>
                                         <div style="display:flex;flex-direction: row; gap:5px; justify-content: center">
                                             
-                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" rendered="#{mascota.estado != 'adoptada'}">
+                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" rendered="#{mascota.estado == 'sin_solicitud'}">
                                                
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
-                                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" rendered="#{mascota.estado != 'adoptada'}">
+                                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" rendered="#{mascota.estado == 'sin_solicitud'}">
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
                                         </div>
@@ -253,7 +259,7 @@
                                 <div class="ui-fluid">
                                     <div class="field">
                                         <p:outputLabel value="Raza" for="raza" />
-                                        <p:inputText id="raza" type="text" value="#{mascotasPageBackingBean.raza}" required="true"/>
+                                        <p:inputText id="raza" type="text" value="#{mascotasPageBackingBean.raza}" required="false"/>
                                         <p:message for="@previous"/>
                                     </div>
                                     <div class="field">
@@ -282,7 +288,7 @@
                                       mode="simple" skinSimple="true" auto="true"
                                       process="@this" update="growlAddMascota" label="Subir imagen" chooseIcon="pi pi-image"/>
 
-                        <p:commandButton ajax="true" value="Añadir mascota" styleClass="ui-confirmdialog-yes" update="growlAddMascota" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)" icon="pi pi-plus">
+                        <p:commandButton ajax="true" value="Añadir mascota" styleClass="ui-confirmdialog-yes" update=":form:data" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)" icon="pi pi-plus">
                             <p:ajax event="click" update=":form:data"/> 
                         </p:commandButton>
                         <p:growl id="growlAddMascota" showDetail="true"/>

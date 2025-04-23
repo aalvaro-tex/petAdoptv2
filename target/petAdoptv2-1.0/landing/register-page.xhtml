@@ -18,7 +18,7 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                
+
                 <h:form>
                     <p:breadCrumb>
                         <p:menuitem outcome="/index"/>
@@ -30,7 +30,7 @@
                         </p:menuitem>
                     </p:breadCrumb>
                 </h:form>
-                
+
             </ui:define>
 
             <ui:define name="content">
@@ -108,8 +108,8 @@
                             <div class="grid">
                                 <div class="col-12 flex align-items-center justify-content-center">
                                     <p:fileUpload id="upload" value="#{signUpPageBackingBean.fotoPerfil}"
-                                      mode="simple" skinSimple="true" auto="true"
-                                      process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true"/>
+                                                  mode="simple" skinSimple="true" auto="true"
+                                                  process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true"/>
                                     <p:commandButton ajax="false" action="#{signUpPageClientBean.addUsuario()}" update="growlSignUp" value="Darse de alta">      
                                     </p:commandButton>
                                     <p:growl id="growlSignUp" showDetail="true"/>
@@ -158,14 +158,16 @@
                                         </div>
                                         <div class="field">
                                             <p:outputLabel for="@next" value="Fecha de nacimiento (dd/mm/aaaa)" />
-                                            <p:inputMask id="date" value="#{signUpPageBackingBean.fechaNacimiento}" mask="99/99/9999" required="true"/>
+                                            <p:inputMask id="date" value="#{signUpPageBackingBean.fechaNacimiento}" mask="99/99/9999" required="true">
+                                                
+                                            </p:inputMask>
                                             <p:message for="@previous"/>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-4 flex align-items-center justify-content-center">
                                     <div class="ui-fluid">
-<div class="field">
+                                        <div class="field">
                                             <p:outputLabel value="Correo electrónico" for="email" />
                                             <p:inputText id="email" type="email" value="#{signUpPageBackingBean.email}" required="true"/>
                                             <p:message for="@previous"/>
@@ -187,17 +189,57 @@
                                 </div>
                             </div>
                             <div class="grid">
-                                <div class="col-12 flex align-items-center justify-content-center">
+                                <div class="col-12 flex align-items-center justify-content-center" style="gap:10px;">
                                     <p:fileUpload id="upload" value="#{signUpPageBackingBean.fotoPerfil}"
-                                      mode="simple" skinSimple="true" auto="true"
-                                      process="@this" label="Subir imagen" chooseIcon="pi pi-image"/>
-                                    <p:commandButton ajax="false" action="#{signUpPageClientBean.addUsuario()}" update="growlSignUp" value="Darse de alta">      
+                                                  mode="simple" skinSimple="true" auto="true"
+                                                  process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true"/>
+                                    <p:commandButton id="signUpBtn" ajax="false" action="#{signUpPageClientBean.addUsuario()}" update="growlSignUp" value="Darse de alta" disabled="#{!signUpPageBackingBean.terminosAceptados}">      
                                     </p:commandButton>
+                                    <p:selectBooleanCheckbox value="#{signUpPageBackingBean.terminosAceptados}">He leído y acepto los<a onclick="PF('terminosCondiciones').show()" style="font-size: 600"><span style="font-weight: bold; cursor: pointer; color: blue;">términos y condiciones</span></a>
+                                        <p:ajax event="change" update=":j_idt18:signUpBtn" />
+                                    </p:selectBooleanCheckbox>
                                     <p:growl id="growlSignUp" showDetail="true"/>
                                 </div>
 
                             </div>
                         </h:form>
+                        <p:dialog header="Términos y condiciones" widgetVar="terminosCondiciones" minHeight="40" width="350" showEffect="fade" closeOnEscape="true" modal="true" resizable="false" draggable="false" fitViewport="true">
+                            <p class="m-0">
+                               
+
+    <p>Bienvenido/a a <strong>petAdopt</strong>. Antes de utilizar nuestra aplicación, te pedimos que leas detenidamente los siguientes términos y condiciones, ya que al registrarte y utilizar nuestros servicios, aceptas cumplirlos.</p>
+    
+    <h2>1. Finalidad de la Aplicación</h2>
+    <p>Esta aplicación está destinada a facilitar el proceso de adopción responsable de mascotas. Los datos proporcionados por los usuarios serán utilizados exclusivamente para gestionar la adopción de mascotas, promover el bienestar animal y garantizar la transparencia en el proceso.</p>
+    
+    <h2>2. Información Personal Recopilada</h2>
+    <ul>
+        <li>Nombre completo</li>
+        <li>Documento Nacional de Identidad (DNI)</li>
+        <li>Teléfono</li>
+        <li>Domicilio</li>
+        <li>Otros datos necesarios para el proceso de adopción.</li>
+    </ul>
+
+    <h2>3. Tratamiento de Datos Personales</h2>
+    <p>La protección de tus datos personales es nuestra prioridad. Nos comprometemos a cumplir con la legislación vigente en materia de protección de datos, especialmente el Reglamento General de Protección de Datos (RGPD).</p>
+    <ul>
+        <li>Los datos serán utilizados exclusivamente para las finalidades descritas anteriormente y no serán compartidos con terceros sin tu consentimiento explícito.</li>
+        <li>Adoptaremos medidas de seguridad adecuadas para proteger tus datos frente al acceso no autorizado, alteración o divulgación.</li>
+        <li>Podrás ejercer tus derechos de acceso, rectificación, cancelación y oposición (ARCO) en cualquier momento, comunicándote con nosotros a través de <strong>[correo electrónico de contacto]</strong>.</li>
+    </ul>
+
+    <h2>4. Responsabilidades del Usuario</h2>
+    <p>Al utilizar nuestra aplicación, el usuario se compromete a proporcionar información veraz y actualizada. Cualquier uso indebido de la aplicación está estrictamente prohibido y puede resultar en la suspensión de la cuenta.</p>
+
+    <h2>5. Modificaciones de los Términos y Condiciones</h2>
+    <p>Nos reservamos el derecho de actualizar estos términos y condiciones en cualquier momento. Las modificaciones serán notificadas a través de la aplicación.</p>
+
+    <h2>6. Aceptación de los Términos</h2>
+    <p>Al registrarte en nuestra aplicación, confirmas que has leído y aceptas estos términos y condiciones en su totalidad.</p>
+
+                            </p>
+                        </p:dialog>
                     </c:if>
 
                 </div>

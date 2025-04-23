@@ -50,7 +50,7 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public void edit(@PathParam("id") Long id, Mascota entity) {
-        System.out.println("Id: " + entity.getId());
+        //System.out.println("Id: " + entity.getId());
         super.edit(entity);
     }
 

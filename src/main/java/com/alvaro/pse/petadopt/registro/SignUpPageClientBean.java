@@ -70,7 +70,7 @@ public class SignUpPageClientBean {
         String p1 = bean.getPassword1();
         String p2 = bean.getPassword2();
         if (!p1.equalsIgnoreCase(p2)) {
-             bean.showError();
+            bean.showError();
         } else {
             Usuario u = new Usuario();
             u.setEmail(bean.getEmail());
@@ -118,14 +118,14 @@ public class SignUpPageClientBean {
                             .post(Entity.entity(c, MediaType.APPLICATION_JSON));
                     success = "success";
                     loginBean.setCliente(c);
+
                 }
             } else {
                 bean.showError();
             }
         }
- 
+        bean.clearValues();
         return success;
     }
-    
-   
+
 }

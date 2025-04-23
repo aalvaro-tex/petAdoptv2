@@ -9,6 +9,7 @@ import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
 import com.alvaro.pse.petadopt.json.ClienteWriter;
+import com.alvaro.pse.petadopt.json.MascotaWriter;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
 import com.alvaro.pse.petadopt.json.UsuarioReader;
 import com.alvaro.pse.petadopt.json.UsuarioWriter;
@@ -130,6 +131,7 @@ public class LoginPageClientBean implements Serializable {
                     Refugio r = response.readEntity(Refugio.class);
                     bean.setRefugio(r);
                     bean.setCliente(null);
+                    bean.setTieneNotificaciones(this.hasNotifications());
                     // hemos encontrado el id del usuario que ha intentado 
                     // inicar sesión, luego sí está accediendo correctamente
                     success = "success";
@@ -146,5 +148,21 @@ public class LoginPageClientBean implements Serializable {
         //System.out.println(success);
         return success;
 
+    }
+    // Indica si el usuario logueado tiene alguna notificación pendiente
+    // Esto es, solicitud pendiente
+    private boolean hasNotifications(){
+        boolean tieneNotificaciones = false;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
+        Response response = target.register(MascotaWriter.class)
+                    .path("find-by-refugio-estado/{idRefugio}/{estado}")
+                    .resolveTemplate("idRefugio", bean.getUsuarioLogeado().getId())
+                    .resolveTemplate("estado", "pendiente")
+                    .request(MediaType.APPLICATION_JSON)
+                    .get();
+            if (response.getStatus() == 200) {
+                tieneNotificaciones = !response.readEntity(List.class).isEmpty();
+            }
+            return tieneNotificaciones;
     }
 }

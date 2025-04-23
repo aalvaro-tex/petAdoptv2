@@ -15,7 +15,8 @@
                  <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                 <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
                 <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
+                    <p:sticky target="navMenu"/>
+                    <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
                         <p:menuitem value="Inicio" outcome="/home/home" />
                         <p:menuitem value="Gestionar administradores" outcome="administradores" style="font-weight: 600"/>
                         <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
@@ -35,7 +36,7 @@
                  </c:if>
                  <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
-                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-raised ui-button-secondary ui-button-flat"></p:linkButton>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
             </ui:define>
 

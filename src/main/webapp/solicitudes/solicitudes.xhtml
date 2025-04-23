@@ -13,370 +13,403 @@
 
             <ui:define name="top">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
-                    <script>
-                        function handleSubmitAdd() {
-                            PF('mascotaDialog').hide();
-                        }
-                        function handleSubmitDelete() {
-                            PF('mascotaDeleteDialog').hide();
-                        }
-                        function handleSubmitUpdate() {
-                            PF('mascotaUpdateDialog').hide();
-                        }
-                        function ovBodyAuto() {
-                            $('html, body').css('overflow', 'auto');
-                        }
+                    <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                        <script>
+                            function handleSubmitAdd() {
+                                PF('mascotaDialog').hide();
+                            }
+                            function handleSubmitDelete() {
+                                PF('mascotaDeleteDialog').hide();
+                            }
+                            function handleSubmitUpdate() {
+                                PF('mascotaUpdateDialog').hide();
+                            }
+                            function ovBodyAuto() {
+                                $('html, body').css('overflow', 'auto');
+                            }
 
-                        function ovBodyHidden() {
-                            $('html, body').css('overflow', 'hidden');
-                        }</script>
-                    <h:form >
-                        <p:megaMenu orientation="horizontal" autoDisplay="false">
-                            <p:menuitem value="Inicio" outcome="/home/home"/>
-                            <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
-                            <p:menuitem value="Adopciones" outcome="solicitudes" style="font-weight: 600"/>
-                            <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
-                        </p:megaMenu>
-                    </h:form>
-                    <h:form style="margin-top:10px;">
-                        <p:breadCrumb>
-                            <p:menuitem outcome="/index"/>
-                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:menuitem>
-                            <p:menuitem outcome="solicitudes" value="Adopciones"/>
-                        </p:breadCrumb>
-                    </h:form>
+                            function ovBodyHidden() {
+                                $('html, body').css('overflow', 'hidden');
+                            }</script>
+                        <h:form id="header-form">
+                            <p:sticky target="navMenu"/>
+                            <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                                <p:menuitem value="Inicio" outcome="/home/home"/>
+                                <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
+                                <p:menuitem id="solicitudes" outcome="/solicitudes/solicitudes" style="font-weight: 600;">
+                                    Solicitudes de adopción 
+                                    <c:if test="${loginPageBackingBean.tieneNotificaciones eq true}">
+                                        <span class="notification-dot"></span>
+                                    </c:if>
+                                </p:menuitem>
+                                <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem outcome="solicitudes" value="Solicitudes de adopción"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                    <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                        <h:form >
+                            <p:sticky target="navMenu"/>
+                            <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                                <p:menuitem value="Inicio" outcome="/home/home"/>
+                                <p:menuitem value="Mis adopciones" outcome="solicitudes" style="font-weight: 600"/>
+                                <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
+                                <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem outcome="solicitudes" value="Mis adopciones"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
                 </c:if>
-                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
-                    <h:form >
-                        <p:megaMenu orientation="horizontal" autoDisplay="false">
-                            <p:menuitem value="Inicio" outcome="/home/home"/>
-                            <p:menuitem value="Mis adopciones" outcome="solicitudes" style="font-weight: 600"/>
-                            <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
-                            <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
-                        </p:megaMenu>
-                    </h:form>
-                    <h:form style="margin-top:10px;">
-                        <p:breadCrumb>
-                            <p:menuitem outcome="/index"/>
-                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:menuitem>
-                            <p:menuitem outcome="solicitudes" value="Mis adopciones"/>
-                        </p:breadCrumb>
-                    </h:form>
-                </c:if>
-                </c:if>
-                 <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
-                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-raised ui-button-secondary ui-button-flat"></p:linkButton>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
             </ui:define>
 
             <ui:define name="content">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
-                    <div class="card" style="margin-top:40px;">
-                        <h:form>
-                            <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px; margin-bottom:10px;" value="#{solicitudesBackingBean.verMascotasFilter}" >
-                                <f:selectItem itemLabel="Aceptadas" itemValue="adoptada"/>
-                                <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
-                                <f:selectItem itemLabel="Rechazadas" itemValue="rechazada"/>
-                                <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
-                                <p:ajax event="itemSelect" update=":form:data"/> 
-                            </p:selectOneMenu>
-                        </h:form>
-                        <h:form id="form" >
-                            <p:dataScroller  value="#{solicitudesClientBean.findByRefugioAndEstado()}" var="solicitud" chunkSize="3" id="data" lazy="false">
-                                <f:facet name="header" id="header">
-                                    <p:outputLabel id="selectedItemText" value="#{solicitudesBackingBean.filterDisplayName}"/>
-                                </f:facet>
-
-                                <f:facet name="loader">
-                                    <div class="text-center">
-                                        <p:commandButton type="button" value="Ver más" icon="pi pi-refresh"/>
-                                    </div>
-                                </f:facet>
-
-                                <style>
-                                    .solicitud .solicitud-name {
-                                        font-size: 1rem;
-                                        font-weight: 700
-                                    }
-
-                                    .solicitud .solicitud-description {
-                                        margin: 0 0 1rem 0
-                                    }
-
-                                    .solicitud .solicitud-category-icon {
-                                        vertical-align: middle;
-                                        margin-right: .5rem
-                                    }
-
-                                    .solicitud .solicitud-category {
-                                        font-weight: 600;
-                                        vertical-align: middle
-                                    }
-
-                                    .solicitud .solicitud-list-item {
-                                        display: -ms-flexbox;
-                                        display: flex;
-                                        -ms-flex-align: center;
-                                        align-items: center;
-                                        padding: 5px;
-                                    }
-
-                                    .solicitud .solicitud-list-item.border-1 {
-                                        border-bottom: 1px solid var(--surface-d)
-                                    }
-
-                                    .solicitud .solicitud-list-item img {
-                                        width: 150px;
-                                        box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                        margin-right: 2rem
-                                    }
-
-                                    .solicitud .solicitud-list-item .solicitud-list-detail {
-                                        flex: 1 1 0;
-                                        -ms-flex: 1 1 0
-                                    }
-
-                                    .solicitud .solicitud-list-item .ui-rating {
-                                        margin: 0 0 .5rem 0
-                                    }
-
-                                    .solicitud .solicitud-list-item .solicitud-price {
-                                        font-size: 1.5rem;
-                                        font-weight: 600;
-                                        margin-bottom: .5rem;
-                                        align-self: flex-end
-                                    }
-
-                                    .solicitud .solicitud-list-item .solicitud-list-action {
-                                        display: -ms-flexbox;
-                                        display: flex;
-                                        -ms-flex-direction: column;
-                                        flex-direction: column
-                                    }
-
-                                    .solicitud .solicitud-list-item .ui-button {
-                                        margin-bottom: .5rem
-                                    }
-                                    .solicitud-badge {
-                                        border-radius: 2px;
-                                        padding: .25em .5rem;
-                                        text-transform: uppercase;
-                                        font-weight: 700;
-                                        font-size: 12px;
-                                        letter-spacing: .3px
-                                    }
-                                    .solicitud .solicitud-list-item img {
-                                        width: 150px;
-                                        box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                        margin-right: 2rem
-                                    }
-
-                                    .status-adoptada {
-                                        background: #c8e6c9;
-                                        color: #256029
-                                    }
-
-                                    .status-rechazada {
-                                        background: #ffcdd2;
-                                        color: #c63737
-                                    }
-                                    .status-pendiente {
-                                        background: #EFC3CA;
-                                        color: #CC6CE7
-                                    }
-                                    .status-sin_solicitud {
-                                        background: #feedaf;
-                                        color: #8a5340
-                                    }
-                                </style>
-
-                                <div class="solicitud">
-
-                                    <div class="solicitud-list-item">
-
-                                        <div class="solicitud-list-detail">
-                                            El cliente <strong>#{solicitudesClientBean.findClienteById(solicitud.idCliente).nombre}</strong> ha solicitado la adopción de <strong>#{solicitud.nombre ? solicitud.nombre : solicitudesClientBean.findMascotaById(solicitud.id).nombre}</strong>
-                                        </div>
-
-                                        <div class="solicitud-list-action">
-                                            <div style="display:flex;flex-direction: row; gap:10px; justify-content: center">
-                                                <p:commandButton icon="pi pi-check" styleClass="ui-button-success" action="#{solicitudesClientBean.aceptarSolicitud(solicitud.id)}" id="acceptBtn" rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}" >
-                                                    <p:ajax event="click" update=":form:data"/> 
-                                                </p:commandButton>
-                                                <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
-                                                <p:commandButton icon="pi pi-times" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" id="rejectBtn"  rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}">
-                                                    <p:ajax event="click" update=":form:data"/> 
-                                                    <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" />
-                                                </p:commandButton>
-                                                <p:tooltip for="rejectBtn" value="Rechazar" position="bottom"/>
-                                            </div>
-                                            <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitudesBackingBean.getEstadoDisplayName(solicitud.estado)}</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </p:dataScroller>
-                        </h:form>
-                        <p:dialog draggable="false" resizable="false" modal="true" header="Rechazar adopción" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade" closeOnEscape="false">
+                    <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                        <div class="card" style="margin-top:40px;">
                             <h:form>
-                                <p>¿Seguro que deseas rechazar la adopción?</p>
-                                <p:commandButton value="Eliminar mascota" styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.rechazarSolicitud(solicitudesBackingBean.idMascotaSelected)}" oncomplete="handleSubmitDelete(xhr, status, args)">
-                                    <p:ajax event="click" update=":form:data"/> 
-                                </p:commandButton>
+                                <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px; margin-bottom:10px;" value="#{solicitudesBackingBean.verMascotasFilter}" >
+                                    <f:selectItem itemLabel="Aceptadas" itemValue="adoptada"/>
+                                    <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
+                                    <f:selectItem itemLabel="Rechazadas" itemValue="rechazada"/>
+                                    <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
+                                    <p:ajax event="itemSelect" update=":form:data"/> 
+                                </p:selectOneMenu>
                             </h:form>
-                        </p:dialog>
-                    </div>
+                            <h:form id="form" >
+                                <p:dataScroller  value="#{solicitudesClientBean.findByRefugioAndEstado()}" var="solicitud" chunkSize="5" id="data" lazy="false">
+                                    <f:facet name="header" id="header">
+                                        <p:outputLabel id="selectedItemText" value="#{solicitudesBackingBean.filterDisplayName}"/>
+                                    </f:facet>
 
-                </c:if>
-                <!-- Para clientes -->
-                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
-                    <div class="card" style="margin-top:40px;">
-                        <h:form>
-                            <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px; margin-bottom:10px;" value="#{solicitudesBackingBean.verMascotasFilter}" >
-                                <f:selectItem itemLabel="Aceptadas" itemValue="adoptada"/>
-                                <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
-                                <f:selectItem itemLabel="Rechazadas" itemValue="rechazada"/>
-                                <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
-                                <p:ajax event="itemSelect" update=":form:data"/> 
-                            </p:selectOneMenu>
-                        </h:form>
-                        <h:form id="form" >
-                            <p:dataScroller  value="#{solicitudesClientBean.findByClienteAndEstado()}" var="solicitud" chunkSize="3" id="data" lazy="false">
-                                <f:facet name="header" id="header">
-                                    <p:outputLabel id="selectedItemText" value="#{solicitudesBackingBean.filterDisplayName}"/>
-                                </f:facet>
-
-                                <f:facet name="loader">
-                                    <div class="text-center">
-                                        <p:commandButton type="button" value="Ver más" icon="pi pi-refresh"/>
-                                    </div>
-                                </f:facet>
-
-                                <style>
-                                    .solicitud .solicitud-name {
-                                        font-size: 1rem;
-                                        font-weight: 700
-                                    }
-
-                                    .solicitud .solicitud-description {
-                                        margin: 0 0 1rem 0
-                                    }
-
-                                    .solicitud .solicitud-category-icon {
-                                        vertical-align: middle;
-                                        margin-right: .5rem
-                                    }
-
-                                    .solicitud .solicitud-category {
-                                        font-weight: 600;
-                                        vertical-align: middle
-                                    }
-
-                                    .solicitud .solicitud-list-item {
-                                        display: -ms-flexbox;
-                                        display: flex;
-                                        -ms-flex-align: center;
-                                        align-items: center;
-                                        padding: 5px;
-                                    }
-
-                                    .solicitud .solicitud-list-item.border-1 {
-                                        border-bottom: 1px solid var(--surface-d)
-                                    }
-
-                                    .solicitud .solicitud-list-item img {
-                                        width: 150px;
-                                        box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                        margin-right: 2rem
-                                    }
-
-                                    .solicitud .solicitud-list-item .solicitud-list-detail {
-                                        flex: 1 1 0;
-                                        -ms-flex: 1 1 0
-                                    }
-
-                                    .solicitud .solicitud-list-item .ui-rating {
-                                        margin: 0 0 .5rem 0
-                                    }
-
-                                    .solicitud .solicitud-list-item .solicitud-price {
-                                        font-size: 1.5rem;
-                                        font-weight: 600;
-                                        margin-bottom: .5rem;
-                                        align-self: flex-end
-                                    }
-
-                                    .solicitud .solicitud-list-item .solicitud-list-action {
-                                        display: -ms-flexbox;
-                                        display: flex;
-                                        -ms-flex-direction: column;
-                                        flex-direction: column
-                                    }
-
-                                    .solicitud .solicitud-list-item .ui-button {
-                                        margin-bottom: .5rem
-                                    }
-                                    .solicitud-badge {
-                                        border-radius: 2px;
-                                        padding: .25em .5rem;
-                                        text-transform: uppercase;
-                                        font-weight: 700;
-                                        font-size: 12px;
-                                        letter-spacing: .3px
-                                    }
-                                    .solicitud .solicitud-list-item img {
-                                        width: 150px;
-                                        box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                        margin-right: 2rem
-                                    }
-
-                                    .status-adoptada {
-                                        background: #c8e6c9;
-                                        color: #256029
-                                    }
-
-                                    .status-rechazada {
-                                        background: #ffcdd2;
-                                        color: #c63737
-                                    }
-
-                                    .status-pendiente {
-                                        background: #feedaf;
-                                        color: #8a5340
-                                    }
-                                </style>
-
-                                <div class="solicitud">
-
-                                    <div class="solicitud-list-item">
-
-                                        <div class="solicitud-list-detail">
-
-                                            Has solicitado la adopción de <strong>#{solicitud.nombre ? solicitud.nombre : solicitudesClientBean.findMascotaById(solicitud.id).nombre}</strong>
+                                    <f:facet name="loader">
+                                        <div class="text-center" style="margin-top:10px;">
+                                            <p:commandButton type="button" value="Ver más" icon="pi pi-refresh"/>
                                         </div>
+                                    </f:facet>
 
-                                        <div class="solicitud-list-action">
-                                            <!-- <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitud.estado}</span> -->
-                                            <div style="display:flex;flex-direction: row; gap:10px;">
-                                                <p:commandButton icon="pi pi-download" styleClass="ui-button-primary" action="#{solicitudesClientBean.descargarCertificado(solicitud.id)}" style="width:40px; margin-top:5px;" id="downloadCertificado" rendered="#{solicitud.estado.equalsIgnoreCase('adoptada')}" >
+                                    <style>
+                                        .solicitud .solicitud-name {
+                                            font-size: 1rem;
+                                            font-weight: 700
+                                        }
 
-                                                </p:commandButton>
-                                                <p:tooltip for="downloadCertificado" value="Descargar certificado de adopción"/>
+                                        .solicitud .solicitud-description {
+                                            margin: 0 0 1rem 0
+                                        }
+
+                                        .solicitud .solicitud-category-icon {
+                                            vertical-align: middle;
+                                            margin-right: .5rem
+                                        }
+
+                                        .solicitud .solicitud-category {
+                                            font-weight: 600;
+                                            vertical-align: middle
+                                        }
+
+                                        .solicitud .solicitud-list-item {
+                                            display: -ms-flexbox;
+                                            display: flex;
+                                            -ms-flex-align: center;
+                                            align-items: center;
+                                            padding: 5px;
+                                        }
+
+                                        .solicitud .solicitud-list-item.border-1 {
+                                            border-bottom: 1px solid var(--surface-d)
+                                        }
+
+                                        .solicitud .solicitud-list-item img {
+                                            width: 150px;
+                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                            margin-right: 2rem
+                                        }
+
+                                        .solicitud .solicitud-list-item .solicitud-list-detail {
+                                            flex: 1 1 0;
+                                            -ms-flex: 1 1 0
+                                        }
+
+                                        .solicitud .solicitud-list-item .ui-rating {
+                                            margin: 0 0 .5rem 0
+                                        }
+
+                                        .solicitud .solicitud-list-item .solicitud-price {
+                                            font-size: 1.5rem;
+                                            font-weight: 600;
+                                            margin-bottom: .5rem;
+                                            align-self: flex-end
+                                        }
+
+                                        .solicitud .solicitud-list-item .solicitud-list-action {
+                                            display: -ms-flexbox;
+                                            display: flex;
+                                            -ms-flex-direction: column;
+                                            flex-direction: column
+                                        }
+
+                                        .solicitud .solicitud-list-item .ui-button {
+                                            margin-bottom: .5rem
+                                        }
+                                        .solicitud-badge {
+                                            border-radius: 2px;
+                                            padding: .25em .5rem;
+                                            text-transform: uppercase;
+                                            font-weight: 700;
+                                            font-size: 12px;
+                                            letter-spacing: .3px
+                                        }
+                                        .solicitud .solicitud-list-item img {
+                                            width: 150px;
+                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                            margin-right: 2rem
+                                        }
+
+                                        .status-adoptada {
+                                            background: #c8e6c9;
+                                            color: #256029
+                                        }
+
+                                        .status-rechazada {
+                                            background: #ffcdd2;
+                                            color: #c63737
+                                        }
+                                        .status-pendiente {
+                                            background: #EFC3CA;
+                                            color: #CC6CE7
+                                        }
+                                        .status-sin_solicitud {
+                                            background: #feedaf;
+                                            color: #8a5340
+                                        }
+                                    </style>
+
+                                    <div class="solicitud">
+
+                                        <div class="solicitud-list-item">
+
+                                            <div class="solicitud-list-detail">
+                                                El cliente <strong>#{solicitudesClientBean.findClienteById(solicitud.idCliente).nombre}</strong> ha solicitado la adopción de <strong>#{solicitud.nombre ? solicitud.nombre : solicitudesClientBean.findMascotaById(solicitud.id).nombre}</strong>
+                                            </div>
+
+                                            <div class="solicitud-list-detail">
+                                                <strong>Fecha de modificación: </strong>#{solicitud.fechaAdopcion}
+                                            </div>
+
+                                            <div class="solicitud-list-action">
+                                                <div style="display:flex;flex-direction: row; gap:10px; justify-content: center">
+                                                    <p:commandButton icon="pi pi-check" styleClass="ui-button-success" update=":form:data"  action="#{solicitudesClientBean.aceptarSolicitud(solicitud.id)}" id="acceptBtn" rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}" >
+                                                        <p:ajax event="click" update=":header-form:solicitudes"/>
+                                                        <p:ajax event="click" update=":form:data"/> 
+                                                    </p:commandButton>
+                                                    <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
+                                                    <p:commandButton icon="pi pi-times" styleClass="ui-button-danger"  onclick="PF('mascotaDeleteDialog').show()" id="rejectBtn"  rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}">
+                                                        <p:ajax event="click" update=":form:data"/> 
+                                                        <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" />
+                                                    </p:commandButton>
+                                                    <p:tooltip for="rejectBtn" value="Rechazar" position="bottom"/>
+                                                </div>
+                                                <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitudesBackingBean.getEstadoDisplayName(solicitud.estado)}</span>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </p:dataScroller>
-                        </h:form>
-                    </div>
-                </c:if>
+
+                                </p:dataScroller>
+                            </h:form>
+                            <!-- Modal para confirmar el rechazo -->
+                            <p:dialog draggable="false" resizable="false" modal="true" header="Rechazar adopción" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade" closeOnEscape="false">
+                                <h:form>
+                                    <p>¿Seguro que deseas rechazar la adopción?</p>
+                                    <p:commandButton value="Rechazar adopción" update=":form:data"  styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.rechazarSolicitud(solicitudesBackingBean.idMascotaSelected)}" oncomplete="handleSubmitDelete(xhr, status, args)">
+                                        <p:ajax event="click" update=":form:data"/> 
+                                    </p:commandButton>
+                                </h:form>
+                            </p:dialog>
+                        </div>
+
+                    </c:if>
+                    <!-- Para clientes -->
+                    <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                        <div class="card" style="margin-top:40px;">
+                            <h:form>
+                                <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px; margin-bottom:10px;" value="#{solicitudesBackingBean.verMascotasFilter}" >
+                                    <f:selectItem itemLabel="Aceptadas" itemValue="adoptada"/>
+                                    <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
+                                    <f:selectItem itemLabel="Rechazadas" itemValue="rechazada"/>
+                                    <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
+                                    <p:ajax event="itemSelect" update=":form:data"/> 
+                                </p:selectOneMenu>
+                            </h:form>
+                            <h:form id="form" >
+                                <p:dataScroller  value="#{solicitudesClientBean.findByClienteAndEstado()}" var="solicitud" chunkSize="5" id="data" lazy="false">
+                                    <f:facet name="header" id="header">
+                                        <p:outputLabel id="selectedItemText" value="#{solicitudesBackingBean.filterDisplayName}"/>
+                                    </f:facet>
+
+                                    <f:facet name="loader">
+                                        <div class="text-center">
+                                            <p:commandButton type="button" value="Ver más" icon="pi pi-refresh"/>
+                                        </div>
+                                    </f:facet>
+
+                                    <style>
+                                        .solicitud .solicitud-name {
+                                            font-size: 1rem;
+                                            font-weight: 700
+                                        }
+
+                                        .solicitud .solicitud-description {
+                                            margin: 0 0 1rem 0
+                                        }
+
+                                        .solicitud .solicitud-category-icon {
+                                            vertical-align: middle;
+                                            margin-right: .5rem
+                                        }
+
+                                        .solicitud .solicitud-category {
+                                            font-weight: 600;
+                                            vertical-align: middle
+                                        }
+
+                                        .solicitud .solicitud-list-item {
+                                            display: -ms-flexbox;
+                                            display: flex;
+                                            -ms-flex-align: center;
+                                            align-items: center;
+                                            padding: 5px;
+                                        }
+
+                                        .solicitud .solicitud-list-item.border-1 {
+                                            border-bottom: 1px solid var(--surface-d)
+                                        }
+
+                                        .solicitud .solicitud-list-item img {
+                                            width: 150px;
+                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                            margin-right: 2rem
+                                        }
+
+                                        .solicitud .solicitud-list-item .solicitud-list-detail {
+                                            flex: 1 1 0;
+                                            -ms-flex: 1 1 0
+                                        }
+
+                                        .solicitud .solicitud-list-item .ui-rating {
+                                            margin: 0 0 .5rem 0
+                                        }
+
+                                        .solicitud .solicitud-list-item .solicitud-price {
+                                            font-size: 1.5rem;
+                                            font-weight: 600;
+                                            margin-bottom: .5rem;
+                                            align-self: flex-end
+                                        }
+
+                                        .solicitud .solicitud-list-item .solicitud-list-action {
+                                            display: -ms-flexbox;
+                                            display: flex;
+                                            -ms-flex-direction: column;
+                                            flex-direction: column
+                                        }
+
+                                        .solicitud .solicitud-list-item .ui-button {
+                                            margin-bottom: .5rem
+                                        }
+                                        .solicitud-badge {
+                                            border-radius: 2px;
+                                            padding: .25em .5rem;
+                                            text-transform: uppercase;
+                                            font-weight: 700;
+                                            font-size: 12px;
+                                            letter-spacing: .3px
+                                        }
+                                        .solicitud .solicitud-list-item img {
+                                            width: 150px;
+                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                            margin-right: 2rem
+                                        }
+
+                                        .status-adoptada {
+                                            background: #c8e6c9;
+                                            color: #256029
+                                        }
+
+                                        .status-rechazada {
+                                            background: #ffcdd2;
+                                            color: #c63737
+                                        }
+
+                                        .status-pendiente {
+                                            background: #feedaf;
+                                            color: #8a5340
+                                        }
+                                    </style>
+
+                                    <div class="solicitud">
+
+                                        <div class="solicitud-list-item">
+
+                                            <div class="solicitud-list-detail">
+
+                                                Has solicitado la adopción de <strong>#{solicitud.nombre ? solicitud.nombre : solicitudesClientBean.findMascotaById(solicitud.id).nombre}</strong>
+                                            </div>
+
+                                            <div class="solicitud-list-detail">
+                                                <strong>Fecha de modificación: </strong>#{solicitud.fechaAdopcion}
+                                            </div>
+                                            <div class="solicitud-list-detail">
+                                                <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitudesBackingBean.getEstadoDisplayName(solicitud.estado)}</span>
+                                            </div>
+
+                                            <div class="solicitud-list-action">
+                                                <!-- <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitud.estado}</span> -->
+                                                <div style="display:flex;flex-direction: row; gap:10px;">
+                                                    <script type="text/javascript">
+                                                        function showStatus() {
+                                                            PF('statusDialog').show();
+                                                        }
+                                                        function hideStatus() {
+                                                            PF('statusDialog').hide();
+                                                        }
+                                                    </script>
+                                                    <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false"
+                                                              resizable="false">
+                                                        <i class="pi pi-spinner pi-spin" style="font-size:3rem"></i>
+                                                    </p:dialog>
+                                                    <p:commandButton icon="pi pi-file-pdf" styleClass="ui-button-primary" style="margin-top:5px;" id="downloadCertificado" rendered="#{solicitud.estado.equalsIgnoreCase('adoptada')}" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);">
+                                                        <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" /> 
+                                                        <p:fileDownload value="#{solicitudesClientBean.descargarCertificado(solicitud.id)}"/> 
+                                                    </p:commandButton>
+                                                    <p:tooltip for="downloadCertificado" value="Descargar certificado de adopción"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </p:dataScroller>
+                            </h:form>
+                        </div>
+                    </c:if>
                 </c:if>
             </ui:define>
 

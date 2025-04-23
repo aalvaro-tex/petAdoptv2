@@ -14,7 +14,8 @@
             <ui:define name="top">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                 <h:form >
-                    <p:megaMenu orientation="horizontal" autoDisplay="false">
+                    <p:sticky target="navMenu"/>
+                    <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
                         <p:menuitem value="Inicio" outcome="/home/home" />
                         <p:menuitem value="Mis adopciones"/>
                         <p:menuitem value="Adoptar" style="font-weight: 600"/>
@@ -42,34 +43,52 @@
                 </c:if>
                    <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
-                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-raised ui-button-secondary ui-button-flat"></p:linkButton>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
             </ui:define>
 
             <ui:define name="content">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                 <div class="card" style="margin-top:40px;">
-                    <p:staticMessage severity="info" summary="INFO" detail="Tu solicitud ha sido enviada al refugio. Puedes consultar el estado de tu solicitud en Mis adopciones." style="width: calc(100% - 10px);"/>
+                    <p:staticMessage severity="info" summary="INFO" style="width: calc(100% - 10px);" detail="Tu solicitud ha sido enviada al refugio. Puedes consultar el estado de tu solicitud en Mis adopciones"/>
                     <p:fieldset legend="Detalles de la mascota" toggleable="true" toggleSpeed="500" style="margin-top:10px;" collapsed="true">
-                        <p:outputLabel value="Nombre: #{adopcionBackingBean.mascotaSelected.nombre}"/>
+                        <p:outputLabel>
+                            Nombre: <strong>#{adopcionBackingBean.mascotaSelected.nombre}</strong>
+                        </p:outputLabel>
                         <br></br>
-                        <p:outputLabel value="Especie: #{adopcionBackingBean.mascotaSelected.especie}"/>
+                        <p:outputLabel>
+                            Especie: <strong>#{adopcionBackingBean.mascotaSelected.especie}</strong>
+                        </p:outputLabel>
                         <br></br>
-                        <p:outputLabel value="Precio: #{adopcionBackingBean.mascotaSelected.costeAdopcion}"/>
+                        <p:outputLabel>
+                            Precio: <strong>#{adopcionBackingBean.mascotaSelected.costeAdopcion}</strong> euros
+                        </p:outputLabel>
                     </p:fieldset>
                     <p:fieldset legend="Detalles del refugio" toggleable="true" toggleSpeed="500" collapsed="true" style="margin-top:10px;" >
-                        <p:outputLabel value="Nombre del refugio: #{adopcionBackingBean.refugio.nombre}"/>
+                        <p:outputLabel>
+                            Nombre del refugio: <strong>#{adopcionBackingBean.refugio.nombre}</strong>
+                        </p:outputLabel>
                         <br></br>
-                        <p:outputLabel value="Dirección:  #{adopcionBackingBean.refugio.domicilioSocial}"/>
+                        <p:outputLabel>
+                            Dirección: <strong>#{adopcionBackingBean.refugio.domicilioSocial}</strong>
+                        </p:outputLabel>
                         <br></br>
-                        <p:outputLabel value="Teléfono de contacto: #{adopcionBackingBean.refugio.telefono}"/>
+                        <p:outputLabel>
+                            Teléfono de contacto: <strong>#{adopcionBackingBean.refugio.telefono}</strong>
+                        </p:outputLabel>
                     </p:fieldset>
-                    <p:fieldset legend="Tus datos" toggleable="true" toggleSpeed="500" collapsed="true" >
-                        <p:outputLabel value="Nombre: #{loginPageBackingBean.cliente.nombre}"/>
+                    <p:fieldset legend="Tus datos" toggleable="true" toggleSpeed="500" collapsed="true" style="margin-top:10px;" >
+                        <p:outputLabel>
+                            Nombre: <strong>#{loginPageBackingBean.cliente.nombre}</strong>
+                        </p:outputLabel>
                         <br></br>
-                        <p:outputLabel value="DNI:  #{loginPageBackingBean.cliente.nif}"/>
+                        <p:outputLabel>
+                            DNI: <strong>#{loginPageBackingBean.cliente.nif}</strong>
+                        </p:outputLabel>
                         <br></br>
-                        <p:outputLabel value="Teléfono de contacto: #{loginPageBackingBean.cliente.telefono}"/>
+                        <p:outputLabel>
+                            Teléfono de contacto: <strong>#{loginPageBackingBean.cliente.telefono}</strong>
+                        </p:outputLabel>
                     </p:fieldset>
                 </div>
                 <div class="grid">
