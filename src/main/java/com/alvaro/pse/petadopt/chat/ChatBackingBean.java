@@ -20,19 +20,14 @@ import javax.inject.Named;
 @SessionScoped
 public class ChatBackingBean implements Serializable{
     
-    private List<Chat> chats = new ArrayList<>();
-    
-    public ChatBackingBean(){
-        
+   private String idConversacion;
+
+    public String getIdConversacion() {
+        return idConversacion;
     }
 
-    public List<Chat> getChats() {
-        return chats;
+    public void setIdConversacion(String idConversacion) {
+        this.idConversacion = idConversacion;
     }
-
-    public void setChats(List<Chat> chats) {
-        this.chats = chats;
-    }
-    
-    
+     
 }

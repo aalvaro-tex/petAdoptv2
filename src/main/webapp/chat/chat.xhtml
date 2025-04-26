@@ -4,55 +4,144 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
 
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <body>
+        <f:metadata>
+            <f:viewParam name="idConversacion" value="#{chatBackingBean.idConversacion}" />
+
+        </f:metadata>
+        <script src="#{resource['js/jquery-1.10.2.min.js']}"></script>
 
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                top
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                        <h:form >
+                            <p:sticky target="navMenu"/>
+                            <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                                <p:menuitem value="Inicio" outcome="/home/home" style="font-weight: 600"/>
+                                <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
+                                <p:menuitem outcome="/solicitudes/solicitudes" >
+                                    Solicitudes de adopción 
+                                    <c:if test="${loginPageBackingBean.tieneNotificaciones eq true}">
+                                        <span class="notification-dot"></span>
+                                    </c:if>
+                                </p:menuitem>
+                                <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                                <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                    <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                        <h:form >
+                            <p:sticky target="navMenu"/>
+                            <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                                <p:menuitem value="Inicio" outcome="/home/home" style="font-weight: 600"/>
+                                <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
+                                <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
+                                <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                                <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+
+                                <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                    <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
+                        <h:form >
+                            <p:megaMenu orientation="horizontal" autoDisplay="false">
+                                <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
+                                <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
+                                <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
+                                <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem outcome="home" value="Inicio"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                </c:if>
+                <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                    <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
+                </c:if>
             </ui:define>
 
             <ui:define name="content">
-
-                <form action="">
-                    <table>
-                        <tr>
-                            <td>
-                                <h3>
-                                    <p:outputLabel value="Mensajes" />
-                                </h3>
-                                <p:inputTextarea readonly="true" id="chatlog" rows="10" cols="50" autoResize="false" />
-                            </td>
-                            <td>
-                                <h3>
-                                    <p:outputLabel value="Usuarios" />
-                                </h3>
-                                <p:inputTextarea readonly="true" id="users" rows="10" cols="20" autoResize="false" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2">
-                                <p:inputText id="texto" value="Usuario" />
-                                <p:commandButton id="unirse" onclick="join();" value="Unirse" />
-                                <p:commandButton id="enviar" onclick="send_message();" value="Enviar"
-                                                 style="visibility:hidden" />
-                                <p />
-                                <p:commandButton id="desconectar" onclick="disconnect();" value="Desconectarse"
-                                                 style="visibility: hidden" />
-                            </td>
-                        </tr>
-                    </table>
-                </form>
-                <div id="output"></div>
+                <style>
+                    h2{
+                        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                        font-weight: 200;
+                    }
+                    .container{
+                        width:100%;
+                        display:flex;
+                        flex-direction: row;
+                        gap:10px;
+                    }
+                    .chat-container{
+                        width:100%;
+                        display:flex;
+                        flex-direction: column;
+                        gap:10px;
+                    }
+                </style>
                 <script language="javascript" type="text/javascript"
                         src="${facesContext.externalContext.requestContextPath}/chat/websocket.js">
                 </script>
-
+                <p:card style="margin-top:10px" >
+                    <p:outputLabel style="font-size: 20px;"> Hablando con <strong>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).nombre} </strong> </p:outputLabel>
+                </p:card>
+                <div class="container">
+                    <p:card style="margin-top:10px; width: 100%;" >
+                        <div style="display:flex; flex-direction: row">
+                            <img src="data:image/png;base64,#{chatClientBean.getUsuarioById(chatBackingBean.idConversacion).foto}" style="width:50%; padding: 10px;"></img>
+                            <div style="display:flex; flex-direction: column; height:100%; margin-top:10px; gap:5px;">
+                                <p:outputLabel style="font-size:26px;">#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).nombre}</p:outputLabel>
+                                <p:outputLabel>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).telefono}</p:outputLabel>
+                                <p:outputLabel>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).domicilioSocial}</p:outputLabel>
+                            </div>
+                        </div>
+                    </p:card>
+                    <div class="chat-container">
+                        <p:card style="margin-top:10px; width:100%;">
+                            <p:inputTextarea readonly="true" id="chatlog" rows="10" autoResize="true" style="width:100%; padding: 10px;"/>
+                            <div style="display:flex; flex-direction:row; gap:10px; height: 40px; margin-top:20px;" >
+                                <p:inputText id="inputText" style="width:95%"/>
+                                <p:commandButton id="sendBtn" icon="pi pi-send"></p:commandButton>
+                                <p:tooltip for="sendBtn" value="Enviar mensaje" />
+                            </div>
+                        </p:card>
+                    </div>
+                </div>
             </ui:define>
 
         </ui:composition>
-
     </body>
 </html>

@@ -113,18 +113,20 @@
                                 .btn-container{
                                     display:flex;
                                     flex-direction: column;
-                                    gap:10px;
+                                    gap:16px;
+                                    height: 150px;
                                 }
                             </style>
                             <div class="grid">
                                 <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
                                     <div class="btn-container" >
-                                        <p:linkButton  value="Volver" styleClass="ui-button-outlined ui-button-info"  outcome="lista-mascotas"  icon="pi pi-arrow-left" style="text-decoration: none;">
+                                        <p:linkButton  value="Volver" styleClass="ui-button-outlined ui-button-info"  outcome="lista-mascotas"  icon="pi pi-arrow-left">
                                         </p:linkButton>
-                                        <p:commandButton ajax="true" value="Hablar con el refugio" styleClass="ui-confirmdialog-yes" update="growlAddMascota" icon="pi pi-envelope">
-                                        </p:commandButton>
+                                        <p:linkButton value="Hablar con el refugio" styleClass="ui-confirmdialog-yes" icon="pi pi-envelope" outcome="/chat/chat">
+                                            <f:param name="idConversacion" value="#{adopcionBackingBean.mascotaSelected.idRefugio}:#{loginPageBackingBean.cliente.id}"/>
+                                        </p:linkButton>
 
-                                        <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-confirmdialog-yes" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check"  oncomplete="PF('sig').clear()">
+                                        <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-button-success" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check"  oncomplete="PF('sig').clear()">
                                         </p:commandButton>
                                     </div>
                                     <p:outputPanel id="input">

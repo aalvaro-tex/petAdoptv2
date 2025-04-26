@@ -72,7 +72,6 @@ public class PDFUtils implements Serializable {
     ) throws IOException {
         File file = new File("C:/Users/alvar/OneDrive/Documentos/NetBeansProjects/petAdoptv2/src/main/java/com/alvaro/pse/petadopt/utils/certificadoPlantilla.pdf");
         PDDocument document = PDDocument.load(file);
-
         PDPage page = document.getPage(0);
         PDPageContentStream contentStream = new PDPageContentStream(document, page, PDPageContentStream.AppendMode.APPEND, true, true);
 
@@ -252,11 +251,13 @@ public class PDFUtils implements Serializable {
         } catch (InterruptedException ex) {
             Logger.getLogger(PDFUtils.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
         DefaultStreamedContent pdf = DefaultStreamedContent.builder()
                 .name("certificado_" + idOperacion + "_" + nombreMascota + ".pdf")
                 .contentType("application/pdf")
                 .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/certificados/certificado_" +idOperacion + ".pdf"))
                 .build();
+
         return pdf;
         
     }

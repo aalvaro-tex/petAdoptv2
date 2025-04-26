@@ -1,0 +1,117 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.alvaro.pse.petadopt.chat;
+
+import com.alvaro.pse.petadopt.entities.Cliente;
+import com.alvaro.pse.petadopt.entities.Refugio;
+import com.alvaro.pse.petadopt.entities.Usuario;
+import com.alvaro.pse.petadopt.json.ClienteReader;
+import com.alvaro.pse.petadopt.json.RefugioReader;
+import com.alvaro.pse.petadopt.json.RefugioWriter;
+import com.alvaro.pse.petadopt.json.UsuarioReader;
+import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
+import javax.annotation.PostConstruct;
+import javax.annotation.PreDestroy;
+import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
+
+/**
+ *
+ * @author alvar
+ */
+@Named
+@RequestScoped
+public class ChatClientBean {
+    
+    @Inject
+    LoginPageBackingBean loginBean;
+
+    private Client client;
+    private WebTarget target;
+    
+    @PostConstruct
+    public void init() {
+        client = ClientBuilder.newClient();
+        
+    }
+
+    @PreDestroy
+    public void destroy() {
+        client.close();
+    }
+    
+    public Usuario getUsuarioById(String idConversacion){
+        Long id = -1L;
+        if(loginBean.getRol().equalsIgnoreCase("cliente")){
+            id = Long.parseLong(idConversacion.split(":")[0]);
+        } else {
+            id = Long.parseLong(idConversacion.split(":")[1]);
+        }
+        Usuario found = null;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
+        Response response = target.register(UsuarioReader.class)
+                .path("{id}")
+                .resolveTemplate("id", id)
+                .request()
+                .get();
+        
+        if(response.getStatus() == 200){
+            found = response.readEntity(Usuario.class);
+        }
+        return found;
+        
+    }
+    
+    public Cliente getClienteById(String idConversacion){
+        Long id = -1L;
+        if(loginBean.getRol().equalsIgnoreCase("cliente")){
+            id = Long.parseLong(idConversacion.split(":")[0]);
+        } else {
+            id = Long.parseLong(idConversacion.split(":")[1]);
+        }
+        Cliente found = null;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
+        Response response = target.register(ClienteReader.class)
+                .path("{id}")
+                .resolveTemplate("id", id)
+                .request()
+                .get();
+        
+        if(response.getStatus() == 200){
+            found = response.readEntity(Cliente.class);
+        }
+        return found;
+    }
+    
+    public Refugio getRefugioById(String idConversacion){
+        Long id = -1L;
+        if(loginBean.getRol().equalsIgnoreCase("refugio")){
+            id = Long.parseLong(idConversacion.split(":")[1]);
+        } else {
+            id = Long.parseLong(idConversacion.split(":")[0]);
+        }
+        System.out.println(id);
+        Refugio found = null;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
+        Response response = target
+                .path("{id}")
+                .resolveTemplate("id", id)
+                .request()
+                .get();
+        System.out.println(response);
+        
+        if(response.getStatus() == 200){
+            found = response.readEntity(Refugio.class);
+            System.out.println(found);
+        }
+        return found;
+    }
+}

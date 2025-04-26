@@ -6,7 +6,6 @@ com\alvaro\pse\petadopt\json\UsuarioReader$1.class
 com\alvaro\pse\petadopt\login\LoginPageClientBean.class
 com\alvaro\pse\petadopt\entities\Refugio_.class
 com\alvaro\pse\petadopt\rest\UsuarioFacadeREST.class
-com\alvaro\pse\petadopt\chat\MessageEncoder.class
 com\alvaro\pse\petadopt\entities\Especies_.class
 com\alvaro\pse\petadopt\entities\Usuario.class
 com\alvaro\pse\petadopt\entities\UsuarioRol_.class
@@ -15,13 +14,13 @@ com\alvaro\pse\petadopt\rest\RefugioFacadeREST.class
 com\alvaro\pse\petadopt\entities\Mascota.class
 com\alvaro\pse\petadopt\entities\Chat.class
 com\alvaro\pse\petadopt\registro\SignUpPageBackingBean.class
+com\alvaro\pse\petadopt\chat\ChatServer.class
 com\alvaro\pse\petadopt\entities\Mascota_.class
 com\alvaro\pse\petadopt\rest\EspeciesFacadeREST.class
 com\alvaro\pse\petadopt\administrador\AdministradorBackingBean.class
 com\alvaro\pse\petadopt\external\ComunidadesAPI.class
 com\alvaro\pse\petadopt\registro\SignUpPageClientBean.class
 com\alvaro\pse\petadopt\rest\MascotaFacadeREST.class
-com\alvaro\pse\petadopt\chat\Message.class
 com\alvaro\pse\petadopt\entities\Cliente_.class
 com\alvaro\pse\petadopt\rest\ApplicationConfig.class
 com\alvaro\pse\petadopt\entities\Administrador.class
@@ -47,7 +46,6 @@ com\alvaro\pse\petadopt\login\LoginPageBackingBean.class
 com\alvaro\pse\petadopt\json\UsuarioWriter.class
 com\alvaro\pse\petadopt\utils\AutenticacionUtils.class
 com\alvaro\pse\petadopt\json\ClienteWriter.class
-com\alvaro\pse\petadopt\chat\ChatEndpoint.class
 com\alvaro\pse\petadopt\entities\Administrador_.class
 com\alvaro\pse\petadopt\utils\StringUtils.class
 com\alvaro\pse\petadopt\json\ComunidadReader$1.class
@@ -57,7 +55,7 @@ com\alvaro\pse\petadopt\external\Comunidad.class
 com\alvaro\pse\petadopt\entities\HistoricoSolicitudes_.class
 com\alvaro\pse\petadopt\json\ClienteReader$1.class
 com\alvaro\pse\petadopt\solicitudes\SolicitudesBackingBean.class
-com\alvaro\pse\petadopt\chat\MessageDecoder.class
+com\alvaro\pse\petadopt\chat\ChatClientBean.class
 com\alvaro\pse\petadopt\json\RefugioWriter.class
 com\alvaro\pse\petadopt\administrador\AdministradorClientBean.class
 com\alvaro\pse\petadopt\entities\UsuarioRol.class
