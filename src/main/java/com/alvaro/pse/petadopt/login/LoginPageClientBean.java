@@ -146,6 +146,7 @@ public class LoginPageClientBean implements Serializable {
             bean.showError();
         }
         //System.out.println(success);
+        bean.clearValues();
         return success;
 
     }

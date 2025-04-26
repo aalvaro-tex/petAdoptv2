@@ -3,7 +3,6 @@ C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\solicitudes\SolicitudesBackingBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\registro\SignUpPageBackingBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\MascotaFacadeREST.java
-C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\utils\FileDownloadView.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\login\LoginPageValidator.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\home\HomePageBackingBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\HistoricoSolicitudesFacadeREST.java
@@ -26,10 +25,11 @@ C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\HistoricoSolicitudesWriter.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Chat.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\chat\ChatBean.java
+C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\utils\AutenticacionUtils.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Usuario.java
-C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\PdfREST.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\administrador\AdministradorClientBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\utils\ImageUtils.java
+C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\UsuarioRol.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\chat\Message.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Mascota.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\mascotas\MascotasValidator.java
@@ -47,6 +47,7 @@ C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\ClienteWriter.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Cliente.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\RefugioReader.java
+C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\jaas\UsuarioEJB.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\adopcion\AdopcionClientBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\UsuarioReader.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\shared\Constantes.java

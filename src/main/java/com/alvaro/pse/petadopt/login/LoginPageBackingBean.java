@@ -9,12 +9,16 @@ import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.utils.StringUtils;
 import com.alvaro.pse.petadopt.entities.Usuario;
+import com.alvaro.pse.petadopt.jaas.UsuarioEJB;
 import java.io.Serializable;
 import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ComponentSystemEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.PrimeFaces;
@@ -40,12 +44,15 @@ public class LoginPageBackingBean implements Serializable {
 
     private boolean usuarioFound;
     private boolean tieneNotificaciones;
-    
+
     private Cliente cliente;
     private Refugio refugio;
-    
-    public LoginPageBackingBean(){
-         this.stringUtils = new StringUtils();
+
+    @Inject
+    private UsuarioEJB userEJB;
+
+    public LoginPageBackingBean() {
+        this.stringUtils = new StringUtils();
     }
 
     public boolean isUsuarioFound() {
@@ -152,13 +159,44 @@ public class LoginPageBackingBean implements Serializable {
     public void setTieneNotificaciones(boolean tieneNotificaciones) {
         this.tieneNotificaciones = tieneNotificaciones;
     }
-    
-    
-    
 
     public void showError() {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error", "Los datos introducidos no se corresponden con ningún usuario");
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Los datos introducidos no se corresponden con ningún usuario");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
+    /*
+    public void validatePassword(ComponentSystemEvent event) {
+        FacesContext facesContext = FacesContext.getCurrentInstance();
+        UIComponent components = event.getComponent();
+        UIInput uiInputPassword = (UIInput) components.findComponent("password");
+        String password = uiInputPassword.getLocalValue() == null ? "" : uiInputPassword.getLocalValue().toString();
+        UIInput uiInputConfirmPassword = (UIInput) components.findComponent("confirmpassword");
+        String confirmPassword = uiInputConfirmPassword.getLocalValue() == null ? ""
+                : uiInputConfirmPassword.getLocalValue().toString();
+        if (password.isEmpty() || confirmPassword.isEmpty()) {
+            return;
+        }
+        if (!password.equals(confirmPassword)) {
+            FacesMessage msg = new FacesMessage("Las contraseñas no coinciden");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputPassword.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+        UIInput uiInputEmail = (UIInput) components.findComponent("email");
+        String email = uiInputEmail.getLocalValue() == null ? ""
+                : uiInputEmail.getLocalValue().toString();
+        if (userEJB.findByEmail(email) != null) {
+            FacesMessage msg = new FacesMessage("Ya existe un usuario con ese email");
+            msg.setSeverity(FacesMessage.SEVERITY_ERROR);
+            facesContext.addMessage(uiInputPassword.getClientId(), msg);
+            facesContext.renderResponse();
+        }
+    }
+     */
+    
+      public void clearValues() {
+        setEmail(null);
+        setPassword(null);
+    }
 }

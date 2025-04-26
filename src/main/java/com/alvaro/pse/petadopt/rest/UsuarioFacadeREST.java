@@ -64,6 +64,20 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     public Usuario find(@PathParam("id") Long id) {
         return super.find(id);
     }
+    
+    @GET
+    @Path("find-by-email/{email}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public Usuario findByEmail(@PathParam("email") String email){
+        Usuario found = null;
+        List<Usuario> all = this.findAll();
+        for(Usuario u : all){
+            if(u.getEmail().equalsIgnoreCase(email)){
+                found = u;
+            }
+        }
+        return found;
+    }
 
     @GET
     @Override

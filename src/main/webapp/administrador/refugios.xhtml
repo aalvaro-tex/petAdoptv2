@@ -162,11 +162,11 @@
 
                                     <div class="mascota-list-action">
                                         <div style="display:flex;flex-direction: row; gap:10px; justify-content: center">
-                                            <p:commandButton icon="pi pi-check" styleClass="ui-button-success" action="#{administradorClientBean.aprobarRefugio(refugio.id)}" id="acceptBtn" rendered="#{refugio.verificado == false}" >
+                                            <p:commandButton icon="pi pi-check" styleClass="ui-button-success" action="#{administradorClientBean.aprobarRefugio(refugio.id)}" id="acceptBtn" rendered="#{refugio.verificado == false}" update=":form:data" >
                                                     <p:ajax event="click" update=":form:data"/> 
                                                 </p:commandButton>
                                                 <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
-                                                <p:commandButton icon="pi pi-times" styleClass="ui-button-danger" action="#{administradorClientBean.rechazarRefugio(refugio.id)}" id="rejectBtn"  rendered="#{refugio.verificado == false}">
+                                                <p:commandButton icon="pi pi-times" styleClass="ui-button-danger" action="#{administradorClientBean.rechazarRefugio(refugio.id)}" id="rejectBtn"  rendered="#{refugio.verificado == false}" update=":form:data">
                                                     <p:ajax event="click" update=":form:data"/> 
                                                 </p:commandButton>
                                                 <p:tooltip for="rejectBtn" value="Rechazar" position="bottom"/>

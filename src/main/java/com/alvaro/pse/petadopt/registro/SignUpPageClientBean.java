@@ -70,58 +70,72 @@ public class SignUpPageClientBean {
         String p1 = bean.getPassword1();
         String p2 = bean.getPassword2();
         if (!p1.equalsIgnoreCase(p2)) {
-            bean.showError();
+            bean.showError("Las contraseñas no coinciden");
         } else {
+
             Usuario u = new Usuario();
             u.setEmail(bean.getEmail());
             u.setPassword(bean.getPassword1()); // da igual, las dos coinciden
             u.setFoto(this.imageUtils.upload(bean.getFotoPerfil()));
-            target.register(UsuarioWriter.class)
-                    .request(MediaType.APPLICATION_JSON)
-                    .post(Entity.entity(u, MediaType.APPLICATION_JSON));
-            // recuperamos el id del usuario que acabamos de crear
-            // para asignarselo al id del refugio/cliente que corresponda
+            // hay que comprobar si el correo ya está registrado
             Response response = target
-                    .path("find-by-login")
+                    .path("find-by-email/{email}")
+                    .resolveTemplate("email", u.getEmail())
                     .request()
-                    .post(Entity.entity(u, MediaType.APPLICATION_JSON));
-            if (response.hasEntity()) {
-                Usuario found = response.readEntity(Usuario.class);
-                id = found.getId();
-                loginBean.setUsuarioLogeado(found);
-                // aqui podemos guardar en la bbdd al refugio/cliente en su tabla correspondiente
-                if (loginBean.getRol().equalsIgnoreCase("Refugio")) {
-                    target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
-                    Refugio r = new Refugio();
-                    r.setId(id);
-                    r.setNombre(bean.getNombreRefugio());
-                    r.setTelefono(bean.getTelefono());
-                    r.setCif(bean.getCif());
-                    r.setVerificado(false);
-                    r.setDomicilioSocial(bean.getDomicilioSocial());
-                    target.register(RefugioWriter.class).request()
-                            .post(Entity.entity(r, MediaType.APPLICATION_JSON));
-                    success = "success";
-                    loginBean.setRefugio(r);
-                } else if (loginBean.getRol().equalsIgnoreCase("Cliente")) {
-                    target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
-                    Cliente c = new Cliente();
-                    c.setId(id);
-                    c.setNif(bean.getNif());
-                    c.setNombre(bean.getNombreCliente());
-                    //c.setApellidos(bean.getApellidos());
-                    c.setApellidos(bean.getApellidos());
-                    c.setDomicilio(bean.getDomicilio());
-                    c.setTelefono(bean.getTelefono());
-                    c.setFechaNacimiento(bean.getFechaNacimiento());
-                    target.register(ClienteWriter.class).request()
-                            .post(Entity.entity(c, MediaType.APPLICATION_JSON));
-                    success = "success";
-                    loginBean.setCliente(c);
-
-                }
+                    .get();
+            if (response.getStatus() == 200) {
+                // el usuario ya está registrado
+                bean.showError("El correo ya está registrado");
             } else {
-                bean.showError();
+
+                target.register(UsuarioWriter.class)
+                        .request(MediaType.APPLICATION_JSON)
+                        .post(Entity.entity(u, MediaType.APPLICATION_JSON));
+                // recuperamos el id del usuario que acabamos de crear
+                // para asignarselo al id del refugio/cliente que corresponda
+                response = target
+                        .path("find-by-login")
+                        .request()
+                        .post(Entity.entity(u, MediaType.APPLICATION_JSON));
+                if (response.hasEntity()) {
+                    Usuario found = response.readEntity(Usuario.class);
+                    id = found.getId();
+                    loginBean.setUsuarioLogeado(found);
+                    // aqui podemos guardar en la bbdd al refugio/cliente en su tabla correspondiente
+                    if (loginBean.getRol().equalsIgnoreCase("Refugio")) {
+                        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
+                        Refugio r = new Refugio();
+                        r.setId(id);
+                        r.setNombre(bean.getNombreRefugio());
+                        r.setTelefono(bean.getTelefono());
+                        r.setCif(bean.getCif());
+                        r.setVerificado(false);
+                        r.setDomicilioSocial(bean.getDomicilioSocial());
+                        target.register(RefugioWriter.class).request()
+                                .post(Entity.entity(r, MediaType.APPLICATION_JSON));
+                        success = "success";
+                        loginBean.setRefugio(r);
+                    } else if (loginBean.getRol().equalsIgnoreCase("Cliente")) {
+                        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
+                        Cliente c = new Cliente();
+                        c.setId(id);
+                        c.setNif(bean.getNif());
+                        c.setNombre(bean.getNombreCliente());
+                        //c.setApellidos(bean.getApellidos());
+                        c.setApellidos(bean.getApellidos());
+                        c.setDomicilio(bean.getDomicilio());
+                        c.setTelefono(bean.getTelefono());
+                        c.setFechaNacimiento(bean.getFechaNacimiento());
+                        target.register(ClienteWriter.class).request()
+                                .post(Entity.entity(c, MediaType.APPLICATION_JSON));
+                        success = "success";
+                        loginBean.setCliente(c);
+
+                    }
+                } else {
+                    // llegamos aquí si no hemos elegido una foto de perfil
+                    bean.showError("Debes seleccionar una imagen de perfil");
+                }
             }
         }
         bean.clearValues();

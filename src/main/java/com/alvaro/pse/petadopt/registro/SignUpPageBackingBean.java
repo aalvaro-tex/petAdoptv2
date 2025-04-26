@@ -213,8 +213,8 @@ public class SignUpPageBackingBean implements Serializable {
         this.terminosAceptados = terminosAceptados;
     }
 
-    public void showError() {
-        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Las contraseñas no coinciden");
+    public void showError(String mensaje) {
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", mensaje);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
 
@@ -233,6 +233,7 @@ public class SignUpPageBackingBean implements Serializable {
         setDomicilio(null);
         setNif(null);
         setFechaNacimiento(null);
+        setTerminosAceptados(false);
     }
 
 }
