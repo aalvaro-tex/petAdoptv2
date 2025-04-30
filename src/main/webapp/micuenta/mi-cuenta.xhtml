@@ -69,6 +69,7 @@
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                 <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                     <div class="card" style="margin-top:40px;">
+                        
                     <h:form>
                         <div class="grid">
                             <div class="col-2 flex align-items-center justify-content-center">
@@ -117,7 +118,9 @@
                         </div>
                         <div class="grid">
                             <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
-                                
+                                <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" icon="pi pi-trash" onclick="PF('cuentaDeleteDialog').show()" id="deleteCuenta">
+                                    <p:tooltip for="deleteCuenta" value="Eliminar cuenta"></p:tooltip>
+                                </p:commandButton>
                             </div>
                         </div>
                     </h:form>
@@ -187,13 +190,24 @@
                         </div>
                         <div class="grid">
                             <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
-                                
+                                <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" icon="pi pi-trash" onclick="PF('cuentaDeleteDialog').show()" id="deleteCuenta">
+                                    <p:tooltip for="deleteCuenta" value="Eliminar cuenta"></p:tooltip>
+                                </p:commandButton>
                             </div>
                         </div>
                     </h:form>
                 </div>
                 </c:if>
                 </c:if>
+                <!-- Modal para confirmar delete -->
+
+                <p:dialog draggable="false" resizable="false" modal="true" header="Eliminar cuenta" widgetVar="cuentaDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
+                    <h:form>
+                        <p>¿Seguro que deseas eliminar tu cuenta?</p>
+                        <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" oncomplete="handleSubmitDelete(xhr, status, args)">
+                        </p:commandButton>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

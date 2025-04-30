@@ -222,11 +222,13 @@
                                                         <p:ajax event="click" update=":header-form:solicitudes"/>
                                                         <p:ajax event="click" update=":form:data"/> 
                                                     </p:commandButton>
+                                                    
                                                     <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
                                                     <p:commandButton icon="pi pi-times" styleClass="ui-button-danger"  onclick="PF('mascotaDeleteDialog').show()" id="rejectBtn"  rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}">
                                                         <p:ajax event="click" update=":form:data"/> 
                                                         <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" />
                                                     </p:commandButton>
+                                                    
                                                     <p:tooltip for="rejectBtn" value="Rechazar" position="bottom"/>
                                                 </div>
                                                 <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitudesBackingBean.getEstadoDisplayName(solicitud.estado)}</span>

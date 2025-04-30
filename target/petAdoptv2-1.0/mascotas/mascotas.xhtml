@@ -219,13 +219,15 @@
                                         </h:outputText>
                                         <div style="display:flex;flex-direction: row; gap:5px; justify-content: center">
                                             
-                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" rendered="#{mascota.estado == 'sin_solicitud'}">
+                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" rendered="#{mascota.estado == 'sin_solicitud'}" id="editMasctoaBtn">
                                                
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
-                                            <p:commandButton icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" rendered="#{mascota.estado == 'sin_solicitud'}">
+                                            <p:tooltip for="editMasctoaBtn" value="Editar"  position="bottom" />
+                                            <p:commandButton id="deleteMasctoaBtn"  icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" rendered="#{mascota.estado == 'sin_solicitud'}">
                                                 <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
+                                            <p:tooltip for="deleteMasctoaBtn" value="Eliminar" position="bottom" />
                                         </div>
                                         <span class="mascota-badge status-#{mascota.estado.toLowerCase()}">#{mascotasPageBackingBean.getEstadoDisplayName(mascota.estado)}</span>
                                     </div>
