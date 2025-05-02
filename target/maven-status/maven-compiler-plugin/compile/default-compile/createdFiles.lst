@@ -5,8 +5,8 @@ com\alvaro\pse\petadopt\adopcion\AdopcionClientBean.class
 com\alvaro\pse\petadopt\json\UsuarioReader$1.class
 com\alvaro\pse\petadopt\login\LoginPageClientBean.class
 com\alvaro\pse\petadopt\entities\Refugio_.class
+com\alvaro\pse\petadopt\json\EspeciesWriter.class
 com\alvaro\pse\petadopt\rest\UsuarioFacadeREST.class
-com\alvaro\pse\petadopt\entities\Especies_.class
 com\alvaro\pse\petadopt\entities\Usuario.class
 com\alvaro\pse\petadopt\entities\UsuarioRol_.class
 com\alvaro\pse\petadopt\micuenta\MiCuentaPageClientBean.class
@@ -14,10 +14,10 @@ com\alvaro\pse\petadopt\json\HistoricoSolicitudesReader$1.class
 com\alvaro\pse\petadopt\rest\RefugioFacadeREST.class
 com\alvaro\pse\petadopt\entities\Mascota.class
 com\alvaro\pse\petadopt\entities\Chat.class
+com\alvaro\pse\petadopt\entities\Especie.class
 com\alvaro\pse\petadopt\registro\SignUpPageBackingBean.class
 com\alvaro\pse\petadopt\chat\ChatServer.class
 com\alvaro\pse\petadopt\entities\Mascota_.class
-com\alvaro\pse\petadopt\rest\EspeciesFacadeREST.class
 com\alvaro\pse\petadopt\administrador\AdministradorBackingBean.class
 com\alvaro\pse\petadopt\external\ComunidadesAPI.class
 com\alvaro\pse\petadopt\registro\SignUpPageClientBean.class
@@ -27,13 +27,14 @@ com\alvaro\pse\petadopt\rest\ApplicationConfig.class
 com\alvaro\pse\petadopt\entities\Administrador.class
 com\alvaro\pse\petadopt\entities\Refugio.class
 com\alvaro\pse\petadopt\home\HomePageBackingBean.class
-com\alvaro\pse\petadopt\entities\Especies.class
 com\alvaro\pse\petadopt\json\RefugioReader$1.class
 com\alvaro\pse\petadopt\chat\ChatBackingBean.class
 com\alvaro\pse\petadopt\json\RefugioReader.class
 com\alvaro\pse\petadopt\adopcion\AdopcionBackingBean.class
+com\alvaro\pse\petadopt\entities\Especie_.class
 com\alvaro\pse\petadopt\json\ClienteReader.class
 com\alvaro\pse\petadopt\utils\PDFUtils.class
+com\alvaro\pse\petadopt\json\EspeciesReader$1.class
 com\alvaro\pse\petadopt\login\LoginPageValidator.class
 com\alvaro\pse\petadopt\mascotas\MascotasPageBackingBean.class
 com\alvaro\pse\petadopt\rest\AdministradorFacadeREST.class
@@ -63,7 +64,9 @@ com\alvaro\pse\petadopt\administrador\AdministradorClientBean.class
 com\alvaro\pse\petadopt\entities\UsuarioRol.class
 com\alvaro\pse\petadopt\json\MascotaReader$1.class
 com\alvaro\pse\petadopt\jaas\UsuarioEJB.class
+com\alvaro\pse\petadopt\rest\EspecieFacadeREST.class
 com\alvaro\pse\petadopt\entities\HistoricoSolicitudes.class
+com\alvaro\pse\petadopt\json\EspeciesReader.class
 com\alvaro\pse\petadopt\rest\ClienteFacadeREST.class
 com\alvaro\pse\petadopt\home\HomePageClientBean.class
 com\alvaro\pse\petadopt\mascotas\MascotasPageClientBean.class

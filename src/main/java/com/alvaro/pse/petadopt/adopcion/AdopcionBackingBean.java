@@ -79,27 +79,7 @@ public class AdopcionBackingBean implements Serializable {
     
     
     public String getFilterDisplayName() {
-        String text = "";
-        switch (this.mascotaFilter) {
-            case "todas":
-                text = "Todas las mascotas disponibles";
-                break;
-            case "gato":
-                text = "Gatos";
-                break;
-            case "perro":
-                text = "Perros";
-                break;
-            case "pajaro":
-                text = "Pájaros";
-                break;
-            case "roedor":
-                text = "Roedores";
-                break;
-            default:
-                break;
-        }
-        return text;
+        return this.mascotaFilter.substring(0,1).toUpperCase() + this.mascotaFilter.substring(1).toLowerCase();
     }
 
 }

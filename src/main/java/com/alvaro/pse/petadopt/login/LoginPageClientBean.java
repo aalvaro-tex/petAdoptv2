@@ -6,14 +6,17 @@
 package com.alvaro.pse.petadopt.login;
 
 import com.alvaro.pse.petadopt.entities.Cliente;
+import com.alvaro.pse.petadopt.entities.Especie;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
 import com.alvaro.pse.petadopt.json.ClienteWriter;
+import com.alvaro.pse.petadopt.json.EspeciesWriter;
 import com.alvaro.pse.petadopt.json.MascotaWriter;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
 import com.alvaro.pse.petadopt.json.UsuarioReader;
 import com.alvaro.pse.petadopt.json.UsuarioWriter;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
@@ -58,6 +61,7 @@ public class LoginPageClientBean implements Serializable {
     }
 
     public String findUsuario() {
+        this.getEspecies();
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
         String success = "failure";
         Usuario u = new Usuario();
@@ -165,5 +169,19 @@ public class LoginPageClientBean implements Serializable {
                 tieneNotificaciones = !response.readEntity(List.class).isEmpty();
             }
             return tieneNotificaciones;
+    }
+    
+    private void getEspecies(){
+        HashMap<String,String> especies = new HashMap<>();
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.especie");
+        Especie[] response = target.register(EspeciesWriter.class)
+                .request(MediaType.APPLICATION_JSON)
+                .get(Especie[].class);
+        if(response.length > 0){
+           for(Especie e: response){
+               especies.put(e.getNombre(), e.getNombre().toLowerCase());
+           }
+        }
+        bean.setEspecies(especies);
     }
 }

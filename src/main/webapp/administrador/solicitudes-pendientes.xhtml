@@ -1,0 +1,188 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
+
+            <ui:define name="top">
+                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+               <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
+                <h:form >
+                    <p:sticky target="navMenu"/>
+                    <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                        <p:menuitem value="Inicio" outcome="/home/home" />
+                        <p:menuitem value="Gestionar administradores" outcome="administradores" />
+                        <p:menuitem value="Gestionar usuarios" outcome="/administrador/solicitudes-pendientes" style="font-weight: 600"/>
+                        <p:menuitem value="Añadir especies" outcome="especies" />
+                    </p:megaMenu>
+                </h:form>
+                <h:form style="margin-top:10px;">
+                    <p:breadCrumb>
+                        <p:menuitem outcome="/index"/>
+                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                        </p:menuitem>
+                        <p:menuitem outcome="solicitudes-pendientes" value="Gestionar usuarios"/>
+                    </p:breadCrumb>
+                </h:form>
+                </c:if>
+                 </c:if>
+                   <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                    <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
+                </c:if>
+            </ui:define>
+
+            <ui:define name="content">
+                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                <div class="card" style="margin-top:40px;">
+                    <p:linkButton icon="pi pi-users" value="Todos los usuarios" outcome="/administrador/gestionar-usuarios" style="margin-bottom:10px;"></p:linkButton>
+                <h:form id="form">
+                    <p:dataScroller  value="#{administradorClientBean.findRefugiosPendientesAceptacion()}" var="refugio" chunkSize="3" id="data" lazy="false">
+                            <f:facet name="header" id="header">
+                                <p:outputLabel id="selectedItemText" value="Solicitudes pendientes de aprobar"/>
+                            </f:facet>
+
+                            <f:facet name="loader">
+                                <div class="text-center">
+                                    <p:commandButton type="button" value="Ver más" icon="pi pi-refresh"/>
+                                </div>
+                            </f:facet>
+
+                            <style>
+                                .mascota .mascota-name {
+                                    font-size: 1rem;
+                                    font-weight: 700
+                                }
+
+                                .mascota .mascota-description {
+                                    margin: 0 0 0rem 0
+                                }
+
+                                .mascota .mascota-category-icon {
+                                    vertical-align: middle;
+                                    margin-right: .5rem
+                                }
+
+                                .mascota .mascota-category {
+                                    font-weight: 600;
+                                    vertical-align: middle
+                                }
+
+                                .mascota .mascota-list-item {
+                                    display: -ms-flexbox;
+                                    display: flex;
+                                    -ms-flex-align: center;
+                                    align-items: center;
+                                    padding: 1rem
+                                }
+
+                                .mascota .mascota-list-item.border-1 {
+                                    border-bottom: 1px solid var(--surface-d)
+                                }
+
+                                .mascota .mascota-list-item img {
+                                    width: 150px;
+                                    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                    margin-right: 2rem
+                                }
+
+                                .mascota .mascota-list-item .mascota-list-detail {
+                                    flex: 1 1 0;
+                                    -ms-flex: 1 1 0
+                                }
+
+                                .mascota .mascota-list-item .ui-rating {
+                                    margin: 0 0 .5rem 0
+                                }
+
+                                .mascota .mascota-list-item .mascota-price {
+                                    font-size: 1.5rem;
+                                    font-weight: 600;
+                                    margin-bottom: .5rem;
+                                    align-self: flex-end
+                                }
+
+                                .mascota .mascota-list-item .mascota-list-action {
+                                    display: -ms-flexbox;
+                                    display: flex;
+                                    -ms-flex-direction: column;
+                                    flex-direction: column
+                                }
+
+                                .mascota .mascota-list-item .ui-button {
+                                    margin-bottom: .5rem
+                                }
+                                .mascota-badge {
+                                    border-radius: 2px;
+                                    padding: .25em .5rem;
+                                    text-transform: uppercase;
+                                    font-weight: 700;
+                                    font-size: 12px;
+                                    letter-spacing: .3px
+                                }
+                                .status-adoptada {
+                                    background: #c8e6c9;
+                                    color: #256029
+                                }
+
+                                .status-pendiente {
+                                    background: #ffcdd2;
+                                    color: #c63737
+                                }
+
+                                .status-sin_solicitud {
+                                    background: #feedaf;
+                                    color: #8a5340
+                                }
+                                .mascota .mascota-list-item img {
+                                    width: 150px;
+                                    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                    margin-right: 2rem
+                                }
+                            </style>
+
+                            <div class="mascota">
+
+                                <div class="mascota-list-item p-5">
+                                    <img src="data:image/png;base64,#{administradorClientBean.getUsuarioById(refugio.id).foto}"></img>
+                                    <div class="mascota-list-detail">
+                                        <div class="mascota-name">#{refugio.nombre}</div>
+                                        <div class="mascota-description"><i class="pi pi-id-card"></i> #{refugio.cif}</div>
+                                        <div class="mascota-description"><i class="pi pi-phone"></i> #{refugio.telefono}</div>
+                                        
+               
+                                    </div>
+
+                                    <div class="mascota-list-action">
+                                        <div style="display:flex;flex-direction: row; gap:10px; justify-content: center">
+                                            <p:commandButton icon="pi pi-check" styleClass="ui-button-success" action="#{administradorClientBean.aprobarRefugio(refugio.id)}" id="acceptBtn" rendered="#{refugio.verificado == false}" update=":form:data" >
+                                                    <p:ajax event="click" update=":form:data"/> 
+                                                </p:commandButton>
+                                                <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
+                                                <p:commandButton icon="pi pi-times" styleClass="ui-button-danger" action="#{administradorClientBean.rechazarRefugio(refugio.id)}" id="rejectBtn"  rendered="#{refugio.verificado == false}" update=":form:data">
+                                                    <p:ajax event="click" update=":form:data"/> 
+                                                </p:commandButton>
+                                                <p:tooltip for="rejectBtn" value="Rechazar" position="bottom"/>
+                                            </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </p:dataScroller>
+                    </h:form>
+                </div>
+                 </c:if>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>

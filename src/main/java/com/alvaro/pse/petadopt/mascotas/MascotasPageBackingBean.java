@@ -22,22 +22,22 @@ import org.primefaces.model.file.UploadedFile;
  */
 @Named
 @SessionScoped
-public class MascotasPageBackingBean implements Serializable{
+public class MascotasPageBackingBean implements Serializable {
 
     private String verMascotasFilter = "todas";
     private Long idMascotaSelected;
     private Mascota mascotaSelected;
     private UploadedFile mascotaImg;
     private UploadedFile mascotaUpdateImg;
-    
+
     private String nombreMascotaSeleccionada = "";
     private String especieMascotaSeleccionada = "";
-    private String razaMascotaSeleccionada ="";
-    private String edadMascotaSeleccionada="";
-    private String estadoSaludMascotaSeleccionada="";
-    private String costeAdopcionMascotaSeleccionada="";
-    private String fotoMascotaSeleccionada="";
-  
+    private String razaMascotaSeleccionada = "";
+    private String edadMascotaSeleccionada = "";
+    private String estadoSaludMascotaSeleccionada = "";
+    private String costeAdopcionMascotaSeleccionada = "";
+    private String fotoMascotaSeleccionada = "";
+
     private String nombre;
     private String especie;
     private String raza;
@@ -198,9 +198,9 @@ public class MascotasPageBackingBean implements Serializable{
 
     public void setMascotaUpdateImg(UploadedFile mascotaUpdateImg) {
         this.mascotaUpdateImg = mascotaUpdateImg;
-    }    
-    
-    public void cleanInputs(){
+    }
+
+    public void cleanInputs() {
         this.setCosteAdopcion(0);
         this.setEdad(0);
         this.setEspecie("");
@@ -209,8 +209,6 @@ public class MascotasPageBackingBean implements Serializable{
         this.setNombre("");
         this.setRaza("");
     }
-
-    
 
     public String getFilterDisplayName() {
         String text = "";

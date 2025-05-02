@@ -5,14 +5,21 @@
  */
 package com.alvaro.pse.petadopt.administrador;
 
+import com.alvaro.pse.petadopt.entities.Especie;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
+import com.alvaro.pse.petadopt.json.ClienteWriter;
+import com.alvaro.pse.petadopt.json.EspeciesReader;
+import com.alvaro.pse.petadopt.json.EspeciesWriter;
 import com.alvaro.pse.petadopt.json.RefugioReader;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
+import com.alvaro.pse.petadopt.json.UsuarioWriter;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
@@ -32,6 +39,9 @@ public class AdministradorClientBean {
     private Client client;
     private WebTarget target;
 
+    @Inject
+    private AdministradorBackingBean bean;
+
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
@@ -42,7 +52,8 @@ public class AdministradorClientBean {
     public void destroy() {
         client.close();
     }
-    public Usuario getUsuarioById(Long id){
+
+    public Usuario getUsuarioById(Long id) {
         Usuario found = null;
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
         Response response = target.register(RefugioWriter.class)
@@ -55,8 +66,8 @@ public class AdministradorClientBean {
         }
         return found;
     }
-    
-    private Refugio getRefugioById(Long id){
+
+    private Refugio getRefugioById(Long id) {
         Refugio found = null;
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
         Response response = target.register(RefugioWriter.class)
@@ -83,8 +94,8 @@ public class AdministradorClientBean {
         }
         return found;
     }
-    
-    public void aprobarRefugio(Long idRefugio){
+
+    public void aprobarRefugio(Long idRefugio) {
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
         Refugio r = this.getRefugioById(idRefugio);
         r.setVerificado(true);
@@ -97,8 +108,8 @@ public class AdministradorClientBean {
             System.out.println("Se ha aprobado la solicitud");
         }
     }
-    
-    public void rechazarRefugio(Long idRefugio){
+
+    public void rechazarRefugio(Long idRefugio) {
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
         Refugio r = this.getRefugioById(idRefugio);
         // rechazar un refugio implica eliminarlo de la bbdd
@@ -107,16 +118,84 @@ public class AdministradorClientBean {
                 .request()
                 .delete();
         //System.out.println("respuesta: "+response);
-         if (response.getStatus() == 204) {
+        if (response.getStatus() == 204) {
             System.out.println("Se ha aprobado la solicitud");
             target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
             response = target.path("{usuarioId}")
-                .resolveTemplate("usuarioId", idRefugio)
-                .request()
-                .delete();
-            if(response.getStatus() ==204){
+                    .resolveTemplate("usuarioId", idRefugio)
+                    .request()
+                    .delete();
+            if (response.getStatus() == 204) {
                 System.out.println("Se ha rechazado la solicitud");
             }
         }
+    }
+
+    public List<Usuario> getAllUsuarios() {
+        List<Usuario> all = new ArrayList<>();
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
+        Response response = target.register(UsuarioWriter.class)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        if (response.getStatus() == 200) {
+            all = response.readEntity(List.class);
+        }
+        return all;
+    }
+
+    // indica si el usuario con el id asociado es administrador o no
+    public boolean isAdmin(Long id) {
+        boolean esAdmin = false;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.administrador");
+        Response response = target.register(ClienteWriter.class)
+                .path("{id}")
+                .resolveTemplate("id", id)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        if (response.getStatus() == 200) {
+            // es administrador
+            esAdmin = true;
+        }
+        return esAdmin;
+    }
+
+    public List<Especie> getAllEspecies() {
+        List<Especie> especies = null;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.especie");
+        Response response = target.register(EspeciesWriter.class)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        if (response.getStatus() == 200) {
+            especies = response.readEntity(List.class);
+        }
+        return especies;
+    }
+
+    public void addEspecie() {
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.especie");
+        Especie e = new Especie();
+        e.setNombre(bean.getNuevaEspecie());
+        Response response = target.register(EspeciesReader.class)
+                .request()
+                .post(Entity.entity(e, MediaType.APPLICATION_JSON));
+    }
+
+    public void deleteEspecie() {
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.especie");
+        Especie e = new Especie();
+        e.setNombre(bean.getNuevaEspecie());
+        Response response = target.register(EspeciesReader.class)
+                .path("{id}")
+                .resolveTemplate("id", bean.getIdEspecieSelected())
+                .request()
+                .delete();
+    }
+
+    public void deleteUsuario() {
+        // para eliminar un usuario debemos
+        // 1. Eliminar todas las solicitudes pendientes de dicho usuario
+        // 2. Eliminar del historial todas las entradas asociadas a dicho usuario
+        // 3. Eliminar de la tabla cliente/refugio su fila
+        // 4. Eliminar de la tabla de usuarios su fila
     }
 }

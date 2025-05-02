@@ -19,7 +19,7 @@
                     <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
                         <p:menuitem value="Inicio" outcome="/home/home" />
                         <p:menuitem value="Gestionar administradores" outcome="administradores" style="font-weight: 600"/>
-                        <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
+                        <p:menuitem value="Gestionar usuarios" outcome="/administrador/solicitudes-pendientes"/>
                         <p:menuitem value="Añadir especies" outcome="especies"/>
                     </p:megaMenu>
                 </h:form>
@@ -29,7 +29,7 @@
                         <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
                             <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
                         </p:menuitem>
-                        <p:menuitem outcome="/home/home" value="Inicio"/>
+                        <p:menuitem outcome="/administrador/administradores" value="Gestionar administradores"/>
                     </p:breadCrumb>
                 </h:form>
                 </c:if>

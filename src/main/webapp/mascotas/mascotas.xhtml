@@ -17,31 +17,31 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <h:form >
-                    <p:sticky target="navMenu"/>
-                    <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
-                        <p:menuitem value="Inicio" outcome="/home/home"/>
-                        <p:menuitem value="Mascotas" outcome="mascotas" style="font-weight: 600;"/>
-                        <p:menuitem outcome="/solicitudes/solicitudes" >
-                                    Solicitudes de adopción 
-                                    <c:if test="${loginPageBackingBean.tieneNotificaciones eq true}">
-                                        <span class="notification-dot"></span>
-                                    </c:if>
-                                </p:menuitem>
-                        <p:menuitem value="Mi cuenta"/>
-                    </p:megaMenu>
-                </h:form>
-                <h:form style="margin-top:10px;">
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                        <p:menuitem outcome="mascotas" value="Mascotas"/>
-                    </p:breadCrumb>
-                </h:form>
-                 </c:if>
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <h:form >
+                        <p:sticky target="navMenu"/>
+                        <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                            <p:menuitem value="Inicio" outcome="/home/home"/>
+                            <p:menuitem value="Mascotas" outcome="mascotas" style="font-weight: 600;"/>
+                            <p:menuitem outcome="/solicitudes/solicitudes" >
+                                Solicitudes de adopción 
+                                <c:if test="${loginPageBackingBean.tieneNotificaciones eq true}">
+                                    <span class="notification-dot"></span>
+                                </c:if>
+                            </p:menuitem>
+                            <p:menuitem value="Mi cuenta"/>
+                        </p:megaMenu>
+                    </h:form>
+                    <h:form style="margin-top:10px;">
+                        <p:breadCrumb>
+                            <p:menuitem outcome="/index"/>
+                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                            </p:menuitem>
+                            <p:menuitem outcome="mascotas" value="Mascotas"/>
+                        </p:breadCrumb>
+                    </h:form>
+                </c:if>
                 <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
                     <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
@@ -49,265 +49,267 @@
             </ui:define>
 
             <ui:define name="content">
-                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <script>
-                    function handleSubmitAdd() {
-                        PF('mascotaDialog').hide();
-                    }
-                    function handleSubmitDelete() {
-                        PF('mascotaDeleteDialog').hide();
-                    }
-                    function handleSubmitUpdate() {
-                        PF('mascotaUpdateDialog').hide();
-                    }
-                    function ovBodyAuto() {
-                        $('html, body').css('overflow', 'auto');
-                    }
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <script>
+                        function handleSubmitAdd() {
+                            PF('mascotaDialog').hide();
+                        }
+                        function handleSubmitDelete() {
+                            PF('mascotaDeleteDialog').hide();
+                        }
+                        function handleSubmitUpdate() {
+                            PF('mascotaUpdateDialog').hide();
+                        }
+                        function ovBodyAuto() {
+                            $('html, body').css('overflow', 'auto');
+                        }
 
-                    function ovBodyHidden() {
-                        $('html, body').css('overflow', 'hidden');
-                    }</script>
-                <div class="card" style="margin-top:40px;">
+                        function ovBodyHidden() {
+                            $('html, body').css('overflow', 'hidden');
+                        }</script>
+                    <div class="card" style="margin-top:40px;">
 
-                    <div class="field" style="display:flex; gap:10px; ">
-                        <h:form>                    
-                            <p:commandButton value="Añadir nueva mascota" icon="pi pi-plus" style="margin-bottom:10px; heigth:40px;" onclick="PF('mascotaDialog').show()" disabled="#{loginPageBackingBean.refugio.verificado == false}"></p:commandButton>
-                        </h:form>    
-                        <h:form>
-                            <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{mascotasPageBackingBean.verMascotasFilter}" >
-                                <f:selectItem itemLabel="Todas las mascotas" itemValue="todas" />
-                                <f:selectItem itemLabel="Sin adoptar" itemValue="sin_solicitud"/>
-                                <f:selectItem itemLabel="Adoptadas" itemValue="adoptada"/>
-                                <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
-                                
-                                <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
-                                <p:ajax event="itemSelect" update=":form:data"/> 
-                            </p:selectOneMenu>
-                        </h:form>
-                        <h:form>
-                            <p:commandButton icon="pi pi-undo" id="recargarButton">
-                                <p:tooltip for="recargarButton" value="Recargar datos" position="right"/>
-                                <p:ajax event="click" update=":form:data"/> 
-                            </p:commandButton>
+                        <div class="field" style="display:flex; gap:10px; ">
+                            <h:form>                    
+                                <p:commandButton value="Añadir nueva mascota" icon="pi pi-plus" style="margin-bottom:10px; heigth:40px;" onclick="PF('mascotaDialog').show()" disabled="#{loginPageBackingBean.refugio.verificado == false}"></p:commandButton>
+                            </h:form>    
+                            <h:form>
+                                <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{mascotasPageBackingBean.verMascotasFilter}" >
+                                    <f:selectItem itemLabel="Todas las mascotas" itemValue="todas" />
+                                    <f:selectItem itemLabel="Sin adoptar" itemValue="sin_solicitud"/>
+                                    <f:selectItem itemLabel="Adoptadas" itemValue="adoptada"/>
+                                    <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
 
+                                    <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
+                                    <p:ajax event="itemSelect" update=":form:data"/> 
+                                </p:selectOneMenu>
+                            </h:form>
+                            <h:form>
+                                <p:commandButton icon="pi pi-undo" id="recargarButton">
+                                    <p:tooltip for="recargarButton" value="Recargar datos" position="right"/>
+                                    <p:ajax event="click" update=":form:data"/> 
+                                </p:commandButton>
+
+                            </h:form>
+                        </div>
+
+                        <h:form id="form" >
+                            <p:dataScroller  value="#{mascotasPageClientBean.findByRefugioAndEstado()}" var="mascota" chunkSize="3" id="data" lazy="false">
+                                <f:facet name="header" id="header">
+                                    <p:outputLabel id="selectedItemText" value="#{mascotasPageBackingBean.filterDisplayName}"/>
+                                </f:facet>
+
+                                <f:facet name="loader">
+                                    <div class="text-center">
+                                        <p:commandButton type="button" value="Ver más" icon="pi pi-refresh"/>
+                                    </div>
+                                </f:facet>
+
+                                <style>
+                                    .mascota .mascota-name {
+                                        font-size: 1rem;
+                                        font-weight: 700
+                                    }
+
+                                    .mascota .mascota-description {
+                                        margin: 0 0 1rem 0
+                                    }
+
+                                    .mascota .mascota-category-icon {
+                                        vertical-align: middle;
+                                        margin-right: .5rem
+                                    }
+
+                                    .mascota .mascota-category {
+                                        font-weight: 600;
+                                        vertical-align: middle
+                                    }
+
+                                    .mascota .mascota-list-item {
+                                        display: -ms-flexbox;
+                                        display: flex;
+                                        -ms-flex-align: center;
+                                        align-items: center;
+                                        padding: 1rem
+                                    }
+
+                                    .mascota .mascota-list-item.border-1 {
+                                        border-bottom: 1px solid var(--surface-d)
+                                    }
+
+                                    .mascota .mascota-list-item img {
+                                        width: 150px;
+                                        box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                        margin-right: 2rem
+                                    }
+
+                                    .mascota .mascota-list-item .mascota-list-detail {
+                                        flex: 1 1 0;
+                                        -ms-flex: 1 1 0
+                                    }
+
+                                    .mascota .mascota-list-item .ui-rating {
+                                        margin: 0 0 .5rem 0
+                                    }
+
+                                    .mascota .mascota-list-item .mascota-price {
+                                        font-size: 1.5rem;
+                                        font-weight: 600;
+                                        margin-bottom: .5rem;
+                                        align-self: flex-end
+                                    }
+
+                                    .mascota .mascota-list-item .mascota-list-action {
+                                        display: -ms-flexbox;
+                                        display: flex;
+                                        -ms-flex-direction: column;
+                                        flex-direction: column
+                                    }
+
+                                    .mascota .mascota-list-item .ui-button {
+                                        margin-bottom: .5rem
+                                    }
+                                    .mascota-badge {
+                                        border-radius: 2px;
+                                        padding: .25em .5rem;
+                                        text-transform: uppercase;
+                                        font-weight: 700;
+                                        font-size: 12px;
+                                        letter-spacing: .3px
+                                    }
+                                    .status-adoptada {
+                                        background: #c8e6c9;
+                                        color: #256029
+                                    }
+
+                                    .status-rechazada {
+                                        background: #ffcdd2;
+                                        color: #c63737
+                                    }
+                                    .status-pendiente {
+                                        background: #EFC3CA;
+                                        color: #CC6CE7
+                                    }
+                                    .status-sin_solicitud {
+                                        background: #feedaf;
+                                        color: #8a5340
+                                    }
+                                    .mascota .mascota-list-item img {
+                                        width: 150px;
+                                        height: 200px;
+                                        box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                        margin-right: 2rem
+                                    }
+                                </style>
+
+                                <div class="mascota">
+
+                                    <div class="mascota-list-item p-5">
+                                        <img src="data:image/png;base64,#{mascota.foto}"></img>
+                                        <div class="mascota-list-detail">
+                                            <div class="mascota-name">Nombre: #{mascota.nombre}</div>
+                                            <div class="mascota-description">Especie: #{mascota.especie}</div>
+                                            <div class="mascota-description">Raza: #{mascota.raza}</div>
+                                            <i class="pi pi-heart-fill mascota-category-icon"/><span
+                                                class="mascota-category">Estado de salud: #{mascota.estadoSalud}</span>
+                                        </div>
+
+                                        <div class="mascota-list-action">
+                                            <h:outputText value="#{mascota.costeAdopcion} €" styleClass="mascota-price" >
+                                            </h:outputText>
+                                            <div style="display:flex;flex-direction: row; gap:5px; justify-content: center">
+
+                                                <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" rendered="#{mascota.estado == 'sin_solicitud'}" id="editMasctoaBtn">
+
+                                                    <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
+                                                </p:commandButton>
+                                                <p:tooltip for="editMasctoaBtn" value="Editar"  position="bottom" />
+                                                <p:commandButton id="deleteMasctoaBtn"  icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" rendered="#{mascota.estado == 'sin_solicitud'}">
+                                                    <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
+                                                </p:commandButton>
+                                                <p:tooltip for="deleteMasctoaBtn" value="Eliminar" position="bottom" />
+                                            </div>
+                                            <span class="mascota-badge status-#{mascota.estado.toLowerCase()}">#{mascotasPageBackingBean.getEstadoDisplayName(mascota.estado)}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p:dataScroller>
                         </h:form>
                     </div>
 
-                    <h:form id="form" >
-                        <p:dataScroller  value="#{mascotasPageClientBean.findByRefugioAndEstado()}" var="mascota" chunkSize="3" id="data" lazy="false">
-                            <f:facet name="header" id="header">
-                                <p:outputLabel id="selectedItemText" value="#{mascotasPageBackingBean.filterDisplayName}"/>
-                            </f:facet>
+                    <!-- Modal para crear una mascota -->
 
-                            <f:facet name="loader">
-                                <div class="text-center">
-                                    <p:commandButton type="button" value="Ver más" icon="pi pi-refresh"/>
-                                </div>
-                            </f:facet>
+                    <p:dialog resizable="false" draggable="false" modal="true" header="Nueva mascota" widgetVar="mascotaDialog"  width="1000" showEffect="fade"  closeOnEscape="false" onShow="ovBodyHidden();" onHide="ovBodyAuto();">
+                        <h:form id="newMascotaForm">
 
-                            <style>
-                                .mascota .mascota-name {
-                                    font-size: 1rem;
-                                    font-weight: 700
-                                }
-
-                                .mascota .mascota-description {
-                                    margin: 0 0 1rem 0
-                                }
-
-                                .mascota .mascota-category-icon {
-                                    vertical-align: middle;
-                                    margin-right: .5rem
-                                }
-
-                                .mascota .mascota-category {
-                                    font-weight: 600;
-                                    vertical-align: middle
-                                }
-
-                                .mascota .mascota-list-item {
-                                    display: -ms-flexbox;
-                                    display: flex;
-                                    -ms-flex-align: center;
-                                    align-items: center;
-                                    padding: 1rem
-                                }
-
-                                .mascota .mascota-list-item.border-1 {
-                                    border-bottom: 1px solid var(--surface-d)
-                                }
-
-                                .mascota .mascota-list-item img {
-                                    width: 150px;
-                                    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                    margin-right: 2rem
-                                }
-
-                                .mascota .mascota-list-item .mascota-list-detail {
-                                    flex: 1 1 0;
-                                    -ms-flex: 1 1 0
-                                }
-
-                                .mascota .mascota-list-item .ui-rating {
-                                    margin: 0 0 .5rem 0
-                                }
-
-                                .mascota .mascota-list-item .mascota-price {
-                                    font-size: 1.5rem;
-                                    font-weight: 600;
-                                    margin-bottom: .5rem;
-                                    align-self: flex-end
-                                }
-
-                                .mascota .mascota-list-item .mascota-list-action {
-                                    display: -ms-flexbox;
-                                    display: flex;
-                                    -ms-flex-direction: column;
-                                    flex-direction: column
-                                }
-
-                                .mascota .mascota-list-item .ui-button {
-                                    margin-bottom: .5rem
-                                }
-                                .mascota-badge {
-                                    border-radius: 2px;
-                                    padding: .25em .5rem;
-                                    text-transform: uppercase;
-                                    font-weight: 700;
-                                    font-size: 12px;
-                                    letter-spacing: .3px
-                                }
-                                .status-adoptada {
-                                    background: #c8e6c9;
-                                    color: #256029
-                                }
-
-                                .status-rechazada {
-                                    background: #ffcdd2;
-                                    color: #c63737
-                                }
-                                .status-pendiente {
-                                    background: #EFC3CA;
-                                    color: #CC6CE7
-                                }
-                                .status-sin_solicitud {
-                                    background: #feedaf;
-                                    color: #8a5340
-                                }
-                                .mascota .mascota-list-item img {
-                                    width: 150px;
-                                    height: 200px;
-                                    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                    margin-right: 2rem
-                                }
-                            </style>
-
-                            <div class="mascota">
-
-                                <div class="mascota-list-item p-5">
-                                    <img src="data:image/png;base64,#{mascota.foto}"></img>
-                                    <div class="mascota-list-detail">
-                                        <div class="mascota-name">Nombre: #{mascota.nombre}</div>
-                                        <div class="mascota-description">Especie: #{mascota.especie}</div>
-                                        <div class="mascota-description">Raza: #{mascota.raza}</div>
-                                        <i class="pi pi-heart-fill mascota-category-icon"/><span
-                                            class="mascota-category">Estado de salud: #{mascota.estadoSalud}</span>
-                                    </div>
-
-                                    <div class="mascota-list-action">
-                                        <h:outputText value="#{mascota.costeAdopcion} €" styleClass="mascota-price" >
-                                        </h:outputText>
-                                        <div style="display:flex;flex-direction: row; gap:5px; justify-content: center">
-                                            
-                                            <p:commandButton icon="pi pi-pencil" styleClass="ui-button-secondary" action="#{mascotasPageClientBean.getMascotaById()}" rendered="#{mascota.estado == 'sin_solicitud'}" id="editMasctoaBtn">
-                                               
-                                                <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
-                                            </p:commandButton>
-                                            <p:tooltip for="editMasctoaBtn" value="Editar"  position="bottom" />
-                                            <p:commandButton id="deleteMasctoaBtn"  icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('mascotaDeleteDialog').show()" rendered="#{mascota.estado == 'sin_solicitud'}">
-                                                <f:setPropertyActionListener target="#{mascotasPageBackingBean.idMascotaSelected}" value="#{mascota.id}" />
-                                            </p:commandButton>
-                                            <p:tooltip for="deleteMasctoaBtn" value="Eliminar" position="bottom" />
+                            <div class="grid">
+                                <div class="col-4 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
+                                        <div class="field">
+                                            <p:outputLabel value="Nombre de la mascota" for="nombreMascota" />
+                                            <p:inputText id="nombreMascota" type="text" value="#{mascotasPageBackingBean.nombre}" required="true"/>
+                                            <p:message for="@previous"/>
                                         </div>
-                                        <span class="mascota-badge status-#{mascota.estado.toLowerCase()}">#{mascotasPageBackingBean.getEstadoDisplayName(mascota.estado)}</span>
+                                        <div class="field">
+                                            <p:outputLabel value="Especie" for="especie" />
+                                            <p:selectOneMenu required="true" id="especie" alwaysDisplayLabel="false" style="height: 40px;" value="#{adopcionBackingBean.mascotaFilter}" >
+                                                <f:selectItems value="#{loginPageBackingBean.especies}"/>
+                                            </p:selectOneMenu>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
+                                        <div class="field">
+                                            <p:outputLabel value="Raza" for="raza" />
+                                            <p:inputText id="raza" type="text" value="#{mascotasPageBackingBean.raza}" required="false"/>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                        <div class="field">
+                                            <p:outputLabel value="Edad" for="edad" />
+                                            <p:inputText id="edad" type="number" value="#{mascotasPageBackingBean.edad}" required="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-4 flex align-items-center justify-content-center">
+                                    <div class="ui-fluid">
+                                        <div class="field">
+                                            <p:outputLabel value="Estado de salud" for="estado_salud" />
+                                            <p:inputText id="estado_salud" type="text" value="#{mascotasPageBackingBean.estadoSalud}" required="true"/>
+                                            <p:message for="@previous"/>
+                                        </div>
+                                        <div class="field">
+                                            <p:outputLabel value="Coste de adopción" for="coste_adopcion" />
+                                            <p:inputNumber id="coste_adopcion" symbolPosition="s"  value="#{mascotasPageBackingBean.costeAdopcion}" required="true" symbol=" €" />
+                                            <p:message for="@previous"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </p:dataScroller>
-                    </h:form>
-                </div>
+                            <p:fileUpload id="upload" value="#{mascotasPageBackingBean.mascotaImg}"
+                                          mode="simple" skinSimple="true" auto="true"
+                                          process="@this" update="growlAddMascota" label="Subir imagen" chooseIcon="pi pi-image"/>
 
-                <!-- Modal para crear una mascota -->
+                            <p:commandButton ajax="true" value="Añadir mascota" styleClass="ui-confirmdialog-yes" update=":form:data" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)" icon="pi pi-plus">
+                                <p:ajax event="click" update=":form:data"/> 
+                            </p:commandButton>
+                            <p:growl id="growlAddMascota" showDetail="true"/>
+                        </h:form>
+                    </p:dialog>
 
-                <p:dialog resizable="false" draggable="false" modal="true" header="Nueva mascota" widgetVar="mascotaDialog"  width="1000" showEffect="fade"  closeOnEscape="false" onShow="ovBodyHidden();" onHide="ovBodyAuto();">
-                    <h:form id="newMascotaForm">
+                    <!-- Modal para confirmar delete -->
 
-                        <div class="grid">
-                            <div class="col-4 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Nombre de la mascota" for="nombreMascota" />
-                                        <p:inputText id="nombreMascota" type="text" value="#{mascotasPageBackingBean.nombre}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Especie" for="especie" />
-                                        <p:inputText id="especie" type="email" value="#{mascotasPageBackingBean.especie}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Raza" for="raza" />
-                                        <p:inputText id="raza" type="text" value="#{mascotasPageBackingBean.raza}" required="false"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Edad" for="edad" />
-                                        <p:inputText id="edad" type="number" value="#{mascotasPageBackingBean.edad}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Estado de salud" for="estado_salud" />
-                                        <p:inputText id="estado_salud" type="text" value="#{mascotasPageBackingBean.estadoSalud}" required="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Coste de adopción" for="coste_adopcion" />
-                                        <p:inputNumber id="coste_adopcion" symbolPosition="s"  value="#{mascotasPageBackingBean.costeAdopcion}" required="true" symbol=" €" />
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <p:fileUpload id="upload" value="#{mascotasPageBackingBean.mascotaImg}"
-                                      mode="simple" skinSimple="true" auto="true"
-                                      process="@this" update="growlAddMascota" label="Subir imagen" chooseIcon="pi pi-image"/>
-
-                        <p:commandButton ajax="true" value="Añadir mascota" styleClass="ui-confirmdialog-yes" update=":form:data" actionListener="#{mascotasPageClientBean.addMascota()}" oncomplete="handleSubmitAdd(xhr, status, args)" icon="pi pi-plus">
-                            <p:ajax event="click" update=":form:data"/> 
-                        </p:commandButton>
-                        <p:growl id="growlAddMascota" showDetail="true"/>
-                    </h:form>
-                </p:dialog>
-                
-                <!-- Modal para confirmar delete -->
-
-                <p:dialog draggable="false" resizable="false" modal="true" header="Eliminar mascota" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
-                    <h:form>
-                        <p>¿Seguro que deseas eliminar la mascota seleccionada?</p>
-                        <p:commandButton value="Eliminar mascota" styleClass="ui-button-danger" actionListener="#{mascotasPageClientBean.deleteMascota()}" oncomplete="handleSubmitDelete(xhr, status, args)">
-                            <p:ajax event="click" update=":form:data"/> 
-                        </p:commandButton>
-                    </h:form>
-                </p:dialog>
-                 </c:if>
+                    <p:dialog draggable="false" resizable="false" modal="true" header="Eliminar mascota" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
+                        <h:form>
+                            <p>¿Seguro que deseas eliminar la mascota seleccionada?</p>
+                            <p:commandButton update=":form:data" value="Eliminar mascota" styleClass="ui-button-danger" actionListener="#{mascotasPageClientBean.deleteMascota()}" oncomplete="handleSubmitDelete(xhr, status, args)">
+                                <p:ajax event="click" update=":form:data"/> 
+                            </p:commandButton>
+                        </h:form>
+                    </p:dialog>
+                </c:if>
             </ui:define>
         </ui:composition>
 

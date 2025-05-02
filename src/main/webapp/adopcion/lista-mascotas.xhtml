@@ -54,16 +54,10 @@
                         <h:form>
                             <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{adopcionBackingBean.mascotaFilter}" >
                                 <f:selectItem itemLabel="Todas las mascotas disponibles" itemValue="todas" />
-                                <f:selectItem itemLabel="Gatos" itemValue="gato"/>
-                                <f:selectItem itemLabel="Perros" itemValue="perro"/>
-                                <f:selectItem itemLabel="Pájaros" itemValue="pajaro"/>
-                                <f:selectItem itemLabel="Roedores" itemValue="roedor"/>
+                                <f:selectItems value="#{loginPageBackingBean.especies}"/>
                                 <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
                                 <p:ajax event="itemSelect" update=":form:data"/> 
                             </p:selectOneMenu>
-                        </h:form>
-                        <h:form>
-
                         </h:form>
                     </div>
 

@@ -6,11 +6,13 @@
 package com.alvaro.pse.petadopt.login;
 
 import com.alvaro.pse.petadopt.entities.Cliente;
+import com.alvaro.pse.petadopt.entities.Especie;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.utils.StringUtils;
 import com.alvaro.pse.petadopt.entities.Usuario;
 import com.alvaro.pse.petadopt.jaas.UsuarioEJB;
 import java.io.Serializable;
+import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
@@ -19,6 +21,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.faces.model.SelectItem;
 import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.PrimeFaces;
@@ -47,6 +50,8 @@ public class LoginPageBackingBean implements Serializable {
 
     private Cliente cliente;
     private Refugio refugio;
+    
+    private Map<String,String> especies;
 
     @Inject
     private UsuarioEJB userEJB;
@@ -164,6 +169,16 @@ public class LoginPageBackingBean implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "Los datos introducidos no se corresponden con ningún usuario");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    public Map<String,String> getEspecies() {
+        return especies;
+    }
+
+    public void setEspecies(Map<String,String> especies) {
+        this.especies = especies;
+    }
+    
+    
 
     /*
     public void validatePassword(ComponentSystemEvent event) {

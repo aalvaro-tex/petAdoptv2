@@ -351,6 +351,34 @@ public class SolicitudesClientBean {
         }
     }
 
+    public String cancelarSolicitud() {
+        String success = "failure";
+        // cancelar una solicitud es poner en el estado de la mascota 'sin_solicitud'
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
+        // recupero la mascota seleccionada
+        Response response = target
+                .path("{mascotaId}")
+                .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
+                .request()
+                .get();
+
+        if (response.getStatus() == 200) {
+
+            Mascota m = response.readEntity(Mascota.class);
+            m.setEstado("sin_solicitud");
+
+            response = target.path("{mascotaId}")
+                    .resolveTemplate("mascotaId", m.getId())
+                    .request()
+                    .put(Entity.entity(m, MediaType.APPLICATION_JSON));
+            if (response.getStatus() == 204) {
+                System.out.println("Solicitud cancelada correctamente");
+                success = "success";
+            }
+        }
+        return success;
+    }
+
     public StreamedContent descargarCertificado(Long id) {
         StreamedContent pdf = null;
         Mascota m = this.findMascotaById(bean.getIdMascotaSelected());

@@ -14,23 +14,6 @@
             <ui:define name="top">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                     <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
-                        <script>
-                            function handleSubmitAdd() {
-                                PF('mascotaDialog').hide();
-                            }
-                            function handleSubmitDelete() {
-                                PF('mascotaDeleteDialog').hide();
-                            }
-                            function handleSubmitUpdate() {
-                                PF('mascotaUpdateDialog').hide();
-                            }
-                            function ovBodyAuto() {
-                                $('html, body').css('overflow', 'auto');
-                            }
-
-                            function ovBodyHidden() {
-                                $('html, body').css('overflow', 'hidden');
-                            }</script>
                         <h:form id="header-form">
                             <p:sticky target="navMenu"/>
                             <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
@@ -83,6 +66,23 @@
             </ui:define>
 
             <ui:define name="content">
+                 <script>
+                            function handleSubmitAdd() {
+                                PF('mascotaDialog').hide();
+                            }
+                            function handleSubmitDelete() {
+                                PF('cancelarSolicitud').hide();
+                            }
+                            function handleSubmitUpdate() {
+                                PF('mascotaUpdateDialog').hide();
+                            }
+                            function ovBodyAuto() {
+                                $('html, body').css('overflow', 'auto');
+                            }
+
+                            function ovBodyHidden() {
+                                $('html, body').css('overflow', 'hidden');
+                            }</script>
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                     <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                         <div class="card" style="margin-top:40px;">
@@ -222,13 +222,13 @@
                                                         <p:ajax event="click" update=":header-form:solicitudes"/>
                                                         <p:ajax event="click" update=":form:data"/> 
                                                     </p:commandButton>
-                                                    
+
                                                     <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
                                                     <p:commandButton icon="pi pi-times" styleClass="ui-button-danger"  onclick="PF('mascotaDeleteDialog').show()" id="rejectBtn"  rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}">
                                                         <p:ajax event="click" update=":form:data"/> 
                                                         <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" />
                                                     </p:commandButton>
-                                                    
+
                                                     <p:tooltip for="rejectBtn" value="Rechazar" position="bottom"/>
                                                 </div>
                                                 <span class="solicitud-badge status-#{solicitud.estado.toLowerCase()}">#{solicitudesBackingBean.getEstadoDisplayName(solicitud.estado)}</span>
@@ -242,7 +242,7 @@
                             <p:dialog draggable="false" resizable="false" modal="true" header="Rechazar adopción" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade" closeOnEscape="false">
                                 <h:form>
                                     <p>¿Seguro que deseas rechazar la adopción?</p>
-                                    <p:commandButton value="Rechazar adopción" update=":form:data"  styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.rechazarSolicitud(solicitudesBackingBean.idMascotaSelected)}" oncomplete="handleSubmitDelete(xhr, status, args)">
+                                    <p:commandButton value="Rechazar adopción" update=":form:data" styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.rechazarSolicitud(solicitudesBackingBean.idMascotaSelected)}" oncomplete="handleSubmitDelete(xhr, status, args)">
                                         <p:ajax event="click" update=":form:data"/> 
                                     </p:commandButton>
                                 </h:form>
@@ -403,6 +403,10 @@
                                                         <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" /> 
                                                         <p:fileDownload value="#{solicitudesClientBean.descargarCertificado(solicitud.id)}"/> 
                                                     </p:commandButton>
+                                                    <p:commandButton icon="pi pi-times" styleClass="ui-button-danger" style="margin-top:5px;" id="cancelarSolicitudBtn" rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}" onclick="PF('cancelarSolicitud').show()">
+                                                        <f:setPropertyActionListener target="#{solicitudesBackingBean.idMascotaSelected}" value="#{solicitud.id}" /> 
+                                                        <p:tooltip for="cancelarSolicitudBtn" value="Cancelar solicitud" />
+                                                    </p:commandButton>
                                                     <p:tooltip for="downloadCertificado" value="Descargar certificado de adopción"/>
                                                 </div>
                                             </div>
@@ -413,6 +417,17 @@
                         </div>
                     </c:if>
                 </c:if>
+                <!-- Modal para confirmar delete -->
+
+                <p:dialog draggable="false" resizable="false" modal="true" header="Cancelar solicitud" widgetVar="cancelarSolicitud"  width="350" showEffect="fade"  closeOnEscape="false">
+                    <h:form>
+                        <p>¿Seguro que deseas cancelar tu solicitud de adopción?</p>
+                        <p>Esta acción no puede deshacerse</p>
+                        <p:commandButton value="Cancelar solicitud" update=":form:data" styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.cancelarSolicitud()}" oncomplete="handleSubmitDelete(xhr, status, args)">
+                            <p:ajax event="click" update=":form:data"/> 
+                        </p:commandButton>
+                    </h:form>
+                </p:dialog>
             </ui:define>
 
         </ui:composition>

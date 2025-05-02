@@ -17,9 +17,9 @@ C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\external\ComunidadesAPI.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\AdministradorFacadeREST.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\ClienteReader.java
-C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Especies.java
-C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\EspeciesFacadeREST.java
+C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Especie.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\home\HomePageClientBean.java
+C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\EspeciesWriter.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\micuenta\MiCuentaPageClientBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\HistoricoSolicitudesWriter.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\chat\ChatServer.java
@@ -27,6 +27,7 @@ C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\chat\ChatBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\utils\AutenticacionUtils.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\micuenta\MiCuentaPageBackingBean.java
+C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\EspecieFacadeREST.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Usuario.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\administrador\AdministradorClientBean.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\utils\ImageUtils.java
@@ -57,4 +58,5 @@ C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\RefugioFacadeREST.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\rest\ApplicationConfig.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\utils\StringUtils.java
+C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\json\EspeciesReader.java
 C:\Users\alvar\OneDrive\Documentos\NetBeansProjects\petAdoptv2\src\main\java\com\alvaro\pse\petadopt\entities\Administrador.java

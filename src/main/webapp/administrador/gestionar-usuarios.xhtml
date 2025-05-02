@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+
+    <body>
+
+        <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
+
+            <ui:define name="top">
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
+                        <h:form >
+                            <p:sticky target="navMenu"/>
+                            <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                                <p:menuitem value="Inicio" outcome="/home/home" />
+                                <p:menuitem value="Gestionar administradores" outcome="administradores" />
+                                <p:menuitem value="Gestionar usuarios" outcome="/administrador/solicitudes-pendientes" style="font-weight: 600"/>
+                                <p:menuitem value="Añadir especies" outcome="especies" />
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/index"/>
+                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
+                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
+                                </p:menuitem>
+                                <p:menuitem outcome="solicitudes-pendientes" value="Gestionar usuarios"/>
+                                <p:menuitem outcome="gestionar-usuarios" value="Todos los usuarios"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                </c:if>
+                <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                    <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
+                    <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
+                </c:if>
+            </ui:define>
+
+            <ui:define name="content">
+                <script>
+                    function handleSubmitAdd() {
+                        PF('mascotaDialog').hide();
+                    }
+                    function handleSubmitDelete() {
+                        PF('mascotaDeleteDialog').hide();
+                    }
+                    function handleSubmitUpdate() {
+                        PF('mascotaUpdateDialog').hide();
+                    }
+                    function ovBodyAuto() {
+                        $('html, body').css('overflow', 'auto');
+                    }
+
+                    function ovBodyHidden() {
+                        $('html, body').css('overflow', 'hidden');
+                    }</script>
+                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                    <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
+                        <div class="card" style="margin-top:40px;">
+
+                            <div class="field" style="display:flex; gap:10px; ">   
+
+                            </div>
+                            <h:form id="form" >
+                                <p:dataTable id="data" var="usuario" value="#{administradorClientBean.allUsuarios}" rows="4"
+                     paginator="true" paginatorPosition="top"
+                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                     currentPageReportTemplate="{startRecord} - {endRecord} de {totalRecords} usuarios"
+                     rowsPerPageTemplate="4,8,{ShowAll|'Todos'}">
+                                    <p:column headerText="Usuario">
+                                        <h:outputText value="#{usuario.email}" />
+                                    </p:column>
+                                    <p:column headerText="Acción">
+                                        <p:commandButton id="deleteUsuarioBtn"  icon="pi pi-trash" styleClass="ui-button-danger" onclick="PF('usuarioDeleteDialog').show()" rendered="#{!administradorClientBean.isAdmin(usuario.id)}">
+                                            <f:setPropertyActionListener target="#{administradorBackingBean.idUsuarioSelected}" value="#{usuario.id}" />
+                                            <p:tooltip value="Eliminar cuenta" for="deleteUsuarioBtn" position="right"/>
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:form>
+                        </div>
+                    </c:if>
+                </c:if>
+                 <!-- Modal para confirmar delete -->
+
+                <p:dialog draggable="false" resizable="false" modal="true" header="Eliminar cuenta" widgetVar="usuarioDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
+                    <h:form>
+                        <p>¿Seguro que deseas eliminar esta cuenta?</p>
+                        <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" onclick="#{administradorClientBean.deleteUsuario()}" oncomplete="handleSubmitDelete(xhr, status, args)">
+                        <p:ajax event="click" update=":form:data"/> 
+                        </p:commandButton>
+                    </h:form>
+                </p:dialog>
+            </ui:define>
+
+        </ui:composition>
+
+    </body>
+</html>
