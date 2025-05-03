@@ -39,6 +39,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.alvaro.pse.petadopt.json.UsuarioReader.class);
         resources.add(com.alvaro.pse.petadopt.json.UsuarioWriter.class);
         resources.add(com.alvaro.pse.petadopt.rest.AdministradorFacadeREST.class);
+        resources.add(com.alvaro.pse.petadopt.rest.ChatFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.ClienteFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.EspecieFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.HistoricoSolicitudesFacadeREST.class);

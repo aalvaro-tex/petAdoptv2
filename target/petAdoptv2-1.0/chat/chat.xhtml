@@ -133,8 +133,8 @@
                         <p:card style="margin-top:10px; width:100%;">
                             <p:inputTextarea readonly="true" id="chatlog" rows="10" autoResize="true" style="width:100%; padding: 10px;"/>
                             <div style="display:flex; flex-direction:row; gap:10px; height: 40px; margin-top:20px;" >
-                                <p:inputText id="inputText" style="width:95%"/>
-                                <p:commandButton id="sendBtn" icon="pi pi-send"></p:commandButton>
+                                <p:inputText id="campoTexto" style="width:95%"/>
+                                <p:commandButton id="sendBtn" icon="pi pi-send" onclick="send_message();"></p:commandButton>
                                 <p:tooltip for="sendBtn" value="Enviar mensaje" />
                             </div>
                         </p:card>

@@ -5,51 +5,137 @@
  */
 package com.alvaro.pse.petadopt.entities;
 
+import java.io.Serializable;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+import javax.xml.bind.annotation.XmlRootElement;
+
 /**
  *
  * @author alvar
  */
-public class Chat {
-    
-    private Long idChat;
-    private Long idCliente;
-    private Long idRefugio;
+@Entity
+@Table(name = "chat")
+@XmlRootElement
+@NamedQueries({
+    @NamedQuery(name = "Chat.findAll", query = "SELECT c FROM Chat c"),
+    @NamedQuery(name = "Chat.findByIdConversacion", query = "SELECT c FROM Chat c WHERE c.idConversacion = :idConversacion"),
+    @NamedQuery(name = "Chat.findByIdEmisor", query = "SELECT c FROM Chat c WHERE c.idEmisor = :idEmisor"),
+    @NamedQuery(name = "Chat.findByIdReceptor", query = "SELECT c FROM Chat c WHERE c.idReceptor = :idReceptor"),
+    @NamedQuery(name = "Chat.findByMensaje", query = "SELECT c FROM Chat c WHERE c.mensaje = :mensaje"),
+    @NamedQuery(name = "Chat.findByTimestamp", query = "SELECT c FROM Chat c WHERE c.timestamp = :timestamp")})
+public class Chat implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id_conversacion")
+    private Long idConversacion;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id_emisor")
+    private long idEmisor;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "id_receptor")
+    private long idReceptor;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "mensaje")
+    private String mensaje;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "timestamp")
+    private String timestamp;
 
     public Chat() {
     }
-    
 
-    public Chat(Long idChat, Long idCliente, Long idRefugio) {
-        this.idChat = idChat;
-        this.idCliente = idCliente;
-        this.idRefugio = idRefugio;
-    }
-    
-    
-
-    public Long getIdChat() {
-        return idChat;
+    public Chat(Long idConversacion) {
+        this.idConversacion = idConversacion;
     }
 
-    public void setIdChat(Long idChat) {
-        this.idChat = idChat;
+    public Chat(Long idConversacion, long idEmisor, long idReceptor, String mensaje, String timestamp) {
+        this.idConversacion = idConversacion;
+        this.idEmisor = idEmisor;
+        this.idReceptor = idReceptor;
+        this.mensaje = mensaje;
+        this.timestamp = timestamp;
     }
 
-    public Long getIdCliente() {
-        return idCliente;
+    public Long getIdConversacion() {
+        return idConversacion;
     }
 
-    public void setIdCliente(Long idCliente) {
-        this.idCliente = idCliente;
+    public void setIdConversacion(Long idConversacion) {
+        this.idConversacion = idConversacion;
     }
 
-    public Long getIdRefugio() {
-        return idRefugio;
+    public long getIdEmisor() {
+        return idEmisor;
     }
 
-    public void setIdRefugio(Long idRefugio) {
-        this.idRefugio = idRefugio;
+    public void setIdEmisor(long idEmisor) {
+        this.idEmisor = idEmisor;
     }
-    
+
+    public long getIdReceptor() {
+        return idReceptor;
+    }
+
+    public void setIdReceptor(long idReceptor) {
+        this.idReceptor = idReceptor;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (idConversacion != null ? idConversacion.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Chat)) {
+            return false;
+        }
+        Chat other = (Chat) object;
+        if ((this.idConversacion == null && other.idConversacion != null) || (this.idConversacion != null && !this.idConversacion.equals(other.idConversacion))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.alvaro.pse.petadopt.entities.Chat[ idConversacion=" + idConversacion + " ]";
+    }
     
 }

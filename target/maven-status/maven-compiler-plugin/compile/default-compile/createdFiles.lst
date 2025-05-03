@@ -32,6 +32,7 @@ com\alvaro\pse\petadopt\chat\ChatBackingBean.class
 com\alvaro\pse\petadopt\json\RefugioReader.class
 com\alvaro\pse\petadopt\adopcion\AdopcionBackingBean.class
 com\alvaro\pse\petadopt\entities\Especie_.class
+com\alvaro\pse\petadopt\entities\Chat_.class
 com\alvaro\pse\petadopt\json\ClienteReader.class
 com\alvaro\pse\petadopt\utils\PDFUtils.class
 com\alvaro\pse\petadopt\json\EspeciesReader$1.class
@@ -57,6 +58,7 @@ com\alvaro\pse\petadopt\registro\SignUpPageValidator.class
 com\alvaro\pse\petadopt\external\Comunidad.class
 com\alvaro\pse\petadopt\entities\HistoricoSolicitudes_.class
 com\alvaro\pse\petadopt\json\ClienteReader$1.class
+com\alvaro\pse\petadopt\rest\ChatFacadeREST.class
 com\alvaro\pse\petadopt\solicitudes\SolicitudesBackingBean.class
 com\alvaro\pse\petadopt\chat\ChatClientBean.class
 com\alvaro\pse\petadopt\json\RefugioWriter.class

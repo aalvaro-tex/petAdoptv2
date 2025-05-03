@@ -51,6 +51,7 @@ public class ChatServer {
     public void message(String message, Session client) throws IOException, EncodeException {
         for (Session peer : peers) {
             peer.getBasicRemote().sendText(message);
+            System.out.println(message);
         }
     }
 

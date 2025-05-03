@@ -66,23 +66,23 @@
             </ui:define>
 
             <ui:define name="content">
-                 <script>
-                            function handleSubmitAdd() {
-                                PF('mascotaDialog').hide();
-                            }
-                            function handleSubmitDelete() {
-                                PF('cancelarSolicitud').hide();
-                            }
-                            function handleSubmitUpdate() {
-                                PF('mascotaUpdateDialog').hide();
-                            }
-                            function ovBodyAuto() {
-                                $('html, body').css('overflow', 'auto');
-                            }
+                <script>
+                    function handleSubmitAdd() {
+                        PF('mascotaDialog').hide();
+                    }
+                    function handleSubmitDelete() {
+                        PF('cancelarSolicitud').hide();
+                    }
+                    function handleSubmitUpdate() {
+                        PF('mascotaUpdateDialog').hide();
+                    }
+                    function ovBodyAuto() {
+                        $('html, body').css('overflow', 'auto');
+                    }
 
-                            function ovBodyHidden() {
-                                $('html, body').css('overflow', 'hidden');
-                            }</script>
+                    function ovBodyHidden() {
+                        $('html, body').css('overflow', 'hidden');
+                    }</script>
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                     <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                         <div class="card" style="margin-top:40px;">
@@ -238,6 +238,14 @@
 
                                 </p:dataScroller>
                             </h:form>
+                            <script type="text/javascript">
+                                function showStatus() {
+                                    PF('statusDialog').show();
+                                }
+                                function hideStatus() {
+                                    PF('statusDialog').hide();
+                                }
+                            </script>
                             <!-- Modal para confirmar el rechazo -->
                             <p:dialog draggable="false" resizable="false" modal="true" header="Rechazar adopción" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade" closeOnEscape="false">
                                 <h:form>
