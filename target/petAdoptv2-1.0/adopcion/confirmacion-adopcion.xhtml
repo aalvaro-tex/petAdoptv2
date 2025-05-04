@@ -124,6 +124,7 @@
                                         </p:linkButton>
                                         <p:linkButton value="Hablar con el refugio" styleClass="ui-confirmdialog-yes" icon="pi pi-envelope" outcome="/chat/chat">
                                             <f:param name="idConversacion" value="#{adopcionBackingBean.mascotaSelected.idRefugio}:#{loginPageBackingBean.cliente.id}"/>
+                                            <f:param name="user" value="#{loginPageBackingBean.usuarioLogeado.id}"/>
                                         </p:linkButton>
 
                                         <p:commandButton ajax="true" value="Confirmar adopcion" styleClass="ui-button-success" action="#{adopcionClientBean.confirmarAdopcion()}" update="growlAddMascota" icon="pi pi-check"  oncomplete="PF('sig').clear()">

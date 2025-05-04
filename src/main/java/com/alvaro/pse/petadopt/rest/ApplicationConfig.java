@@ -29,6 +29,7 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(com.alvaro.pse.petadopt.json.ChatWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.ClienteWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.ComunidadReader.class);
         resources.add(com.alvaro.pse.petadopt.json.EspeciesWriter.class);

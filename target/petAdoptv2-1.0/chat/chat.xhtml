@@ -116,12 +116,13 @@
                         src="${facesContext.externalContext.requestContextPath}/chat/websocket.js">
                 </script>
                 <p:card style="margin-top:10px" >
-                    <p:outputLabel style="font-size: 20px;"> Hablando con <strong>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).nombre} </strong> </p:outputLabel>
+                    <p:outputLabel style="font-size: 20px;" rendered="#{loginPageBackingBean.rol.equalsIgnoreCase('Refugio')}" > Hablando con <strong>#{chatClientBean.getClienteById(chatBackingBean.idConversacion).nombre} </strong> </p:outputLabel>
+                    <p:outputLabel style="font-size: 20px;" rendered="#{loginPageBackingBean.rol.equalsIgnoreCase('Cliente')}" > Hablando con <strong>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).nombre} </strong> </p:outputLabel>
                 </p:card>
                 <div class="container">
                     <p:card style="margin-top:10px; width: 100%;" >
                         <div style="display:flex; flex-direction: row">
-                            <img src="data:image/png;base64,#{chatClientBean.getUsuarioById(chatBackingBean.idConversacion).foto}" style="width:50%; padding: 10px;"></img>
+                            <img src="data:image/png;base64,#{chatClientBean.getUsuarioById(chatBackingBean.idConversacion).foto}" style="width:45%; padding: 10px;"></img>
                             <div style="display:flex; flex-direction: column; height:100%; margin-top:10px; gap:5px;">
                                 <p:outputLabel style="font-size:26px;">#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).nombre}</p:outputLabel>
                                 <p:outputLabel>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).telefono}</p:outputLabel>
@@ -130,14 +131,45 @@
                         </div>
                     </p:card>
                     <div class="chat-container">
-                        <p:card style="margin-top:10px; width:100%;">
-                            <p:inputTextarea readonly="true" id="chatlog" rows="10" autoResize="true" style="width:100%; padding: 10px;"/>
+
+                        <p:card style="margin-top:10px; width:100%;" >
+                            <p:card style="width:100%; height: 220px; ">
+                                <style>
+
+                                    .ui-datatable.borderless thead {
+                                        display: none;
+                                    }
+
+
+                                    .ui-datatable.borderless tbody,
+                                    .ui-datatable.borderless tbody tr,
+                                    .ui-datatable.borderless tbody td {
+                                        border-style: none;
+                                    }
+
+                                    body .ui-datatable .ui-datatable-data > tr > td {
+                                        border:none
+                                    }
+                                </style>
+                                <p:dataTable style="margin-top:-35px;" styleClass="borderless" showGridlines="false" var="chat" value="#{chatClientBean.getLatestMessageByUser(chatBackingBean.idConversacion)}" id="chatMessages">
+                                    <p:column>
+                                        <h:outputText value="#{chat.mensaje}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:card>
+
                             <div style="display:flex; flex-direction:row; gap:10px; height: 40px; margin-top:20px;" >
                                 <p:inputText id="campoTexto" style="width:95%"/>
-                                <p:commandButton id="sendBtn" icon="pi pi-send" onclick="send_message();"></p:commandButton>
+
+                                <p:commandButton id="sendBtn" icon="pi pi-send" onclick="send_message();" update="chatMessages">
+
+                                </p:commandButton>
+
                                 <p:tooltip for="sendBtn" value="Enviar mensaje" />
                             </div>
+
                         </p:card>
+
                     </div>
                 </div>
             </ui:define>

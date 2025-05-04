@@ -6,6 +6,7 @@
 package com.alvaro.pse.petadopt.rest;
 
 import com.alvaro.pse.petadopt.entities.Chat;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -81,6 +82,52 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
     @Produces(MediaType.TEXT_PLAIN)
     public String countREST() {
         return String.valueOf(super.count());
+    }
+    
+    // Busca los 4 últimos mensajes enviados en una conversación concreta
+    @GET
+    @Path("last-message/{idConversacion}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Chat> getLastMessageByChatAndUser(@PathParam("idConversacion") String idConversacion){
+        List<Chat> chats = null;
+        try{
+        chats = em.createNamedQuery("Chat.findLatestByChat", Chat.class)
+                 .setParameter("idConversacion", idConversacion)
+                .setMaxResults(4)
+                .getResultList();
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return chats;
+    }
+    
+    // Busca todos los chats en los que participa un usuario
+    @GET
+    @Path("my-chats/{idUsuario}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<Chat> getChatsByUser(@PathParam("idUsuario") Long idUsuario){
+        List<Chat> chats = null;
+         List<Chat> uniqueChats = new ArrayList<>();
+        try{
+        chats = em.createNamedQuery("Chat.findChatsByUser", Chat.class)
+                .setParameter("idUsuario", idUsuario)
+                .setParameter("idUsuario", idUsuario)
+                .getResultList();
+        
+        // necesito eliminar repetidos en base al idConversacion
+        uniqueChats.add(chats.get(0));
+        for(Chat c : chats){
+           for(Chat uc : uniqueChats){
+               if(!c.getIdConversacion().equalsIgnoreCase(uc.getIdConversacion())){
+                   System.out.println(c.getIdConversacion());
+                   uniqueChats.add(c);
+               }
+           }
+        }
+        } catch(Exception e){
+            System.out.println(e);
+        }
+        return uniqueChats;
     }
 
     @Override

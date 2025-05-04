@@ -21,6 +21,7 @@ import javax.inject.Named;
 public class ChatBackingBean implements Serializable{
     
    private String idConversacion;
+   private List<Chat> chats;
 
     public String getIdConversacion() {
         return idConversacion;
@@ -29,5 +30,15 @@ public class ChatBackingBean implements Serializable{
     public void setIdConversacion(String idConversacion) {
         this.idConversacion = idConversacion;
     }
+
+    public List<Chat> getChats() {
+        return chats;
+    }
+
+    public void setChats(List<Chat> chats) {
+        this.chats = chats;
+    }
+    
+    
      
 }

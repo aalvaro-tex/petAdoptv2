@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,19 +28,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "Chat.findAll", query = "SELECT c FROM Chat c"),
-    @NamedQuery(name = "Chat.findByIdConversacion", query = "SELECT c FROM Chat c WHERE c.idConversacion = :idConversacion"),
     @NamedQuery(name = "Chat.findByIdEmisor", query = "SELECT c FROM Chat c WHERE c.idEmisor = :idEmisor"),
     @NamedQuery(name = "Chat.findByIdReceptor", query = "SELECT c FROM Chat c WHERE c.idReceptor = :idReceptor"),
     @NamedQuery(name = "Chat.findByMensaje", query = "SELECT c FROM Chat c WHERE c.mensaje = :mensaje"),
-    @NamedQuery(name = "Chat.findByTimestamp", query = "SELECT c FROM Chat c WHERE c.timestamp = :timestamp")})
+    @NamedQuery(name = "Chat.findByTimestamp", query = "SELECT c FROM Chat c WHERE c.timestamp = :timestamp"),
+    @NamedQuery(name = "Chat.findById", query = "SELECT c FROM Chat c WHERE c.id = :id"),
+    @NamedQuery(name = "Chat.findByIdConversacion", query = "SELECT c FROM Chat c WHERE c.idConversacion = :idConversacion"),
+    @NamedQuery(name = "Chat.findLatestByChat", query = "SELECT c FROM Chat c WHERE c.idConversacion = :idConversacion ORDER BY c.timestamp DESC"),
+    @NamedQuery(name = "Chat.findChatsByUser", query = "SELECT c FROM Chat c WHERE c.idEmisor = :idUsuario OR c.idReceptor = :idUsuario")
+})
 public class Chat implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "id_conversacion")
-    private Long idConversacion;
     @Basic(optional = false)
     @NotNull
     @Column(name = "id_emisor")
@@ -57,27 +58,30 @@ public class Chat implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "timestamp")
     private String timestamp;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Basic(optional = false)
+    @Column(name = "id")
+    private Long id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "id_conversacion")
+    private String idConversacion;
 
     public Chat() {
     }
 
-    public Chat(Long idConversacion) {
-        this.idConversacion = idConversacion;
+    public Chat(Long id) {
+        this.id = id;
     }
 
-    public Chat(Long idConversacion, long idEmisor, long idReceptor, String mensaje, String timestamp) {
-        this.idConversacion = idConversacion;
+    public Chat(Long id, long idEmisor, long idReceptor, String mensaje, String timestamp, String idConversacion) {
+        this.id = id;
         this.idEmisor = idEmisor;
         this.idReceptor = idReceptor;
         this.mensaje = mensaje;
         this.timestamp = timestamp;
-    }
-
-    public Long getIdConversacion() {
-        return idConversacion;
-    }
-
-    public void setIdConversacion(Long idConversacion) {
         this.idConversacion = idConversacion;
     }
 
@@ -113,10 +117,26 @@ public class Chat implements Serializable {
         this.timestamp = timestamp;
     }
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getIdConversacion() {
+        return idConversacion;
+    }
+
+    public void setIdConversacion(String idConversacion) {
+        this.idConversacion = idConversacion;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (idConversacion != null ? idConversacion.hashCode() : 0);
+        hash += (id != null ? id.hashCode() : 0);
         return hash;
     }
 
@@ -127,7 +147,7 @@ public class Chat implements Serializable {
             return false;
         }
         Chat other = (Chat) object;
-        if ((this.idConversacion == null && other.idConversacion != null) || (this.idConversacion != null && !this.idConversacion.equals(other.idConversacion))) {
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
         return true;
@@ -135,7 +155,7 @@ public class Chat implements Serializable {
 
     @Override
     public String toString() {
-        return "com.alvaro.pse.petadopt.entities.Chat[ idConversacion=" + idConversacion + " ]";
+        return "com.alvaro.pse.petadopt.entities.Chat[ id=" + id + " ]";
     }
-    
+
 }

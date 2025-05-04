@@ -41,11 +41,14 @@ com\alvaro\pse\petadopt\mascotas\MascotasPageBackingBean.class
 com\alvaro\pse\petadopt\rest\AdministradorFacadeREST.class
 com\alvaro\pse\petadopt\entities\Cliente.class
 com\alvaro\pse\petadopt\entities\Usuario_.class
+com\alvaro\pse\petadopt\json\ChatWriter.class
+com\alvaro\pse\petadopt\json\ChatReader$1.class
 com\alvaro\pse\petadopt\rest\HistoricoSolicitudesFacadeREST.class
 com\alvaro\pse\petadopt\json\HistoricoSolicitudesReader.class
 com\alvaro\pse\petadopt\json\MascotaReader.class
 com\alvaro\pse\petadopt\json\UsuarioReader.class
 com\alvaro\pse\petadopt\login\LoginPageBackingBean.class
+com\alvaro\pse\petadopt\json\ChatReader.class
 com\alvaro\pse\petadopt\json\UsuarioWriter.class
 com\alvaro\pse\petadopt\utils\AutenticacionUtils.class
 com\alvaro\pse\petadopt\json\ClienteWriter.class

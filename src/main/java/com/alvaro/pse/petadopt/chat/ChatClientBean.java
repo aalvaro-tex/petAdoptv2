@@ -5,22 +5,34 @@
  */
 package com.alvaro.pse.petadopt.chat;
 
+import com.alvaro.pse.petadopt.entities.Chat;
 import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
+import com.alvaro.pse.petadopt.json.ChatReader;
+import com.alvaro.pse.petadopt.json.ChatWriter;
 import com.alvaro.pse.petadopt.json.ClienteReader;
+import com.alvaro.pse.petadopt.json.MascotaWriter;
 import com.alvaro.pse.petadopt.json.RefugioReader;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
 import com.alvaro.pse.petadopt.json.UsuarioReader;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
+import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
@@ -29,28 +41,31 @@ import javax.ws.rs.core.Response;
  */
 @Named
 @RequestScoped
-public class ChatClientBean {
-    
+public class ChatClientBean implements Serializable {
+
     @Inject
     LoginPageBackingBean loginBean;
+    
+    @Inject
+    ChatBackingBean bean;
 
     private Client client;
     private WebTarget target;
-    
+
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
-        
+
     }
 
     @PreDestroy
     public void destroy() {
         client.close();
     }
-    
-    public Usuario getUsuarioById(String idConversacion){
+
+    public Usuario getUsuarioById(String idConversacion) {
         Long id = -1L;
-        if(loginBean.getRol().equalsIgnoreCase("cliente")){
+        if (loginBean.getRol().equalsIgnoreCase("cliente")) {
             id = Long.parseLong(idConversacion.split(":")[0]);
         } else {
             id = Long.parseLong(idConversacion.split(":")[1]);
@@ -62,17 +77,17 @@ public class ChatClientBean {
                 .resolveTemplate("id", id)
                 .request()
                 .get();
-        
-        if(response.getStatus() == 200){
+
+        if (response.getStatus() == 200) {
             found = response.readEntity(Usuario.class);
         }
         return found;
-        
+
     }
-    
-    public Cliente getClienteById(String idConversacion){
+
+    public Cliente getClienteById(String idConversacion) {
         Long id = -1L;
-        if(loginBean.getRol().equalsIgnoreCase("cliente")){
+        if (loginBean.getRol().equalsIgnoreCase("cliente")) {
             id = Long.parseLong(idConversacion.split(":")[0]);
         } else {
             id = Long.parseLong(idConversacion.split(":")[1]);
@@ -84,16 +99,16 @@ public class ChatClientBean {
                 .resolveTemplate("id", id)
                 .request()
                 .get();
-        
-        if(response.getStatus() == 200){
+
+        if (response.getStatus() == 200) {
             found = response.readEntity(Cliente.class);
         }
         return found;
     }
-    
-    public Refugio getRefugioById(String idConversacion){
+
+    public Refugio getRefugioById(String idConversacion) {
         Long id = -1L;
-        if(loginBean.getRol().equalsIgnoreCase("refugio")){
+        if (loginBean.getRol().equalsIgnoreCase("refugio")) {
             id = Long.parseLong(idConversacion.split(":")[1]);
         } else {
             id = Long.parseLong(idConversacion.split(":")[0]);
@@ -106,12 +121,43 @@ public class ChatClientBean {
                 .resolveTemplate("id", id)
                 .request()
                 .get();
-        System.out.println(response);
-        
-        if(response.getStatus() == 200){
+
+        if (response.getStatus() == 200) {
             found = response.readEntity(Refugio.class);
             System.out.println(found);
         }
         return found;
     }
+
+    public List<Chat> getLatestMessageByUser(String idConversacion) {
+        List<Chat> chats = null;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.chat");
+        Response response = target.register(ChatWriter.class)
+                .path("last-message/{idConversacion}")
+                .resolveTemplate("idConversacion", idConversacion)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        if (response.getStatus() == 200) {
+            chats = response.readEntity(List.class);
+            Collections.reverse(chats);
+        }
+        return chats;
+    }
+
+    public List<Chat> getChatsByUser(String idConversacion) {
+        List<Chat> chats = null;
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.chat");
+        Response response = target.register(ChatWriter.class)
+                .path("my-chats/{idUsuario}")
+                .resolveTemplate("idUsuario", loginBean.getUsuarioLogeado().getId())
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+        if (response.getStatus() == 200) {
+            chats = response.readEntity(List.class);
+            
+        }
+        return chats;
+        
+    }
+    
 }
