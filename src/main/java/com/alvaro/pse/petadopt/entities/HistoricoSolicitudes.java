@@ -153,5 +153,20 @@ public class HistoricoSolicitudes implements Serializable {
     public String toString() {
         return "com.alvaro.pse.petadopt.entities.HistoricoSolicitudes[ id=" + id + " ]";
     }
-    
+
+    public String getAttrAtIdx(int index) {
+        switch (index) {
+            case 0:
+                return this.getFechaModificacion();
+            case 1:
+                return String.valueOf(this.getIdCliente());
+            case 2:
+                return String.valueOf(this.getIdMascota());
+            case 3:
+                return this.getEstado();
+            default:
+                return "";
+        }
+    }
+
 }

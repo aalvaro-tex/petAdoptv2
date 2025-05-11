@@ -20,15 +20,17 @@
                             <p:menuitem value="Mis adopciones"/>
                             <p:menuitem value="Adoptar" style="font-weight: 600"/>
                             <p:menuitem value="Mi cuenta"/>
+                             <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                             <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                         </p:megaMenu>
                     </h:form>
                     <h:form style="margin-top:10px;">
                         <p:breadCrumb>
-                            <p:menuitem outcome="/index"/>
-                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:menuitem>
-                            <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
+                            <p:menuitem outcome="/home/home" value="Inicio"/>
+                            <p:menuitem outcome="/adopcion/lista-mascotas" value="Adoptar"/>
                         </p:breadCrumb>
                     </h:form>
                     <h:form>
@@ -63,19 +65,19 @@
                                                 width: 150px;
                                             }
                                         </style>
-                                        <img src="data:image/png;base64,#{adopcionBackingBean.mascotaSelected.foto}" ></img>
+                                        <img src="data:image/png;base64,#{adopcion.mascotaSelected.foto}" ></img>
                                     </div>
                                 </div>
                                 <div class="col-3 flex align-items-center justify-content-center">
                                     <div class="ui-fluid">
                                         <div class="field">
                                             <p:outputLabel value="Nombre de la mascota" for="nombreMascota" />
-                                            <p:inputText id="nombreMascota" type="text"  placeholder="#{adopcionBackingBean.mascotaSelected.nombre}" disabled="true"/>
+                                            <p:inputText id="nombreMascota" type="text"  placeholder="#{adopcion.mascotaSelected.nombre}" disabled="true"/>
                                             <p:message for="@previous"/>
                                         </div>
                                         <div class="field">
                                             <p:outputLabel value="Especie" for="especie" />
-                                            <p:inputText id="especie" type="email"  placeholder="#{adopcionBackingBean.mascotaSelected.especie}" disabled="true"/>
+                                            <p:inputText id="especie" type="email"  placeholder="#{adopcion.mascotaSelected.especie}" disabled="true"/>
                                             <p:message for="@previous"/>
                                         </div>
                                     </div>
@@ -84,12 +86,12 @@
                                     <div class="ui-fluid">
                                         <div class="field">
                                             <p:outputLabel value="Raza" for="raza" />
-                                            <p:inputText id="raza" type="text"  placeholder="#{adopcionBackingBean.mascotaSelected.raza}" disabled="true"/>
+                                            <p:inputText id="raza" type="text"  placeholder="#{adopcion.mascotaSelected.raza}" disabled="true"/>
                                             <p:message for="@previous"/>
                                         </div>
                                         <div class="field">
                                             <p:outputLabel value="Edad" for="edad" />
-                                            <p:inputNumber id="edad" symbolPosition="s"   symbol=" años" emptyValue="#{adopcionBackingBean.mascotaSelected.edad}" decimalPlaces="0" disabled="true"/>
+                                            <p:inputNumber id="edad" symbolPosition="s"   symbol=" años" emptyValue="#{adopcion.mascotaSelected.edad}" decimalPlaces="0" disabled="true"/>
                                             <p:message for="@previous"/>
                                         </div>
                                     </div>
@@ -98,12 +100,12 @@
                                     <div class="ui-fluid">
                                         <div class="field">
                                             <p:outputLabel value="Estado de salud" for="estado_salud" />
-                                            <p:inputText id="estado_salud" type="text" placeholder="#{adopcionBackingBean.mascotaSelected.estadoSalud}" disabled="true"/>
+                                            <p:inputText id="estado_salud" type="text" placeholder="#{adopcion.mascotaSelected.estadoSalud}" disabled="true"/>
                                             <p:message for="@previous"/>
                                         </div>
                                         <div class="field">
                                             <p:outputLabel value="Coste de adopción" for="coste_adopcion" />
-                                            <p:inputNumber id="coste_adopcion" symbolPosition="s"   symbol=" €" emptyValue="#{adopcionBackingBean.mascotaSelected.costeAdopcion}" disabled="true"/>
+                                            <p:inputNumber id="coste_adopcion" symbolPosition="s"   symbol=" €" emptyValue="#{adopcion.mascotaSelected.costeAdopcion}" disabled="true"/>
                                             <p:message for="@previous"/>
                                         </div>
                                     </div>
@@ -123,7 +125,7 @@
                                         <p:linkButton  value="Volver" styleClass="ui-button-outlined ui-button-info"  outcome="lista-mascotas"  icon="pi pi-arrow-left">
                                         </p:linkButton>
                                         <p:linkButton value="Hablar con el refugio" styleClass="ui-confirmdialog-yes" icon="pi pi-envelope" outcome="/chat/chat">
-                                            <f:param name="idConversacion" value="#{adopcionBackingBean.mascotaSelected.idRefugio}:#{loginPageBackingBean.cliente.id}"/>
+                                            <f:param name="idConversacion" value="#{adopcion.mascotaSelected.idRefugio}:#{loginPageBackingBean.cliente.id}"/>
                                             <f:param name="user" value="#{loginPageBackingBean.usuarioLogeado.id}"/>
                                         </p:linkButton>
 
@@ -132,8 +134,8 @@
                                     </div>
                                     <p:outputPanel id="input">
                                         <p:outputLabel for="@next" value="Firma:" style="font-size:1.5rem" styleClass="block mb-2" />
-                                        <p:signature id="signature" widgetVar="sig" style="width:300px;height:150px" value="#{adopcionBackingBean.valueFirma}" required="true" guideline="true"
-                                                     base64Value="#{adopcionBackingBean.base64firma}" />
+                                        <p:signature id="signature" widgetVar="sig" style="width:300px;height:150px" value="#{adopcion.valueFirma}" required="true" guideline="true"
+                                                     base64Value="#{adopcion.base64firma}" />
                                     </p:outputPanel>
                                     <p:growl id="growlAddMascota" showDetail="true"/>
                                 </div>

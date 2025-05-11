@@ -13,198 +13,220 @@
 
             <ui:define name="top">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
-                    <h:form >
-                        <p:sticky target="navMenu"/>
-                        <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
-                            <p:menuitem value="Inicio" outcome="/home/home"/>
-                            <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
-                            <p:menuitem outcome="/solicitudes/solicitudes" >
+                    <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                        <h:form >
+                            <p:sticky target="navMenu"/>
+                            <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                                <p:menuitem value="Inicio" outcome="/home/home"/>
+                                <p:menuitem value="Mascotas" outcome="/mascotas/mascotas"/>
+                                <p:menuitem outcome="/solicitudes/solicitudes" >
                                     Solicitudes de adopción 
                                     <c:if test="${loginPageBackingBean.tieneNotificaciones eq true}">
                                         <span class="notification-dot"></span>
                                     </c:if>
                                 </p:menuitem>
-                            <p:menuitem value="Mi cuenta" style="font-weight: 600"/>
-                        </p:megaMenu>
-                    </h:form>
-                    <h:form style="margin-top:10px;">
-                        <p:breadCrumb>
-                            <p:menuitem outcome="/index"/>
-                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:menuitem>
-                            <p:menuitem outcome="mi-cuenta" value="Mi cuenta"/>
-                        </p:breadCrumb>
-                    </h:form>
+                                <p:menuitem value="Mi cuenta" style="font-weight: 600"/>
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                                <p:menuitem disabled="true" style="width:calc(100vw - 700px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
+                                <p:menuitem outcome="mi-cuenta" value="Mi cuenta"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
+                    <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                        <h:form >
+                            <p:sticky target="navMenu"/>
+                            <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                                <p:menuitem value="Inicio" outcome="/home/home"/>
+                                <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
+                                <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
+                                <p:menuitem value="Mi cuenta" style="font-weight: 600"/>
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                                <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
+                            </p:megaMenu>
+                        </h:form>
+                        <h:form style="margin-top:10px;">
+                            <p:breadCrumb>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
+                                <p:menuitem outcome="mi-cuenta" value="Mi cuenta"/>
+                            </p:breadCrumb>
+                        </h:form>
+                    </c:if>
                 </c:if>
-                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
-                    <h:form >
-                        <p:sticky target="navMenu"/>
-                        <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
-                            <p:menuitem value="Inicio" outcome="/home/home"/>
-                            <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
-                            <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
-                            <p:menuitem value="Mi cuenta" style="font-weight: 600"/>
-                        </p:megaMenu>
-                    </h:form>
-                    <h:form style="margin-top:10px;">
-                        <p:breadCrumb>
-                            <p:menuitem outcome="/index"/>
-                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:menuitem>
-                            <p:menuitem outcome="mi-cuenta" value="Mi cuenta"/>
-                        </p:breadCrumb>
-                    </h:form>
-                </c:if>
-                </c:if>
-                 <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
                     <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
             </ui:define>
 
             <ui:define name="content">
+
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
-                    <div class="card" style="margin-top:40px;">
+                    <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                         
-                    <h:form>
-                        <div class="grid">
-                            <div class="col-2 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <style>
-                                        img {
-                                            width: 150px;
-                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                            margin-right: 10px;
-                                        } #upload{
-                                            width: 150px;
-                                        }
-                                    </style>
-                                    <img src="data:image/png;base64,#{loginPageBackingBean.usuarioLogeado.foto}" ></img>
+                        <div class="card" style="margin-top:40px;">
+
+                            <h:form>
+                                <div class="grid">
+                                    <div class="col-2 flex align-items-center justify-content-center">
+                                        <div class="ui-fluid">
+                                            <style>
+                                                img {
+                                                    width: 150px;
+                                                    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                                    margin-right: 10px;
+                                                } #upload{
+                                                    width: 150px;
+                                                }
+                                            </style>
+                                            <img src="data:image/png;base64,#{loginPageBackingBean.usuarioLogeado.foto}" ></img>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 flex align-items-center justify-content-center">
+                                        <div class="ui-fluid">
+                                            <div class="field">
+                                                <p:outputLabel value="Nombre del refugio" for="nombreRefugio" />
+                                                <p:inputText id="nombreRefugio" type="text"  placeholder="#{loginPageBackingBean.refugio.nombre}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                            <div class="field">
+                                                <p:outputLabel value="CIF" for="cif" />
+                                                <p:inputText id="cif" type="text"  placeholder="#{loginPageBackingBean.refugio.cif}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 flex align-items-center justify-content-center">
+                                        <div class="ui-fluid">
+                                            <div class="field">
+                                                <p:outputLabel value="Domicilio social" for="dir" />
+                                                <p:inputText id="dir" type="text"  placeholder="#{loginPageBackingBean.refugio.domicilioSocial}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                            <div class="field">
+                                                <p:outputLabel value="Teléfono" for="tlf" />
+                                                <p:inputText id="tlf" placeholder="#{loginPageBackingBean.refugio.telefono}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Nombre del refugio" for="nombreRefugio" />
-                                        <p:inputText id="nombreRefugio" type="text"  placeholder="#{loginPageBackingBean.refugio.nombre}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="CIF" for="cif" />
-                                        <p:inputText id="cif" type="text"  placeholder="#{loginPageBackingBean.refugio.cif}" disabled="true"/>
-                                        <p:message for="@previous"/>
+                                <div class="grid">
+                                    <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
+                                        <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" icon="pi pi-trash" onclick="PF('cuentaDeleteDialog').show()" id="deleteCuenta">
+                                            <p:tooltip for="deleteCuenta" value="Eliminar cuenta" position="top"></p:tooltip>
+                                        </p:commandButton>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Domicilio social" for="dir" />
-                                        <p:inputText id="dir" type="text"  placeholder="#{loginPageBackingBean.refugio.domicilioSocial}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Teléfono" for="tlf" />
-                                        <p:inputText id="tlf" placeholder="#{loginPageBackingBean.refugio.telefono}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                            
+                            </h:form>
                         </div>
-                        <div class="grid">
-                            <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
-                                <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" icon="pi pi-trash" onclick="PF('cuentaDeleteDialog').show()" id="deleteCuenta">
-                                    <p:tooltip for="deleteCuenta" value="Eliminar cuenta" position="top"></p:tooltip>
-                                </p:commandButton>
-                            </div>
+                    </c:if>
+                    <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                        <div class="card" style="margin-top:40px;">
+                            <h:form>
+                                <div class="grid">
+                                    <div class="col-2 flex align-items-center justify-content-center">
+                                        <div class="ui-fluid">
+                                            <style>
+                                                img {
+                                                    width: 150px;
+                                                    box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
+                                                    margin-right: 10px;
+                                                } #upload{
+                                                    width: 150px;
+                                                }
+                                            </style>
+                                            <img src="data:image/png;base64,#{loginPageBackingBean.usuarioLogeado.foto}" ></img>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 flex align-items-center justify-content-center">
+                                        <div class="ui-fluid">
+                                            <div class="field">
+                                                <p:outputLabel value="Nombre y apellidos" for="nombre" />
+                                                <p:inputText id="nombre" type="text"  placeholder="#{loginPageBackingBean.cliente.nombre}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                            <div class="field">
+                                                <p:outputLabel value="Apellidos" for="apellidos" />
+                                                <p:inputText id="apellidos" type="text"  placeholder="#{loginPageBackingBean.cliente.apellidos}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 flex align-items-center justify-content-center">
+                                        <div class="ui-fluid">
+                                            <div class="field">
+                                                <p:outputLabel value="Domicilio" for="dom" />
+                                                <p:inputText id="dom" type="text"  placeholder="#{loginPageBackingBean.cliente.domicilio}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                            <div class="field">
+                                                <p:outputLabel value="Teléfono" for="tlfcl" />
+                                                <p:inputText id="tlfcl" placeholder="#{loginPageBackingBean.cliente.telefono}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-3 flex align-items-center justify-content-center">
+                                        <div class="ui-fluid">
+                                            <div class="field">
+                                                <p:outputLabel value="Fecha de nacimiento" for="fecha" />
+                                                <p:inputText id="fecha" type="text"  placeholder="#{loginPageBackingBean.cliente.fechaNacimiento}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                            <div class="field">
+                                                <p:outputLabel value="NIF" for="nif" />
+                                                <p:inputText id="nif" type="text"  placeholder="#{loginPageBackingBean.cliente.nif}" disabled="true"/>
+                                                <p:message for="@previous"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="grid">
+                                    <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
+                                        <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" icon="pi pi-trash" onclick="PF('cuentaDeleteDialog').show()" id="deleteCuenta">
+                                            <p:tooltip for="deleteCuenta" value="Eliminar cuenta" position="top"></p:tooltip>
+                                        </p:commandButton>
+                                    </div>
+                                </div>
+                            </h:form>
                         </div>
-                    </h:form>
-                </div>
-                </c:if>
-                <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
-                    <div class="card" style="margin-top:40px;">
-                    <h:form>
-                        <div class="grid">
-                            <div class="col-2 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <style>
-                                        img {
-                                            width: 150px;
-                                            box-shadow: 0 3px 6px rgba(0,0,0,.16),0 3px 6px rgba(0,0,0,.23);
-                                            margin-right: 10px;
-                                        } #upload{
-                                            width: 150px;
-                                        }
-                                    </style>
-                                    <img src="data:image/png;base64,#{loginPageBackingBean.usuarioLogeado.foto}" ></img>
-                                </div>
-                            </div>
-                            <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Nombre y apellidos" for="nombre" />
-                                        <p:inputText id="nombre" type="text"  placeholder="#{loginPageBackingBean.cliente.nombre}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Apellidos" for="apellidos" />
-                                        <p:inputText id="apellidos" type="text"  placeholder="#{loginPageBackingBean.cliente.apellidos}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Domicilio" for="dom" />
-                                        <p:inputText id="dom" type="text"  placeholder="#{loginPageBackingBean.cliente.domicilio}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="Teléfono" for="tlfcl" />
-                                        <p:inputText id="tlfcl" placeholder="#{loginPageBackingBean.cliente.telefono}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                              <div class="col-3 flex align-items-center justify-content-center">
-                                <div class="ui-fluid">
-                                    <div class="field">
-                                        <p:outputLabel value="Fecha de nacimiento" for="fecha" />
-                                        <p:inputText id="fecha" type="text"  placeholder="#{loginPageBackingBean.cliente.fechaNacimiento}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                    <div class="field">
-                                        <p:outputLabel value="NIF" for="nif" />
-                                        <p:inputText id="nif" type="text"  placeholder="#{loginPageBackingBean.cliente.nif}" disabled="true"/>
-                                        <p:message for="@previous"/>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="grid">
-                            <div class="col-12 flex align-items-end justify-content-center" style="gap:10px;">
-                                <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" icon="pi pi-trash" onclick="PF('cuentaDeleteDialog').show()" id="deleteCuenta">
-                                    <p:tooltip for="deleteCuenta" value="Eliminar cuenta" position="top"></p:tooltip>
-                                </p:commandButton>
-                            </div>
-                        </div>
-                    </h:form>
-                </div>
-                </c:if>
+                    </c:if>
                 </c:if>
                 <!-- Modal para confirmar delete -->
+                <script>
+                    function handleSubmitAdd() {
+                        PF('mascotaDialog').hide();
+                    }
+                    function handleSubmitDelete() {
+                        PF('cuentaDeleteDialog').hide();
+                    }
+                    function handleSubmitUpdate() {
+                        PF('mascotaUpdateDialog').hide();
+                    }
+                    function ovBodyAuto() {
+                        $('html, body').css('overflow', 'auto');
+                    }
 
+                    function ovBodyHidden() {
+                        $('html, body').css('overflow', 'hidden');
+                    }</script>
                 <p:dialog draggable="false" resizable="false" modal="true" header="Eliminar cuenta" widgetVar="cuentaDeleteDialog"  width="350" showEffect="fade"  closeOnEscape="false">
                     <h:form>
                         <p>¿Seguro que deseas eliminar tu cuenta?</p>
-                        <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" oncomplete="handleSubmitDelete(xhr, status, args)">
+                        <p:commandButton value="Eliminar cuenta" styleClass="ui-button-danger" action="#{miCuentaPageClientBean.deactivateAccount()}" oncomplete="handleSubmitDelete(xhr, status, args)">
                         </p:commandButton>
                     </h:form>
                 </p:dialog>

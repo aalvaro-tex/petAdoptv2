@@ -9,12 +9,15 @@ import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.HistoricoSolicitudes;
 import com.alvaro.pse.petadopt.entities.Mascota;
 import com.alvaro.pse.petadopt.entities.Refugio;
+import com.alvaro.pse.petadopt.entities.Usuario;
+import com.alvaro.pse.petadopt.external.ListaNegraAPI;
 import com.alvaro.pse.petadopt.json.ClienteReader;
 import com.alvaro.pse.petadopt.json.HistoricoSolicitudesReader;
 import com.alvaro.pse.petadopt.json.HistoricoSolicitudesWriter;
 import com.alvaro.pse.petadopt.json.MascotaReader;
 import com.alvaro.pse.petadopt.json.MascotaWriter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
+import com.alvaro.pse.petadopt.utils.ExcelUtils;
 import com.alvaro.pse.petadopt.utils.PDFUtils;
 import java.io.IOException;
 import java.time.LocalDate;
@@ -52,6 +55,10 @@ public class SolicitudesClientBean {
     SolicitudesBackingBean bean;
     @Inject
     PDFUtils pdfUtils;
+    @Inject
+    ExcelUtils excelUtils;
+    @Inject
+    ListaNegraAPI listaNegraAPI;
 
     private Client client;
     private WebTarget target;
@@ -82,7 +89,7 @@ public class SolicitudesClientBean {
     }
 
     public List<Mascota> findByRefugioAndEstado() {
-        System.out.println(bean.getVerMascotasFilter());
+        //System.out.println(bean.getVerMascotasFilter());
         List<Mascota> all = new ArrayList<>();
         if (bean.getVerMascotasFilter().equalsIgnoreCase("pendiente")) {
             target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
@@ -123,7 +130,7 @@ public class SolicitudesClientBean {
     }
 
     public List<Mascota> findByClienteAndEstado() {
-        System.out.println("Find by cliente and estado");
+        //System.out.println("Find by cliente and estado");
         List<Mascota> all = new ArrayList<>();
         if (bean.getVerMascotasFilter().equalsIgnoreCase("pendiente")) {
             target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
@@ -178,7 +185,7 @@ public class SolicitudesClientBean {
     }
 
     public Mascota findMascotaById(Long id) {
-        System.out.println("Id mascota:" + id);
+        //System.out.println("Id mascota:" + id);
         Mascota m = null;
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
         Response response = target
@@ -205,12 +212,28 @@ public class SolicitudesClientBean {
         }
         return r;
     }
+    
+    public boolean puedeAdoptar(Long idCliente){
+        boolean puedeAdoptar = false;
+        // necesito recuperar el email del usuario que ha solicitado la adopción
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
+        Response response = target.path("{usuarioId}")
+                .resolveTemplate("usuarioId", idCliente)
+                .request()
+                .get();
+        if(response.getStatus() == 200){
+            Usuario u = response.readEntity(Usuario.class);
+            puedeAdoptar = listaNegraAPI.consultaListaNegra(u.getEmail());
+        }
+        return puedeAdoptar;
+    }
 
-    public void aceptarSolicitud(Long idSolicitud) {
+    public boolean aceptarSolicitud(Long idSolicitud) {
         // Para aceptar una solicitud basta poner 'adoptada' en el campo 
         // de estado
         //System.out.println(idSolicitud);
         // recuperamos la mascota con su id
+        boolean aceptada = false;
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
         Response response = target
                 .path("{mascotaId}")
@@ -220,57 +243,63 @@ public class SolicitudesClientBean {
 
         if (response.getStatus() == 200) {
             // TODO: AQUI HAY QUE COMPROBAR LA LISTA NEGRA
-            bean.setMascotaSelected(response.readEntity(Mascota.class));
-            Mascota m = new Mascota();
-            m.setId(idSolicitud);
-            m.setNombre(bean.getMascotaSelected().getNombre());
-            m.setEspecie(bean.getMascotaSelected().getEspecie());
-            m.setRaza(bean.getMascotaSelected().getRaza());
-            m.setEdad(bean.getMascotaSelected().getEdad());
-            m.setEstadoSalud(bean.getMascotaSelected().getEstadoSalud());
-            m.setCosteAdopcion(bean.getMascotaSelected().getCosteAdopcion());
-            m.setFoto(bean.getMascotaSelected().getFoto());
-            m.setIdRefugio(bean.getMascotaSelected().getIdRefugio());
-            m.setFechaPublicacion(bean.getMascotaSelected().getFechaPublicacion());
-            m.setFechaSolicitud(bean.getMascotaSelected().getFechaSolicitud());
-            m.setFirma(bean.getMascotaSelected().getFirma());
+            boolean puedeAdoptar = listaNegraAPI.consultaListaNegra("darthvader@uva.es");
+            System.out.println(puedeAdoptar);
+            if (puedeAdoptar == false) {
+                aceptada = false;
+            } else {
+                bean.setMascotaSelected(response.readEntity(Mascota.class));
+                Mascota m = new Mascota();
+                m.setId(idSolicitud);
+                m.setNombre(bean.getMascotaSelected().getNombre());
+                m.setEspecie(bean.getMascotaSelected().getEspecie());
+                m.setRaza(bean.getMascotaSelected().getRaza());
+                m.setEdad(bean.getMascotaSelected().getEdad());
+                m.setEstadoSalud(bean.getMascotaSelected().getEstadoSalud());
+                m.setCosteAdopcion(bean.getMascotaSelected().getCosteAdopcion());
+                m.setFoto(bean.getMascotaSelected().getFoto());
+                m.setIdRefugio(bean.getMascotaSelected().getIdRefugio());
+                m.setFechaPublicacion(bean.getMascotaSelected().getFechaPublicacion());
+                m.setFechaSolicitud(bean.getMascotaSelected().getFechaSolicitud());
+                m.setFirma(bean.getMascotaSelected().getFirma());
 
-            // la fecha de adopcion es la actual
-            LocalDate hoy = LocalDate.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-            String fecha = hoy.format(formatter);
-            m.setFechaAdopcion(fecha);
+                // la fecha de adopcion es la actual
+                LocalDate hoy = LocalDate.now();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+                String fecha = hoy.format(formatter);
+                m.setFechaAdopcion(fecha);
 
-            // el id del cliente es el id del usuario registrado
-            m.setIdCliente(bean.getMascotaSelected().getIdCliente());
-            // el estado de la solicitud pasa a ser 'adoptada'
-            m.setEstado("adoptada");
-            //System.out.println(m);
-            response = target.path("{mascotaId}")
-                    .resolveTemplate("mascotaId", idSolicitud)
-                    .request()
-                    .put(Entity.entity(m, MediaType.APPLICATION_JSON));
-            System.out.println(response);
-            if (response.getStatus() == 204) {
-                // ahora añadimos la solicitud aceptada al histórico de solicitudes
-                target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.historicosolicitudes");
-                HistoricoSolicitudes h = new HistoricoSolicitudes();
-                h.setIdCliente(m.getIdCliente());
-                h.setIdRefugio(m.getIdRefugio());
-                h.setFechaModificacion(fecha);
-                h.setIdMascota(m.getId());
-                h.setEstado("adoptada");
-                response = target.register(HistoricoSolicitudesWriter.class)
-                        .request(MediaType.APPLICATION_JSON)
-                        .post(Entity.entity(h, MediaType.APPLICATION_JSON));
+                // el id del cliente es el id del usuario registrado
+                m.setIdCliente(bean.getMascotaSelected().getIdCliente());
+                // el estado de la solicitud pasa a ser 'adoptada'
+                m.setEstado("adoptada");
+                //System.out.println(m);
+                response = target.path("{mascotaId}")
+                        .resolveTemplate("mascotaId", idSolicitud)
+                        .request()
+                        .put(Entity.entity(m, MediaType.APPLICATION_JSON));
+                //System.out.println(response);
+                if (response.getStatus() == 204) {
+                    // ahora añadimos la solicitud aceptada al histórico de solicitudes
+                    target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.historicosolicitudes");
+                    HistoricoSolicitudes h = new HistoricoSolicitudes();
+                    h.setIdCliente(m.getIdCliente());
+                    h.setIdRefugio(m.getIdRefugio());
+                    h.setFechaModificacion(fecha);
+                    h.setIdMascota(m.getId());
+                    h.setEstado("adoptada");
+                    response = target.register(HistoricoSolicitudesWriter.class)
+                            .request(MediaType.APPLICATION_JSON)
+                            .post(Entity.entity(h, MediaType.APPLICATION_JSON));
 
-                System.out.println(response);
-                if (response.getStatus() == 200) {
-                    System.out.println("Mascota aceptada correctamente");
+                    //System.out.println(response);
+                    if (response.getStatus() == 200) {
+                        System.out.println("Mascota aceptada correctamente");
+                    }
                 }
             }
-
         }
+        return aceptada;
     }
 
     public String getAllSoliciutdesCount() {
@@ -400,6 +429,27 @@ public class SolicitudesClientBean {
             Logger.getLogger(SolicitudesClientBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return pdf;
+    }
+
+    public StreamedContent descargarSolicitudes() {
+        StreamedContent excel = null;
+        // necesito obtener el histórico del refugio logeado
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.historicosolicitudes");
+        HistoricoSolicitudes[] response = target.register(HistoricoSolicitudesWriter.class)
+                .path("find-by-refugio/{idRefugio}")
+                .resolveTemplate("idRefugio", loginBean.getUsuarioLogeado().getId())
+                .request()
+                .get(HistoricoSolicitudes[].class);
+
+        if (response.length > 0) {
+            try {
+                // aqui llamamos al método que nos genera el excel
+                excel = excelUtils.generateHistorialExcel(response);
+            } catch (IOException ex) {
+                Logger.getLogger(SolicitudesClientBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return excel;
     }
 
 }

@@ -57,6 +57,7 @@ public class PDFUtils implements Serializable {
      * @param direccionRefugio
      * @param telefonoRefugio
      * @param base64firma
+     * @return un objeto DefaultSreamedContent 
      * @throws IOException
      */
     public DefaultStreamedContent generateCertificadoAdopcionPDF(
@@ -232,7 +233,7 @@ public class PDFUtils implements Serializable {
         contentStream.endText();
         
         // Firma del cliente
-        System.out.println(base64firma);
+        //System.out.println(base64firma);
         byte[] ba = java.util.Base64.getDecoder().decode(base64firma);
         PDImageXObject sigimg = PDImageXObject.createFromByteArray(document,ba,"signature");
         contentStream.drawImage(sigimg,260,45);
@@ -247,7 +248,7 @@ public class PDFUtils implements Serializable {
         document.close();
         
         try {
-            sleep(1000);
+            sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(PDFUtils.class.getName()).log(Level.SEVERE, null, ex);
         }

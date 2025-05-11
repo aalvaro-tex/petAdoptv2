@@ -25,13 +25,13 @@ public class SignUpPageValidator {
     @Size(min = 8)
     private String password;
     
-    @Size(min = 9)
+    @Size(min =10, max = 10)
     private String cif;
     
     @Size(max = 9)
     private String telefono;
     
-    @Size(min =9, max = 9)
+    @Size(min =10, max = 10)
     private String nif;
 
     public String getCif() {

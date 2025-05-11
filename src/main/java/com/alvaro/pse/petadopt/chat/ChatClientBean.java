@@ -20,6 +20,7 @@ import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
@@ -113,7 +114,7 @@ public class ChatClientBean implements Serializable {
         } else {
             id = Long.parseLong(idConversacion.split(":")[0]);
         }
-        System.out.println(id);
+        //System.out.println(id);
         Refugio found = null;
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
         Response response = target
@@ -124,7 +125,7 @@ public class ChatClientBean implements Serializable {
 
         if (response.getStatus() == 200) {
             found = response.readEntity(Refugio.class);
-            System.out.println(found);
+            //System.out.println(found);
         }
         return found;
     }
@@ -145,7 +146,7 @@ public class ChatClientBean implements Serializable {
     }
 
     public List<Chat> getChatsByUser(String idConversacion) {
-        List<Chat> chats = null;
+        List<Chat> chats = new ArrayList<>();
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.chat");
         Response response = target.register(ChatWriter.class)
                 .path("my-chats/{idUsuario}")

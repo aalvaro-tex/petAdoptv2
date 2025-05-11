@@ -34,7 +34,7 @@ import javax.ws.rs.core.Response;
 public class AdopcionClientBean{
 
     @Inject
-    AdopcionBackingBean bean;
+    Adopcion bean;
     @Inject
     LoginPageBackingBean loginBean;
 
@@ -147,7 +147,7 @@ public class AdopcionClientBean{
                 .resolveTemplate("refugioId", bean.getMascotaSelected().getIdRefugio())
                 .request()
                 .get();
-        System.out.println("Refugio: "+response);
+        //System.out.println("Refugio: "+response);
         if(response.getStatus() == 200){
             Refugio r = response.readEntity(Refugio.class);
             bean.setRefugio(r);

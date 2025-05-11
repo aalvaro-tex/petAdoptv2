@@ -6,6 +6,7 @@
 package com.alvaro.pse.petadopt.rest;
 
 import com.alvaro.pse.petadopt.entities.Usuario;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.ejb.Stateless;
@@ -83,7 +84,15 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     public List<Usuario> findAll() {
-        return super.findAll();
+        List<Usuario> found = new ArrayList<>();
+        // hay que eliminar los usuarios desactivados
+        List<Usuario> all = super.findAll();
+        for(Usuario u : all){
+            if(u.getActivo() == true){
+                found.add(u);
+            }
+        }
+        return found;
     }
 
     @GET

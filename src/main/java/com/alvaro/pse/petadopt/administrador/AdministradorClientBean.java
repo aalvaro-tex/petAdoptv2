@@ -8,11 +8,13 @@ package com.alvaro.pse.petadopt.administrador;
 import com.alvaro.pse.petadopt.entities.Especie;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
+import com.alvaro.pse.petadopt.entities.UsuarioGrupo;
 import com.alvaro.pse.petadopt.json.ClienteWriter;
 import com.alvaro.pse.petadopt.json.EspeciesReader;
 import com.alvaro.pse.petadopt.json.EspeciesWriter;
 import com.alvaro.pse.petadopt.json.RefugioReader;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
+import com.alvaro.pse.petadopt.json.UsuarioGrupoReader;
 import com.alvaro.pse.petadopt.json.UsuarioWriter;
 import java.util.ArrayList;
 import java.util.List;
@@ -145,18 +147,29 @@ public class AdministradorClientBean {
 
     // indica si el usuario con el id asociado es administrador o no
     public boolean isAdmin(Long id) {
-        boolean esAdmin = false;
-        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.administrador");
-        Response response = target.register(ClienteWriter.class)
-                .path("{id}")
-                .resolveTemplate("id", id)
-                .request(MediaType.APPLICATION_JSON)
+        boolean isAdmin = false;
+        // necesitamos el email del usuario
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
+        Response response = target.path("{idUsuario}")
+                .resolveTemplate("idUsuario", id)
+                .request()
                 .get();
+        System.out.println(response);
         if (response.getStatus() == 200) {
-            // es administrador
-            esAdmin = true;
+            Usuario u = response.readEntity(Usuario.class);
+            // buscamos si en la tabla de roles aparece el par (admin, email)
+            target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuariogrupo");
+            response = target.register(UsuarioGrupoReader.class)
+                    .path("is-user-admin/{email}")
+                    .resolveTemplate("email", u.getEmail())
+                    .request()
+                    .get();
+            
+            if(response.getStatus() == 200){
+                isAdmin = response.readEntity(Boolean.class);
+            }
         }
-        return esAdmin;
+        return isAdmin;
     }
 
     public List<Especie> getAllEspecies() {
@@ -192,10 +205,25 @@ public class AdministradorClientBean {
     }
 
     public void deleteUsuario() {
-        // para eliminar un usuario debemos
-        // 1. Eliminar todas las solicitudes pendientes de dicho usuario
-        // 2. Eliminar del historial todas las entradas asociadas a dicho usuario
-        // 3. Eliminar de la tabla cliente/refugio su fila
-        // 4. Eliminar de la tabla de usuarios su fila
+        // eliminar un usuario consiste en desactivar su cuenta
+        // necesitamos el email del usuario en cuestión
+        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
+        Response response = target.path("{idUsuario}")
+                .resolveTemplate("idUsuario", bean.getIdUsuarioSelected())
+                .request()
+                .get();
+        System.out.println(response);
+        if (response.getStatus() == 200) {
+            Usuario u = response.readEntity(Usuario.class);
+            // ahora desactivamos la cuenta
+            response = target.path("{idUsuario}")
+                    .resolveTemplate("idUsuario", bean.getIdUsuarioSelected())
+                    .request()
+                    .put(Entity.entity(u, MediaType.APPLICATION_JSON));
+            if (response.getStatus() == 204) {
+                System.out.println("Cuenta dedscativada");
+            }
+        }
+
     }
 }

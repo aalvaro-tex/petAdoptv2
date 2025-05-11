@@ -24,6 +24,16 @@ public class SolicitudesBackingBean implements Serializable {
     private String rutaCertificado;
 
     private StreamedContent file;
+    
+    private StreamedContent excel;
+
+    public StreamedContent getExcel() {
+        return excel;
+    }
+
+    public void setExcel(StreamedContent excel) {
+        this.excel = excel;
+    }
 
     private Long idMascotaSelected;
     private Mascota mascotaSelected;

@@ -20,15 +20,17 @@
                             <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
                             <p:menuitem value="Adoptar" style="font-weight: 600"/>
                             <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                            <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                            <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                         </p:megaMenu>
                     </h:form>
                     <h:form style="margin-top:10px;">
                         <p:breadCrumb>
-                            <p:menuitem outcome="/index"/>
-                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:menuitem>
-                            <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
+                          <p:menuitem outcome="/home/home" value="Inicio"/>
+                            <p:menuitem outcome="/adopcion/lista-mascotas" value="Adoptar"/>
                         </p:breadCrumb>
                     </h:form>
                     <div class="card">
@@ -52,7 +54,7 @@
 
                     <div class="field" style="display:flex; gap:10px; ">   
                         <h:form>
-                            <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{adopcionBackingBean.mascotaFilter}" >
+                            <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{adopcion.mascotaFilter}" >
                                 <f:selectItem itemLabel="Todas las mascotas disponibles" itemValue="todas" />
                                 <f:selectItems value="#{loginPageBackingBean.especies}"/>
                                 <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
@@ -64,7 +66,7 @@
                     <h:form id="form" >
                         <p:dataScroller  value="#{adopcionClientBean.findByEspecie()}" var="mascota" chunkSize="3" id="data" lazy="false">
                             <f:facet name="header" id="header">
-                                <p:outputLabel id="selectedItemText" value="#{adopcionBackingBean.filterDisplayName}"/>
+                                <p:outputLabel id="selectedItemText" value="#{adopcion.filterDisplayName}"/>
                             </f:facet>
 
                             <f:facet name="loader">
@@ -184,7 +186,7 @@
                                         </h:outputText>
                                         <div style="display:flex;flex-direction: row;">
                                             <p:commandButton icon="pi pi-arrow-right" styleClass="ui-button-primary" style="width:100%" id="selectBtn" action="#{adopcionClientBean.getMascotaById()}">
-                                                <f:setPropertyActionListener target="#{adopcionBackingBean.idMascotaSelected}" value="#{mascota.id}" />
+                                                <f:setPropertyActionListener target="#{adopcion.idMascotaSelected}" value="#{mascota.id}" />
                                             </p:commandButton>
                                             <p:tooltip for="selectBtn" value="Seleccionar" position="bottom"/>
                                         </div>

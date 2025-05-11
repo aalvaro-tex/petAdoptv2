@@ -29,15 +29,17 @@
                                     <span class="notification-dot"></span>
                                 </c:if>
                             </p:menuitem>
-                            <p:menuitem value="Mi cuenta"/>
+                            <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                             <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                             <p:menuitem disabled="true" style="width:calc(100vw - 710px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                         </p:megaMenu>
                     </h:form>
                     <h:form style="margin-top:10px;">
                         <p:breadCrumb>
-                            <p:menuitem outcome="/index"/>
-                            <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                            </p:menuitem>
+                             <p:menuitem outcome="/home/home" value="Inicio"/>
                             <p:menuitem outcome="mascotas" value="Mascotas"/>
                         </p:breadCrumb>
                     </h:form>
@@ -72,7 +74,7 @@
                         <div class="field" style="display:flex; gap:10px; ">
                             <h:form>                    
                                 <p:commandButton value="Añadir nueva mascota" icon="pi pi-plus" style="margin-bottom:10px; heigth:40px;" onclick="PF('mascotaDialog').show()" disabled="#{loginPageBackingBean.refugio.verificado == false}"></p:commandButton>
-                            </h:form>    
+                            </h:form>
                             <h:form>
                                 <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px;" value="#{mascotasPageBackingBean.verMascotasFilter}" >
                                     <f:selectItem itemLabel="Todas las mascotas" itemValue="todas" />
@@ -84,13 +86,7 @@
                                     <p:ajax event="itemSelect" update=":form:data"/> 
                                 </p:selectOneMenu>
                             </h:form>
-                            <h:form>
-                                <p:commandButton icon="pi pi-undo" id="recargarButton">
-                                    <p:tooltip for="recargarButton" value="Recargar datos" position="right"/>
-                                    <p:ajax event="click" update=":form:data"/> 
-                                </p:commandButton>
-
-                            </h:form>
+          
                         </div>
 
                         <h:form id="form" >
@@ -252,8 +248,9 @@
                                         </div>
                                         <div class="field">
                                             <p:outputLabel value="Especie" for="especie" />
-                                            <p:selectOneMenu required="true" id="especie" alwaysDisplayLabel="false" style="height: 40px;" value="#{adopcionBackingBean.mascotaFilter}" >
-                                                <f:selectItems value="#{loginPageBackingBean.especies}"/>
+                                            <p:selectOneMenu required="true" id="especie" alwaysDisplayLabel="false" style="height: 40px;" value="#{mascotasPageBackingBean.especie}" >
+                                                <f:selectItems value="#{loginPageBackingBean.especies}"  />
+                                             
                                             </p:selectOneMenu>
                                             <p:message for="@previous"/>
                                         </div>

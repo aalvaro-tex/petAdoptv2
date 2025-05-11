@@ -15,6 +15,7 @@
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                     <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                         <h:form id="header-form">
+                            <p:remoteCommand name="updateNavMenu" update="navMenu" />
                             <p:sticky target="navMenu"/>
                             <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
                                 <p:menuitem value="Inicio" outcome="/home/home"/>
@@ -26,14 +27,16 @@
                                     </c:if>
                                 </p:menuitem>
                                 <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                                <p:menuitem disabled="true" style="width:calc(100vw - 700px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                                 <p:menuitem outcome="solicitudes" value="Solicitudes de adopción"/>
                             </p:breadCrumb>
                         </h:form>
@@ -46,14 +49,16 @@
                                 <p:menuitem value="Mis adopciones" outcome="solicitudes" style="font-weight: 600"/>
                                 <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
                                 <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                               <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                                 <p:menuitem outcome="solicitudes" value="Mis adopciones"/>
                             </p:breadCrumb>
                         </h:form>
@@ -86,15 +91,27 @@
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                     <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                         <div class="card" style="margin-top:40px;">
-                            <h:form>
-                                <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px; margin-bottom:10px;" value="#{solicitudesBackingBean.verMascotasFilter}" >
-                                    <f:selectItem itemLabel="Aceptadas" itemValue="adoptada"/>
-                                    <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
-                                    <f:selectItem itemLabel="Rechazadas" itemValue="rechazada"/>
-                                    <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
-                                    <p:ajax event="itemSelect" update=":form:data"/> 
-                                </p:selectOneMenu>
-                            </h:form>
+                            <div class="field" style="display:flex; gap:10px; flex-wrap: space-between;">
+                                <h:form>
+                                    <p:selectOneMenu id="selectFilter" alwaysDisplayLabel="false" style="height: 40px; margin-bottom:10px;" value="#{solicitudesBackingBean.verMascotasFilter}" >
+                                        <f:selectItem itemLabel="Aceptadas" itemValue="adoptada"/>
+                                        <f:selectItem itemLabel="Pendientes" itemValue="pendiente"/>
+                                        <f:selectItem itemLabel="Rechazadas" itemValue="rechazada"/>
+                                        <p:ajax event="itemSelect" update=":form:data:selectedItemText"/> 
+                                        <p:ajax event="itemSelect" update=":form:data"/> 
+                                    </p:selectOneMenu>
+                                </h:form>
+                                <div style=" flex-grow: 1;"></div>
+
+                                <h:form>
+                                    <!--
+                                <p:commandButton icon="pi pi-file-excel" styleClass="ui-button-primary" style="margin-top:5px;" id="downloadExcel" ajax="false" onclick="PrimeFaces.monitorDownload(start, stop);">
+                                    <p:fileDownload value="#{solicitudesClientBean.descargarSolicitudes()}" /> 
+                                </p:commandButton>
+                                    -->
+
+                                </h:form>
+                            </div>
                             <h:form id="form" >
                                 <p:dataScroller  value="#{solicitudesClientBean.findByRefugioAndEstado()}" var="solicitud" chunkSize="5" id="data" lazy="false">
                                     <f:facet name="header" id="header">
@@ -218,9 +235,10 @@
 
                                             <div class="solicitud-list-action">
                                                 <div style="display:flex;flex-direction: row; gap:10px; justify-content: center">
-                                                    <p:commandButton icon="pi pi-check" styleClass="ui-button-success" update=":form:data"  action="#{solicitudesClientBean.aceptarSolicitud(solicitud.id)}" id="acceptBtn" rendered="#{solicitud.estado.equalsIgnoreCase('pendiente')}" >
-                                                        <p:ajax event="click" update=":header-form:solicitudes"/>
+                                                    <p:commandButton icon="pi pi-check" styleClass="ui-button-success" update=":form:data"  action="#{solicitudesClientBean.aceptarSolicitud(solicitud.id)}" id="acceptBtn" rendered="#{(solicitud.estado.equalsIgnoreCase('pendiente')) and (solicitudesClientBean.puedeAdoptar(solicitud.idCliente))}" oncomplete="updateNavMenu();" >
+                                                       
                                                         <p:ajax event="click" update=":form:data"/> 
+                                                        
                                                     </p:commandButton>
 
                                                     <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
@@ -246,6 +264,25 @@
                                     PF('statusDialog').hide();
                                 }
                             </script>
+
+
+                            <script>
+                                function handleSubmitAdd() {
+                                    PF('mascotaDialog').hide();
+                                }
+                                function handleSubmitDelete() {
+                                    PF('mascotaDeleteDialog').hide();
+                                }
+                                function handleSubmitUpdate() {
+                                    PF('mascotaUpdateDialog').hide();
+                                }
+                                function ovBodyAuto() {
+                                    $('html, body').css('overflow', 'auto');
+                                }
+
+                                function ovBodyHidden() {
+                                    $('html, body').css('overflow', 'hidden');
+                                }</script>
                             <!-- Modal para confirmar el rechazo -->
                             <p:dialog draggable="false" resizable="false" modal="true" header="Rechazar adopción" widgetVar="mascotaDeleteDialog"  width="350" showEffect="fade" closeOnEscape="false">
                                 <h:form>

@@ -89,6 +89,7 @@ public class MascotasPageClientBean {
         String fecha = hoy.format(formatter);
         m.setFechaPublicacion(fecha);
 
+        System.out.println(m.getEspecie());
         // añadimos la mascota a la bbdd
         target.register(MascotaWriter.class)
                 .request(MediaType.APPLICATION_JSON)
@@ -101,7 +102,7 @@ public class MascotasPageClientBean {
 
     private List<Mascota> findByRefugio() {
         List<Mascota> all = null;
-        System.out.println(loginBean.getUsuarioLogeado().getId());
+        //System.out.println(loginBean.getUsuarioLogeado().getId());
         Response response = target.register(MascotaWriter.class)
                 .path("find-by-refugio/{idRefugio}")
                 .resolveTemplate("idRefugio", loginBean.getUsuarioLogeado().getId())
@@ -177,7 +178,7 @@ public class MascotasPageClientBean {
                 .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
                 .request()
                 .put(Entity.entity(m, MediaType.APPLICATION_JSON));
-        System.out.println(response);
+        //System.out.println(response);
         if(response.getStatus() == 204){
             success = "success";
         }

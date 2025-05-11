@@ -47,6 +47,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.alvaro.pse.petadopt.rest.MascotaFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.RefugioFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.UsuarioFacadeREST.class);
+        resources.add(com.alvaro.pse.petadopt.rest.UsuarioGrupoFacadeREST.class);
     }
     
 }

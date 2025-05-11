@@ -32,16 +32,18 @@
                                     </c:if>
                                 </p:menuitem>
                                 <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
-                                <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                                <p:menuitem disabled="true" style="width:calc(100vw - 700px);"/>
+                                 <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                                 <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                                <p:menuitem value="Chat #{chatBackingBean.idConversacion}"/>
                             </p:breadCrumb>
                         </h:form>
                     </c:if>
@@ -49,21 +51,22 @@
                         <h:form >
                             <p:sticky target="navMenu"/>
                             <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
-                                <p:menuitem value="Inicio" outcome="/home/home" style="font-weight: 600"/>
+                                <p:menuitem value="Inicio" outcome="/home/home"/>
                                 <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
                                 <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
                                 <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
-                                <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" style="font-weight: 600" />
+                                <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
+                                 <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
-
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                                 <p:menuitem value="Chat" outcome="/chat/chat-list"/>
+                                <p:menuitem value="Chat #{chatBackingBean.idConversacion}"/>
                             </p:breadCrumb>
                         </h:form>
                     </c:if>
@@ -74,15 +77,15 @@
                                 <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
                                 <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
                                 <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
+                                <p:menuitem disabled="true" style="width:calc(100vw - 700px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
-                                <p:menuitem outcome="home" value="Inicio"/>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                             </p:breadCrumb>
                         </h:form>
                     </c:if>
@@ -124,8 +127,10 @@
                         <div style="display:flex; flex-direction: row">
                             <img src="data:image/png;base64,#{chatClientBean.getUsuarioById(chatBackingBean.idConversacion).foto}" style="width:45%; padding: 10px;"></img>
                             <div style="display:flex; flex-direction: column; height:100%; margin-top:10px; gap:5px;">
-                                <p:outputLabel style="font-size:26px;">#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).nombre}</p:outputLabel>
-                                <p:outputLabel>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).telefono}</p:outputLabel>
+                                <p:outputLabel rendered="#{loginPageBackingBean.rol.equalsIgnoreCase('Refugio')}" style="font-size:26px;"> <i class="pi pi-user" style="margin-right:10px;"></i>#{chatClientBean.getClienteById(chatBackingBean.idConversacion).nombre}</p:outputLabel>
+                                <p:outputLabel rendered="#{loginPageBackingBean.rol.equalsIgnoreCase('Cliente')}" style="font-size:26px;"> <i class="pi pi-user" style="margin-right:10px;"></i>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).nombre}</p:outputLabel>
+                                <p:outputLabel rendered="#{loginPageBackingBean.rol.equalsIgnoreCase('Refugio')}"> <i class="pi pi-phone" style="margin-right:10px;"></i>#{chatClientBean.getClienteById(chatBackingBean.idConversacion).telefono}</p:outputLabel>
+                                <p:outputLabel rendered="#{loginPageBackingBean.rol.equalsIgnoreCase('Cliente')}"><i class="pi pi-phone" style="margin-right:10px;"></i>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).telefono}</p:outputLabel>
                                 <p:outputLabel>#{chatClientBean.getRefugioById(chatBackingBean.idConversacion).domicilioSocial}</p:outputLabel>
                             </div>
                         </div>
@@ -133,7 +138,7 @@
                     <div class="chat-container">
 
                         <p:card style="margin-top:10px; width:100%;" >
-                            <p:card style="width:100%; height: 220px; ">
+                            <p:card style="width:100%; height: 350px; ">
                                 <style>
 
                                     .ui-datatable.borderless thead {
@@ -150,10 +155,49 @@
                                     body .ui-datatable .ui-datatable-data > tr > td {
                                         border:none
                                     }
+                                    .message-container-emisor{
+                                        width:100%;
+                                        padding: 5px;
+                                        padding-right:10px;
+                                        display: flex;
+                                        flex-direction: row;
+                                        height: 45px;
+                                        align-content: center;
+                                        border: solid 1px #2196F3;
+                                        background-color: rgba(33, 150, 243,0.05);
+                                        border-radius: 6px;
+                                        flex-wrap: wrap;
+                                        justify-content: right;
+                                    }
+                                    .message-container-receptor{
+                                        width:100%;
+                                        padding: 5px;
+                                        padding-left:10px;
+                                        display: flex;
+                                        flex-direction: row;
+                                        height: 45px;
+                                        align-content: center;
+                                        justify-content: left;
+                                        border: solid 1px black;
+                                        background-color: rgb(248, 249, 250);
+                                        border-radius: 6px;
+                                        flex-wrap: wrap;
+                                    }
                                 </style>
                                 <p:dataTable style="margin-top:-35px;" styleClass="borderless" showGridlines="false" var="chat" value="#{chatClientBean.getLatestMessageByUser(chatBackingBean.idConversacion)}" id="chatMessages">
-                                    <p:column>
-                                        <h:outputText value="#{chat.mensaje}"/>
+                                    <p:column rendered="#{chat.idEmisor == loginPageBackingBean.usuarioLogeado.id}">
+                                        <div class="message-container-emisor">
+                                            <h:outputText value="#{chat.mensaje}" style="font-weight: 600"/>
+                                            <i class="pi pi-check-circle" style="align-self: center; margin-left:20px;"></i>
+                                        </div>
+                                    </p:column>
+                                    <p:column rendered="#{chat.idReceptor == loginPageBackingBean.usuarioLogeado.id}">
+                                        <div class="message-container-receptor">
+                                            <i class="pi pi-arrow-circle-right
+                                               " style="align-self: center; margin-right:20px;"></i>
+                                            <h:outputText value="#{chat.mensaje}" style="font-weight: 600"/>
+
+                                        </div>
                                     </p:column>
                                 </p:dataTable>
                             </p:card>

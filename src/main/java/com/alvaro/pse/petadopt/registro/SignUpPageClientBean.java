@@ -8,11 +8,16 @@ package com.alvaro.pse.petadopt.registro;
 import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
+import com.alvaro.pse.petadopt.jaas.UsuarioEJB;
 import com.alvaro.pse.petadopt.json.ClienteWriter;
 import com.alvaro.pse.petadopt.json.UsuarioWriter;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import com.alvaro.pse.petadopt.utils.ImageUtils;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -45,12 +50,10 @@ public class SignUpPageClientBean {
     SignUpPageBackingBean bean;
     @Inject
     LoginPageBackingBean loginBean;
-    @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
-    private EntityManager em;
-    @Resource
-    private javax.transaction.UserTransaction utx;
     @Inject
     ImageUtils imageUtils;
+    @Inject
+    private UsuarioEJB usuarioEJB;
 
     @PostConstruct
     public void init() {
@@ -63,6 +66,7 @@ public class SignUpPageClientBean {
         client.close();
     }
 
+    /*
     public String addUsuario() {
         // comprobamos que las dos contraseñas sean iguales
         Long id = -1L;
@@ -87,7 +91,7 @@ public class SignUpPageClientBean {
                 // el usuario ya está registrado
                 bean.showError("El correo ya está registrado");
             } else {
-
+                System.out.println(u.toString());
                 target.register(UsuarioWriter.class)
                         .request(MediaType.APPLICATION_JSON)
                         .post(Entity.entity(u, MediaType.APPLICATION_JSON));
@@ -141,5 +145,74 @@ public class SignUpPageClientBean {
         bean.clearValues();
         return success;
     }
+     */
+    public String register() {
+        String success = "failure";
+        System.out.println(bean.getFechaNacimiento());
+        if(esMayorDeEdad(bean.getFechaNacimiento())){
+        Usuario user = new Usuario(bean.getEmail(), bean.getPassword1(), this.imageUtils.upload(bean.getFotoPerfil()));
+        user.setActivo(true);
+        try {
+            Long idUsuario = usuarioEJB.createUser(user);
+            // tenemos el id del usuario para poder crear el refugio/cliente
+            if (loginBean.getRol().equalsIgnoreCase("refugio")) {
+                Refugio r = new Refugio();
+                r.setId(idUsuario);
+                r.setNombre(bean.getNombreRefugio());
+                r.setTelefono(bean.getTelefono());
+                r.setCif(bean.getCif());
+                r.setVerificado(false);
+                r.setDomicilioSocial(bean.getDomicilioSocial());
+
+                usuarioEJB.createRefugio(r);
+                success = "success";
+                loginBean.setCliente(null);
+                loginBean.setRefugio(r);
+                loginBean.setUsuarioLogeado(user);
+            } else if (loginBean.getRol().equalsIgnoreCase("cliente")) {
+                Cliente c = new Cliente();
+                c.setId(idUsuario);
+                c.setNif(bean.getNif());
+                c.setNombre(bean.getNombreCliente());
+                c.setApellidos(bean.getApellidos());
+                c.setDomicilio(bean.getDomicilio());
+                c.setTelefono(bean.getTelefono());
+                // hay que validar la mayoría de edad
+                
+                c.setFechaNacimiento(bean.getFechaNacimiento());
+                System.out.println(c.getId());
+                System.out.println("Añadimos un cliente");
+
+                usuarioEJB.createCliente(c);
+
+                success = "success";
+                loginBean.setCliente(c);
+                loginBean.setRefugio(null);
+                loginBean.setUsuarioLogeado(user);
+                
+            }
+        } catch (Exception e) {
+            bean.showError("El email ya está en uso");
+        }
+        } else{
+            bean.showError("Debes ser mayor de edad para registrarte");
+        }
+        
+        return success;
+    }
+
+    public boolean esMayorDeEdad(String fechaNacimiento) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        try {
+            LocalDate nacimiento = LocalDate.parse(fechaNacimiento, formatter);
+            LocalDate hoy = LocalDate.now(); // Se calcula la diferencia en años 
+            int edad = Period.between(nacimiento, hoy).getYears();
+            return edad >= 18;
+        } catch (DateTimeParseException e) {
+            System.err.println("Formato de fecha incorrecto. Debe ser dd/MM/yyyy");
+        }
+        return false;
+    
+}
 
 }

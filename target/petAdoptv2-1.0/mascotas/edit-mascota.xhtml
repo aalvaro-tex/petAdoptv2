@@ -25,14 +25,16 @@
                                     </c:if>
                                 </p:menuitem>
                         <p:menuitem value="Mi cuenta"/>
+                         <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                         <p:menuitem disabled="true" style="width:calc(100vw - 700px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                     </p:megaMenu>
                 </h:form>
                 <h:form style="margin-top:10px;">
                     <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
+                         <p:menuitem outcome="/home/home" value="Inicio"/>
                         <p:menuitem outcome="mascotas" value="Mascotas"/>
                         <p:menuitem outcome="edit-mascota" value="Editar mascota"/>
                     </p:breadCrumb>

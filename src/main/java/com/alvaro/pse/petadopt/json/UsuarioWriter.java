@@ -44,6 +44,7 @@ public class UsuarioWriter implements MessageBodyWriter<Usuario>{
                 .write("email", t.getEmail())
                 .write("password", t.getPassword())
                 .write("foto",t.getFoto())
+                .write("activo",t.getActivo())
                 .writeEnd();
         gen.flush();
     }

@@ -83,6 +83,21 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
     public String countREST() {
         return String.valueOf(super.count());
     }
+     
+    @GET
+    @Path("find-by-refugio/{idRefugio}")
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
+    public List<HistoricoSolicitudes> findByRefugio(@PathParam("idRefugio") Long idRefugio){
+        List<HistoricoSolicitudes> all = this.findAll();
+        List<HistoricoSolicitudes> found = new ArrayList<>();
+        for(HistoricoSolicitudes h : all){
+            if(h.getIdRefugio() == idRefugio){
+                found.add(h);
+            }
+        }
+        //System.out.println("foud: "+found.size());
+        return found;
+    }
     
     @GET
     @Path("find-by-refugio-estado/{idRefugio}/{estado}")

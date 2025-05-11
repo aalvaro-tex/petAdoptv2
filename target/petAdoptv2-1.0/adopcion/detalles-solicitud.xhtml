@@ -13,35 +13,37 @@
 
             <ui:define name="top">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <h:form >
-                    <p:sticky target="navMenu"/>
-                    <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
-                        <p:menuitem value="Inicio" outcome="/home/home" />
-                        <p:menuitem value="Mis adopciones"/>
-                        <p:menuitem value="Adoptar" style="font-weight: 600"/>
-                        <p:menuitem value="Mi cuenta"/>
-                    </p:megaMenu>
-                </h:form>
-                <h:form style="margin-top:10px;">
-                    <p:breadCrumb>
-                        <p:menuitem outcome="/index"/>
-                        <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                            <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                        </p:menuitem>
-                        <p:menuitem outcome="lista-mascotas" value="Adoptar"/>
-                    </p:breadCrumb>
-                </h:form>
-                <h:form>
-                    <div class="card">
-                        <p:steps activeIndex="2">
-                            <p:menuitem value="Elige tu mascota"/>
-                            <p:menuitem value="Confirma tu solicitud"/>
-                            <p:menuitem value="Detalles de la solicitud"/>
-                        </p:steps>
-                    </div>
-                </h:form>
+                    <h:form >
+                        <p:sticky target="navMenu"/>
+                        <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
+                            <p:menuitem value="Inicio" outcome="/home/home" />
+                            <p:menuitem value="Mis adopciones"/>
+                            <p:menuitem value="Adoptar" style="font-weight: 600"/>
+                            <p:menuitem value="Mi cuenta"/>
+                            <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                           <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
+                        </p:megaMenu>
+                    </h:form>
+                    <h:form style="margin-top:10px;">
+                        <p:breadCrumb>
+                           <p:menuitem outcome="/home/home" value="Inicio"/>
+                            <p:menuitem outcome="/adopcion/lista-mascotas" value="Adoptar"/>
+                        </p:breadCrumb>
+                    </h:form>
+                    <h:form>
+                        <div class="card">
+                            <p:steps activeIndex="2">
+                                <p:menuitem value="Elige tu mascota"/>
+                                <p:menuitem value="Confirma tu solicitud"/>
+                                <p:menuitem value="Detalles de la solicitud"/>
+                            </p:steps>
+                        </div>
+                    </h:form>
                 </c:if>
-                   <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
                     <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>
@@ -49,56 +51,57 @@
 
             <ui:define name="content">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                <div class="card" style="margin-top:40px;">
-                    <p:staticMessage severity="info" summary="INFO" style="width: calc(100% - 10px);" detail="Tu solicitud ha sido enviada al refugio. Puedes consultar el estado de tu solicitud en Mis adopciones"/>
-                    <p:fieldset legend="Detalles de la mascota" toggleable="true" toggleSpeed="500" style="margin-top:10px;" collapsed="true">
-                        <p:outputLabel>
-                            Nombre: <strong>#{adopcionBackingBean.mascotaSelected.nombre}</strong>
-                        </p:outputLabel>
-                        <br></br>
-                        <p:outputLabel>
-                            Especie: <strong>#{adopcionBackingBean.mascotaSelected.especie}</strong>
-                        </p:outputLabel>
-                        <br></br>
-                        <p:outputLabel>
-                            Precio: <strong>#{adopcionBackingBean.mascotaSelected.costeAdopcion}</strong> euros
-                        </p:outputLabel>
-                    </p:fieldset>
-                    <p:fieldset legend="Detalles del refugio" toggleable="true" toggleSpeed="500" collapsed="true" style="margin-top:10px;" >
-                        <p:outputLabel>
-                            Nombre del refugio: <strong>#{adopcionBackingBean.refugio.nombre}</strong>
-                        </p:outputLabel>
-                        <br></br>
-                        <p:outputLabel>
-                            Dirección: <strong>#{adopcionBackingBean.refugio.domicilioSocial}</strong>
-                        </p:outputLabel>
-                        <br></br>
-                        <p:outputLabel>
-                            Teléfono de contacto: <strong>#{adopcionBackingBean.refugio.telefono}</strong>
-                        </p:outputLabel>
-                    </p:fieldset>
-                    <p:fieldset legend="Tus datos" toggleable="true" toggleSpeed="500" collapsed="true" style="margin-top:10px;" >
-                        <p:outputLabel>
-                            Nombre: <strong>#{loginPageBackingBean.cliente.nombre}</strong>
-                        </p:outputLabel>
-                        <br></br>
-                        <p:outputLabel>
-                            DNI: <strong>#{loginPageBackingBean.cliente.nif}</strong>
-                        </p:outputLabel>
-                        <br></br>
-                        <p:outputLabel>
-                            Teléfono de contacto: <strong>#{loginPageBackingBean.cliente.telefono}</strong>
-                        </p:outputLabel>
-                    </p:fieldset>
-                </div>
-                <div class="grid">
-                            <div class="col-12 flex align-items-center justify-content-center">
-                                
-                                <p:linkButton style="margin-top:10px" value="Volver a Inicio" styleClass="ui-confirmdialog-yes" outcome="/home/home" icon="pi pi-home">
-                                </p:linkButton>
-                               
-                            </div>
+                    <div class="card" style="margin-top:40px;">
+                        <p:staticMessage severity="info" summary="INFO" style="width: calc(100% - 10px);" detail="Tu solicitud ha sido enviada al refugio. Puedes consultar el estado de tu solicitud en Mis adopciones"/>
+                        <p:fieldset legend="Detalles de la mascota" toggleable="true" toggleSpeed="500" style="margin-top:10px;" collapsed="true">
+                            <p:outputLabel>
+                                Nombre: <strong>#{adopcion.mascotaSelected.nombre}</strong>
+                            </p:outputLabel>
+                            <br></br>
+                            <p:outputLabel>
+                                Especie: <strong>#{adopcion.mascotaSelected.especie}</strong>
+                            </p:outputLabel>
+                            <br></br>
+                            <p:outputLabel>
+                                Precio: <strong>#{adopcion.mascotaSelected.costeAdopcion}</strong> euros
+                            </p:outputLabel>
+                        </p:fieldset>
+                        <p:fieldset legend="Detalles del refugio" toggleable="true" toggleSpeed="500" collapsed="true" style="margin-top:10px;" >
+                            <p:outputLabel>
+                                Nombre del refugio: <strong>#{adopcion.refugio.nombre}</strong>
+                            </p:outputLabel>
+                            <br></br>
+                            <p:outputLabel>
+                                Dirección: <strong>#{adopcion.refugio.domicilioSocial}</strong>
+                            </p:outputLabel>
+                            <br></br>
+                            <p:outputLabel>
+                                Teléfono de contacto: <strong>#{adopcion.refugio.telefono}</strong>
+                            </p:outputLabel>
+                        </p:fieldset>
+                        <p:fieldset legend="Tus datos" toggleable="true" toggleSpeed="500" collapsed="true" style="margin-top:10px;" >
+                            <p:outputLabel>
+                                Nombre: <strong>#{loginPageBackingBean.cliente.nombre}</strong>
+                            </p:outputLabel>
+                            <br></br>
+                            <p:outputLabel>
+                                DNI: <strong>#{loginPageBackingBean.cliente.nif}</strong>
+                            </p:outputLabel>
+                            <br></br>
+                            <p:outputLabel>
+                                Teléfono de contacto: <strong>#{loginPageBackingBean.cliente.telefono}</strong>
+                            </p:outputLabel>
+                        </p:fieldset>
+                    </div>
+                    <div class="grid">
+                        <div class="col-12 flex align-items-center justify-content-center">
+                            <h:form>
+                                <p:commandButton style="margin-top:10px" value="Volver a Inicio" styleClass="ui-confirmdialog-yes" action="/home/home" icon="pi pi-home">
+                                </p:commandButton>
+                            </h:form>
+
                         </div>
+                    </div>
                 </c:if>
             </ui:define>
 

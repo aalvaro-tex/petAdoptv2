@@ -6,13 +6,13 @@
 
     <h:head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<link rel="stylesheet" href="#{resource['css/notificaciones.css']}"></link>
-<link rel="icon" type="image/x-icon" href="#{resource['images/logo-sin-texto.jpg']}"></link>
+        <link rel="stylesheet" href="#{resource['css/notificaciones.css']}"></link>
+        <link rel="icon" type="image/x-icon" href="#{resource['images/logo-sin-texto.jpg']}"></link>
         <title>petAdopt - v2</title>
-        
+
     </h:head>
     <h:outputStylesheet library="webjars" name="primeflex/3.3.1/primeflex.min.css" />
-    
+
 
     <h:body>
 
@@ -39,9 +39,11 @@
                     $('#nonAjaxLoad').show();
                 });
             </script>
-            <ui:insert name="content"><div id="nonAjaxLoad">
+            <ui:insert name="content">
+                <div id="nonAjaxLoad">
                     <img src="../images/ajaxload.gif"/>
-                </div></ui:insert>
+                </div>
+            </ui:insert>
         </div>
 
     </h:body>

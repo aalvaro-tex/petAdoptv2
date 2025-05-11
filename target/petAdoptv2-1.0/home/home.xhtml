@@ -18,7 +18,7 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top"> 
-               
+
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                     <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
                         <h:form >
@@ -35,16 +35,17 @@
                                 </p:menuitem>
                                 <p:menuitem  outcome="/micuenta/mi-cuenta"> Mi cuenta
                                 </p:menuitem>
-                                <p:menuitem value="Chats" outcome="/chat/chat-list" />
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                                <p:menuitem disabled="true" style="width:calc(100vw - 710px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
+                                
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
-                                <p:menuitem outcome="home" value="Inicio"/>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                             </p:breadCrumb>
                         </h:form>
                     </c:if>
@@ -56,15 +57,16 @@
                                 <p:menuitem value="Mis adopciones" outcome="/solicitudes/solicitudes"/>
                                 <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
                                 <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
+                                <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
+                                <p:menuitem disabled="true" style="width:calc(100vw - 640px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
-                                <p:menuitem outcome="home" value="Inicio"/>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                             </p:breadCrumb>
                         </h:form>
                     </c:if>
@@ -75,15 +77,15 @@
                                 <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
                                 <p:menuitem value="Gestionar usuarios" outcome="/administrador/solicitudes-pendientes"/>
                                 <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
+                                <p:menuitem disabled="true" style="width:calc(100vw - 750px);"/>
+                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
                             <p:breadCrumb>
-                                <p:menuitem outcome="/index"/>
-                                <p:menuitem outcome="/landing/login-page" value="#{loginPageBackingBean.rol}" >
-                                    <f:param name="rol" value="#{loginPageBackingBean.rol}"/>
-                                </p:menuitem>
-                                <p:menuitem outcome="home" value="Inicio"/>
+                                <p:menuitem outcome="/home/home" value="Inicio"/>
                             </p:breadCrumb>
                         </h:form>
                     </c:if>

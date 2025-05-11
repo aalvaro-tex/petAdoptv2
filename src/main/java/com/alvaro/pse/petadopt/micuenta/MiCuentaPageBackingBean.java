@@ -5,10 +5,16 @@
  */
 package com.alvaro.pse.petadopt.micuenta;
 
+import java.io.Serializable;
+import javax.enterprise.context.SessionScoped;
+import javax.inject.Named;
+
 /**
  *
  * @author alvar
  */
-public class MiCuentaPageBackingBean {
+@Named
+@SessionScoped
+public class MiCuentaPageBackingBean implements Serializable{
     
 }

@@ -61,6 +61,8 @@ public class UsuarioReader implements MessageBodyReader<Usuario> {
                         case "foto":
                             usuario.setFoto(parser.getString());
                             break;
+                        case "activo":
+                            usuario.setActivo(parser.equals(true));
                         default:
                             break;
                     }

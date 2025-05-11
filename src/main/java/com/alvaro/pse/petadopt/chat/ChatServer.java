@@ -71,7 +71,7 @@ public class ChatServer {
 
     @OnOpen
     public void onOpen(Session peer, @PathParam("room") String room) {
-        System.out.println(room);
+        //System.out.println(room);
         peers.add(peer);
     }
 
@@ -120,7 +120,7 @@ public class ChatServer {
         Response response = target.register(ChatWriter.class)
                 .request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(c, MediaType.APPLICATION_JSON));
-        System.out.println("Añadir mensaje: "+response);
+        //System.out.println("Añadir mensaje: "+response);
 
     }
 

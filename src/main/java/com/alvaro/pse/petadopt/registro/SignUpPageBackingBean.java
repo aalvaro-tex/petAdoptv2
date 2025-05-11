@@ -6,12 +6,14 @@
 package com.alvaro.pse.petadopt.registro;
 
 import com.alvaro.pse.petadopt.external.ComunidadesAPI;
+import com.alvaro.pse.petadopt.jaas.UsuarioEJB;
 import com.alvaro.pse.petadopt.utils.StringUtils;
 import java.io.Serializable;
 import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.inject.Inject;
 import javax.inject.Named;
 import org.primefaces.model.file.UploadedFile;
 
@@ -22,6 +24,7 @@ import org.primefaces.model.file.UploadedFile;
 @Named
 @SessionScoped
 public class SignUpPageBackingBean implements Serializable {
+
 
     private List<String> comunidades;
     private ComunidadesAPI api;

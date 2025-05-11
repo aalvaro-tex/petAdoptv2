@@ -66,7 +66,7 @@ public class Cliente implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "fecha_nacimiento")
     private String fechaNacimiento;
-    @Size(max = 9)
+    @Size(max = 10)
     @Column(name = "nif")
     private String nif;
 

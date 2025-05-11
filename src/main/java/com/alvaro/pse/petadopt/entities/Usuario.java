@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -41,7 +42,7 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Long id;
-    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Email inválido")//if the field contains email address consider using this annotation to enforce field validation
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2147483647)
@@ -56,6 +57,9 @@ public class Usuario implements Serializable {
     @Size(min = 1, max = 2147483647)
     @Column(name = "foto")
     private String foto;
+    @Basic(optional = false)
+    @Column(name = "activo")
+    private Boolean activo;
 
     public Usuario() {
     }
@@ -70,10 +74,16 @@ public class Usuario implements Serializable {
         this.password = password;
         this.foto = foto;
     }
-    
-    public Usuario(String email, String password){
+
+    public Usuario(String email, String password) {
         this.email = email;
         this.password = password;
+    }
+
+    public Usuario(String email, String password, String foto) {
+        this.email = email;
+        this.password = password;
+        this.foto = foto;
     }
 
     public Long getId() {
@@ -108,6 +118,16 @@ public class Usuario implements Serializable {
         this.foto = foto;
     }
 
+    public Boolean getActivo() {
+        return activo;
+    }
+
+    public void setActivo(Boolean activo) {
+        this.activo = activo;
+    }
+    
+    
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -132,5 +152,5 @@ public class Usuario implements Serializable {
     public String toString() {
         return "com.alvaro.pse.petadoptv2.entities.Usuario[ id=" + id + " ]";
     }
-    
+
 }
