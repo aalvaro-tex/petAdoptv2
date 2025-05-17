@@ -44,30 +44,58 @@ public class Especie implements Serializable {
     @Column(name = "nombre")
     private String nombre;
 
+    /**
+     *
+     */
     public Especie() {
     }
 
+    /**
+     *
+     * @param id
+     */
     public Especie(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param id
+     * @param nombre
+     */
     public Especie(Long id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }

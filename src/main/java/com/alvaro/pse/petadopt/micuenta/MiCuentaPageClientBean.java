@@ -33,17 +33,27 @@ public class MiCuentaPageClientBean {
     @Inject
     LoginPageBackingBean loginBean;
 
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
 
     }
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         client.close();
     }
 
+    /**
+     *
+     * @return
+     */
     public String deactivateAccount(){
         String success = "failure";
         // si un usuario quiere borrar su cuenta

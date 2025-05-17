@@ -32,10 +32,17 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public ChatFacadeREST() {
         super(Chat.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -43,6 +50,11 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -50,12 +62,21 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -63,6 +84,10 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
         return super.find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -70,6 +95,12 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
         return super.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -77,6 +108,10 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -85,6 +120,12 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
     }
 
     // Busca los 4 últimos mensajes enviados en una conversación concreta
+
+    /**
+     *
+     * @param idConversacion
+     * @return
+     */
     @GET
     @Path("last-message/{idConversacion}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -102,6 +143,12 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
     }
 
     // Busca todos los chats en los que participa un usuario
+
+    /**
+     *
+     * @param idUsuario
+     * @return
+     */
     @GET
     @Path("my-chats/{idUsuario}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -131,6 +178,10 @@ public class ChatFacadeREST extends AbstractFacade<Chat> {
         return uniqueChats;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;

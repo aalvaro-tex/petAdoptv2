@@ -5,10 +5,7 @@
  */
 package com.alvaro.pse.petadopt.json;
 
-import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.Especie;
-import com.alvaro.pse.petadopt.entities.Refugio;
-import com.alvaro.pse.petadopt.entities.Usuario;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.annotation.Annotation;
@@ -26,11 +23,31 @@ import javax.ws.rs.ext.MessageBodyReader;
  */
 public class EspeciesReader implements MessageBodyReader<Especie> {
 
+    /**
+     *
+     * @param type
+     * @param type1
+     * @param antns
+     * @param mt
+     * @return
+     */
     @Override
     public boolean isReadable(Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
         return Especie.class.isAssignableFrom(type);
     }
 
+    /**
+     *
+     * @param type
+     * @param genericType
+     * @param annotations
+     * @param mediaType
+     * @param httpHeaders
+     * @param entityStream
+     * @return
+     * @throws IOException
+     * @throws WebApplicationException
+     */
     @Override
     public Especie readFrom(Class<Especie> type,
             Type genericType,

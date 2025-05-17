@@ -61,13 +61,27 @@ public class Usuario implements Serializable {
     @Column(name = "activo")
     private Boolean activo;
 
+    /**
+     *
+     */
     public Usuario() {
     }
 
+    /**
+     *
+     * @param id
+     */
     public Usuario(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param id
+     * @param email
+     * @param password
+     * @param foto
+     */
     public Usuario(Long id, String email, String password, String foto) {
         this.id = id;
         this.email = email;
@@ -75,53 +89,104 @@ public class Usuario implements Serializable {
         this.foto = foto;
     }
 
+    /**
+     *
+     * @param email
+     * @param password
+     */
     public Usuario(String email, String password) {
         this.email = email;
         this.password = password;
     }
 
+    /**
+     *
+     * @param email
+     * @param password
+     * @param foto
+     */
     public Usuario(String email, String password, String foto) {
         this.email = email;
         this.password = password;
         this.foto = foto;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getPassword() {
         return password;
     }
 
+    /**
+     *
+     * @param password
+     */
     public void setPassword(String password) {
         this.password = password;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFoto() {
         return foto;
     }
 
+    /**
+     *
+     * @param foto
+     */
     public void setFoto(String foto) {
         this.foto = foto;
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getActivo() {
         return activo;
     }
 
+    /**
+     *
+     * @param activo
+     */
     public void setActivo(Boolean activo) {
         this.activo = activo;
     }

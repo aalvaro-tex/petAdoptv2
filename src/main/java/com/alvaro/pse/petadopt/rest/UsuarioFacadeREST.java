@@ -8,7 +8,6 @@ package com.alvaro.pse.petadopt.rest;
 import com.alvaro.pse.petadopt.entities.Usuario;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.ejb.Stateless;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -35,10 +34,17 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public UsuarioFacadeREST() {
         super(Usuario.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Override
@@ -46,6 +52,11 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -53,12 +64,21 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -66,6 +86,11 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return super.find(id);
     }
     
+    /**
+     *
+     * @param email
+     * @return
+     */
     @GET
     @Path("find-by-email/{email}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -80,6 +105,10 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return found;
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -95,6 +124,12 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return found;
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -102,6 +137,10 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -109,6 +148,11 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return String.valueOf(super.count());
     }
     
+    /**
+     *
+     * @param entity
+     * @return
+     */
     @POST
     @Path("find-by-login")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -123,6 +167,10 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return found;
     }
     
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;

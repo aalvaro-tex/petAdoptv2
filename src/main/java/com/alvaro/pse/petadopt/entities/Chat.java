@@ -69,13 +69,29 @@ public class Chat implements Serializable {
     @Column(name = "id_conversacion")
     private String idConversacion;
 
+    /**
+     *
+     */
     public Chat() {
     }
 
+    /**
+     *
+     * @param id
+     */
     public Chat(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param id
+     * @param idEmisor
+     * @param idReceptor
+     * @param mensaje
+     * @param timestamp
+     * @param idConversacion
+     */
     public Chat(Long id, long idEmisor, long idReceptor, String mensaje, String timestamp, String idConversacion) {
         this.id = id;
         this.idEmisor = idEmisor;
@@ -85,50 +101,98 @@ public class Chat implements Serializable {
         this.idConversacion = idConversacion;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdEmisor() {
         return idEmisor;
     }
 
+    /**
+     *
+     * @param idEmisor
+     */
     public void setIdEmisor(long idEmisor) {
         this.idEmisor = idEmisor;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdReceptor() {
         return idReceptor;
     }
 
+    /**
+     *
+     * @param idReceptor
+     */
     public void setIdReceptor(long idReceptor) {
         this.idReceptor = idReceptor;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMensaje() {
         return mensaje;
     }
 
+    /**
+     *
+     * @param mensaje
+     */
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTimestamp() {
         return timestamp;
     }
 
+    /**
+     *
+     * @param timestamp
+     */
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getIdConversacion() {
         return idConversacion;
     }
 
+    /**
+     *
+     * @param idConversacion
+     */
     public void setIdConversacion(String idConversacion) {
         this.idConversacion = idConversacion;
     }

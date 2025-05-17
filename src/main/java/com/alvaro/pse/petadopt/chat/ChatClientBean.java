@@ -9,29 +9,21 @@ import com.alvaro.pse.petadopt.entities.Chat;
 import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
-import com.alvaro.pse.petadopt.json.ChatReader;
 import com.alvaro.pse.petadopt.json.ChatWriter;
 import com.alvaro.pse.petadopt.json.ClienteReader;
-import com.alvaro.pse.petadopt.json.MascotaWriter;
-import com.alvaro.pse.petadopt.json.RefugioReader;
-import com.alvaro.pse.petadopt.json.RefugioWriter;
 import com.alvaro.pse.petadopt.json.UsuarioReader;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import java.io.Serializable;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -53,17 +45,28 @@ public class ChatClientBean implements Serializable {
     private Client client;
     private WebTarget target;
 
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
 
     }
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         client.close();
     }
 
+    /**
+     *
+     * @param idConversacion
+     * @return
+     */
     public Usuario getUsuarioById(String idConversacion) {
         Long id = -1L;
         if (loginBean.getRol().equalsIgnoreCase("cliente")) {
@@ -86,6 +89,11 @@ public class ChatClientBean implements Serializable {
 
     }
 
+    /**
+     *
+     * @param idConversacion
+     * @return
+     */
     public Cliente getClienteById(String idConversacion) {
         Long id = -1L;
         if (loginBean.getRol().equalsIgnoreCase("cliente")) {
@@ -107,6 +115,11 @@ public class ChatClientBean implements Serializable {
         return found;
     }
 
+    /**
+     *
+     * @param idConversacion
+     * @return
+     */
     public Refugio getRefugioById(String idConversacion) {
         Long id = -1L;
         if (loginBean.getRol().equalsIgnoreCase("refugio")) {
@@ -130,6 +143,11 @@ public class ChatClientBean implements Serializable {
         return found;
     }
 
+    /**
+     *
+     * @param idConversacion
+     * @return
+     */
     public List<Chat> getLatestMessageByUser(String idConversacion) {
         List<Chat> chats = null;
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.chat");
@@ -145,6 +163,11 @@ public class ChatClientBean implements Serializable {
         return chats;
     }
 
+    /**
+     *
+     * @param idConversacion
+     * @return
+     */
     public List<Chat> getChatsByUser(String idConversacion) {
         List<Chat> chats = new ArrayList<>();
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.chat");

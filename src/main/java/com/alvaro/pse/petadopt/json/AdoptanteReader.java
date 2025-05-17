@@ -5,7 +5,6 @@
  */
 package com.alvaro.pse.petadopt.json;
 
-import com.alvaro.pse.petadopt.entities.Chat;
 import com.alvaro.pse.petadopt.solicitudes.AdoptanteDTO;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,11 +23,31 @@ import javax.ws.rs.ext.MessageBodyReader;
  */
 public class AdoptanteReader implements MessageBodyReader<AdoptanteDTO>{
     
+    /**
+     *
+     * @param type
+     * @param type1
+     * @param antns
+     * @param mt
+     * @return
+     */
     @Override
     public boolean isReadable(Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
         return AdoptanteDTO.class.isAssignableFrom(type);
     }
 
+    /**
+     *
+     * @param type
+     * @param genericType
+     * @param annotations
+     * @param mediaType
+     * @param httpHeaders
+     * @param entityStream
+     * @return
+     * @throws IOException
+     * @throws WebApplicationException
+     */
     @Override
     public AdoptanteDTO readFrom(Class<AdoptanteDTO> type,
             Type genericType,

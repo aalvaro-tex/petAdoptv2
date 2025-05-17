@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.util.Base64;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.bean.ViewScoped;
 import javax.inject.Named;
 import org.primefaces.model.file.UploadedFile;
 
@@ -25,6 +24,11 @@ import org.primefaces.model.file.UploadedFile;
 @SessionScoped
 public class ImageUtils implements Serializable{
 
+    /**
+     *
+     * @param file
+     * @return
+     */
     public String upload(UploadedFile file) {
         String base64Image = "";
         if (file != null) {

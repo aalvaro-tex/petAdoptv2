@@ -34,10 +34,17 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public RefugioFacadeREST() {
         super(Refugio.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -45,6 +52,11 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -52,12 +64,21 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -65,6 +86,10 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
         return super.find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -72,6 +97,12 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
         return super.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -79,6 +110,10 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -86,6 +121,11 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
         return String.valueOf(super.count());
     }
     
+    /**
+     *
+     * @param estado
+     * @return
+     */
     @GET
     @Path("find-by-estado/{estado}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -100,7 +140,10 @@ public class RefugioFacadeREST extends AbstractFacade<Refugio> {
         return found;
     }
 
-
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;

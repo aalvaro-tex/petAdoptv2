@@ -21,6 +21,11 @@ import org.apache.commons.lang.time.DateFormatUtils;
 @SessionScoped
 public class StringUtils  implements Serializable {
 
+    /**
+     *
+     * @param name
+     * @return
+     */
     public String capitalizeAllFirstLetters(String name) {
         char[] array = name.toLowerCase().toCharArray();
         array[0] = Character.toUpperCase(array[0]);
@@ -34,14 +39,29 @@ public class StringUtils  implements Serializable {
         return new String(array);
     }
     
+    /**
+     *
+     * @param date
+     * @return
+     */
     public String dateToString(Date date){
         return DateFormatUtils.format(date, "dd/MM/yyyy");
     }
     
+    /**
+     *
+     * @param input
+     * @return
+     */
     public int stringToInt(String input){
         return Integer.parseInt(input);
     }
     
+    /**
+     *
+     * @param input
+     * @return
+     */
     public double stringToDouble(String input){
         return Double.parseDouble(input);
     }

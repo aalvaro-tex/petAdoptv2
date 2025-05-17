@@ -5,16 +5,13 @@
  */
 package com.alvaro.pse.petadopt.jaas;
 
-import com.alvaro.pse.petadopt.entities.Chat;
 import com.alvaro.pse.petadopt.entities.Cliente;
 import com.alvaro.pse.petadopt.entities.Refugio;
 import com.alvaro.pse.petadopt.entities.Usuario;
 import com.alvaro.pse.petadopt.entities.UsuarioGrupo;
 import com.alvaro.pse.petadopt.utils.AutenticacionUtils;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.validation.ConstraintViolationException;
@@ -29,6 +26,12 @@ public class UsuarioEJB {
     @PersistenceContext
     private EntityManager em;
 
+    /**
+     *
+     * @param user
+     * @return
+     * @throws Exception
+     */
     public Long createUser(Usuario user) throws Exception  {
         Long idUsuarioCreado = -1L;
         try {
@@ -71,6 +74,11 @@ public class UsuarioEJB {
         return idUsuarioCreado;
     }
 
+    /**
+     *
+     * @param refugio
+     * @return
+     */
     public String createRefugio(Refugio refugio) {
         String success = "failure";
         try {
@@ -83,6 +91,11 @@ public class UsuarioEJB {
         return success;
     }
 
+    /**
+     *
+     * @param cliente
+     * @return
+     */
     public String createCliente(Cliente cliente) {
         String success = "failure";
         try {
@@ -95,6 +108,12 @@ public class UsuarioEJB {
         return success;
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     * @throws Exception
+     */
     public Usuario findByEmail(String email) throws Exception {
         TypedQuery<Usuario> query = em.createNamedQuery("Usuario.findByEmail",
                 Usuario.class);

@@ -18,6 +18,13 @@ import javax.xml.bind.DatatypeConverter;
 @Named
 public class AutenticacionUtils {
 
+    /**
+     *
+     * @param password
+     * @return
+     * @throws UnsupportedEncodingException
+     * @throws NoSuchAlgorithmException
+     */
     public static String encodeSHA256(String password) throws
             UnsupportedEncodingException, NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("SHA-256");

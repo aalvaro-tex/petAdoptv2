@@ -7,7 +7,6 @@ package com.alvaro.pse.petadopt.rest;
 
 import com.alvaro.pse.petadopt.entities.Mascota;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -35,10 +34,17 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public MascotaFacadeREST() {
         super(Mascota.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -46,6 +52,11 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -54,12 +65,21 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -67,6 +87,10 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
         return super.find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -74,6 +98,12 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
         return super.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -81,6 +111,10 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -89,6 +123,13 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     }
 
     /* Obtiene las mascotas de un determinado refugio */
+
+    /**
+     *
+     * @param idRefugio
+     * @return
+     */
+
     @GET
     @Path("find-by-refugio/{idRefugio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -104,6 +145,13 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     }
     
     /* Obtiene las mascotas de un determinado refugio */
+
+    /**
+     *
+     * @param idCliente
+     * @return
+     */
+
     @GET
     @Path("find-by-cliente/{idRefugio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -119,6 +167,13 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     }
 
     /* Obtiene las mascotas de un determinado refugio */
+
+    /**
+     *
+     * @param estado
+     * @return
+     */
+
     @GET
     @Path("find-by-estado/{estado}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -134,6 +189,14 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     }
 
     /* Obtiene las mascotas de un determinado refugio y un determinado estado */
+
+    /**
+     *
+     * @param idRefugio
+     * @param estado
+     * @return
+     */
+
     @GET
     @Path("find-by-refugio-estado/{idRefugio}/{estado}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -149,6 +212,14 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     }
     
     /* Obtiene las mascotas de un determinado cliente y un determinado estado */
+
+    /**
+     *
+     * @param idCliente
+     * @param estado
+     * @return
+     */
+
     @GET
     @Path("find-by-cliente-estado/{idCliente}/{estado}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -165,6 +236,12 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
 
     /* Obtiene todas las solicitudes de un refugio */
     // Evita obtener las mascotas que no tienen solicitud 
+
+    /**
+     *
+     * @param idRefugio
+     * @return
+     */
     @GET
     @Path("find-by-refugio-solicitudes/{idRefugio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -180,6 +257,13 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
     }
 
     /* Obtiene las mascotas de un determinado refugio y un determinado estado */
+
+    /**
+     *
+     * @param especie
+     * @return
+     */
+
     @GET
     @Path("find-by-especie-and-disponible/{especie}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -194,6 +278,10 @@ public class MascotaFacadeREST extends AbstractFacade<Mascota> {
         return found;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;

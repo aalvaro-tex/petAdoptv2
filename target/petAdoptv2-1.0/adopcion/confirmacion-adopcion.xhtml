@@ -12,7 +12,7 @@
         <ui:composition template="./../WEB-INF/main-layout-template.xhtml">
 
             <ui:define name="top">
-                <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
+                <c:if test="${loginPageBackingBean.cliente ne null}" >
                     <h:form >
                         <p:sticky target="navMenu"/>
                         <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">

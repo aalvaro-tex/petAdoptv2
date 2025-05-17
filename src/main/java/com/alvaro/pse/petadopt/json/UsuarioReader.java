@@ -27,11 +27,31 @@ import javax.ws.rs.ext.Provider;
 @Consumes(MediaType.APPLICATION_JSON)
 public class UsuarioReader implements MessageBodyReader<Usuario> {
 
+    /**
+     *
+     * @param type
+     * @param type1
+     * @param antns
+     * @param mt
+     * @return
+     */
     @Override
     public boolean isReadable(Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
         return Usuario.class.isAssignableFrom(type);
     }
 
+    /**
+     *
+     * @param type
+     * @param genericType
+     * @param annotations
+     * @param mediaType
+     * @param httpHeaders
+     * @param entityStream
+     * @return
+     * @throws IOException
+     * @throws WebApplicationException
+     */
     @Override
     public Usuario readFrom(Class<Usuario> type,
             Type genericType,

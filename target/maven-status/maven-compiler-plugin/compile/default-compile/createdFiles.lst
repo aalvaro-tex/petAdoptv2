@@ -1,5 +1,3 @@
-com\alvaro\pse\petadopt\shared\Constantes.class
-com\alvaro\pse\petadopt\chat\ChatBean.class
 com\alvaro\pse\petadopt\utils\ImageUtils.class
 com\alvaro\pse\petadopt\adopcion\AdopcionClientBean.class
 com\alvaro\pse\petadopt\json\UsuarioReader$1.class
@@ -19,15 +17,12 @@ com\alvaro\pse\petadopt\registro\SignUpPageBackingBean.class
 com\alvaro\pse\petadopt\chat\ChatServer.class
 com\alvaro\pse\petadopt\entities\Mascota_.class
 com\alvaro\pse\petadopt\administrador\AdministradorBackingBean.class
-com\alvaro\pse\petadopt\external\ComunidadesAPI.class
 com\alvaro\pse\petadopt\registro\SignUpPageClientBean.class
 com\alvaro\pse\petadopt\rest\MascotaFacadeREST.class
 com\alvaro\pse\petadopt\entities\Cliente_.class
 com\alvaro\pse\petadopt\rest\ApplicationConfig.class
-com\alvaro\pse\petadopt\entities\Administrador.class
 com\alvaro\pse\petadopt\entities\Refugio.class
 com\alvaro\pse\petadopt\entities\UsuarioGrupo.class
-com\alvaro\pse\petadopt\home\HomePageBackingBean.class
 com\alvaro\pse\petadopt\json\RefugioReader$1.class
 com\alvaro\pse\petadopt\chat\ChatBackingBean.class
 com\alvaro\pse\petadopt\json\RefugioReader.class
@@ -40,7 +35,6 @@ com\alvaro\pse\petadopt\json\EspeciesReader$1.class
 com\alvaro\pse\petadopt\login\LoginPageValidator.class
 com\alvaro\pse\petadopt\mascotas\MascotasPageBackingBean.class
 com\alvaro\pse\petadopt\entities\UsuarioGrupo_.class
-com\alvaro\pse\petadopt\rest\AdministradorFacadeREST.class
 com\alvaro\pse\petadopt\json\UsuarioGrupoReader.class
 com\alvaro\pse\petadopt\entities\Cliente.class
 com\alvaro\pse\petadopt\entities\Usuario_.class
@@ -57,14 +51,10 @@ com\alvaro\pse\petadopt\json\ChatReader.class
 com\alvaro\pse\petadopt\json\UsuarioWriter.class
 com\alvaro\pse\petadopt\utils\AutenticacionUtils.class
 com\alvaro\pse\petadopt\json\ClienteWriter.class
-com\alvaro\pse\petadopt\entities\Administrador_.class
-com\alvaro\pse\petadopt\micuenta\MiCuentaPageBackingBean.class
 com\alvaro\pse\petadopt\utils\StringUtils.class
-com\alvaro\pse\petadopt\json\ComunidadReader$1.class
 com\alvaro\pse\petadopt\json\HistoricoSolicitudesWriter.class
 com\alvaro\pse\petadopt\registro\SignUpPageValidator.class
 com\alvaro\pse\petadopt\json\UsuarioGrupoReader$1.class
-com\alvaro\pse\petadopt\external\Comunidad.class
 com\alvaro\pse\petadopt\entities\HistoricoSolicitudes_.class
 com\alvaro\pse\petadopt\json\ClienteReader$1.class
 com\alvaro\pse\petadopt\rest\ChatFacadeREST.class
@@ -80,11 +70,9 @@ com\alvaro\pse\petadopt\entities\HistoricoSolicitudes.class
 com\alvaro\pse\petadopt\json\EspeciesReader.class
 com\alvaro\pse\petadopt\rest\ClienteFacadeREST.class
 com\alvaro\pse\petadopt\solicitudes\AdoptanteDTO.class
-com\alvaro\pse\petadopt\home\HomePageClientBean.class
 com\alvaro\pse\petadopt\mascotas\MascotasPageClientBean.class
 com\alvaro\pse\petadopt\solicitudes\SolicitudesClientBean.class
 com\alvaro\pse\petadopt\rest\AbstractFacade.class
 com\alvaro\pse\petadopt\json\AdoptanteReader.class
-com\alvaro\pse\petadopt\json\ComunidadReader.class
 com\alvaro\pse\petadopt\mascotas\MascotasValidator.class
 com\alvaro\pse\petadopt\json\MascotaWriter.class

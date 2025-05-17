@@ -6,7 +6,6 @@
 package com.alvaro.pse.petadopt.entities;
 
 import java.io.Serializable;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -104,13 +103,33 @@ public class Mascota implements Serializable {
     @Column(name = "fecha_solicitud")
     private String fechaSolicitud;
 
+    /**
+     *
+     */
     public Mascota() {
     }
 
+    /**
+     *
+     * @param id
+     */
     public Mascota(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param id
+     * @param nombre
+     * @param especie
+     * @param raza
+     * @param edad
+     * @param estadoSalud
+     * @param costeAdopcion
+     * @param idRefugio
+     * @param fechaPublicacion
+     * @param idCliente
+     */
     public Mascota(Long id, String nombre, String especie, String raza, Long edad, String estadoSalud, double costeAdopcion, Long idRefugio, String fechaPublicacion, Long idCliente) {
         this.id = id;
         this.nombre = nombre;
@@ -124,114 +143,226 @@ public class Mascota implements Serializable {
         this.idCliente = idCliente;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEspecie() {
         return especie;
     }
 
+    /**
+     *
+     * @param especie
+     */
     public void setEspecie(String especie) {
         this.especie = especie;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getRaza() {
         return raza;
     }
 
+    /**
+     *
+     * @param raza
+     */
     public void setRaza(String raza) {
         this.raza = raza;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getEdad() {
         return edad;
     }
 
+    /**
+     *
+     * @param edad
+     */
     public void setEdad(long edad) {
         this.edad = edad;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEstadoSalud() {
         return estadoSalud;
     }
 
+    /**
+     *
+     * @param estadoSalud
+     */
     public void setEstadoSalud(String estadoSalud) {
         this.estadoSalud = estadoSalud;
     }
 
+    /**
+     *
+     * @return
+     */
     public double getCosteAdopcion() {
         return costeAdopcion;
     }
 
+    /**
+     *
+     * @param costeAdopcion
+     */
     public void setCosteAdopcion(double costeAdopcion) {
         this.costeAdopcion = costeAdopcion;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFoto() {
         return foto;
     }
 
+    /**
+     *
+     * @param foto
+     */
     public void setFoto(String foto) {
         this.foto = foto;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdRefugio() {
         return idRefugio;
     }
 
+    /**
+     *
+     * @param idRefugio
+     */
     public void setIdRefugio(long idRefugio) {
         this.idRefugio = idRefugio;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFechaPublicacion() {
         return fechaPublicacion;
     }
 
+    /**
+     *
+     * @param fechaPublicacion
+     */
     public void setFechaPublicacion(String fechaPublicacion) {
         this.fechaPublicacion = fechaPublicacion;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdCliente() {
         return idCliente;
     }
 
+    /**
+     *
+     * @param idCliente
+     */
     public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEstado() {
         return estado;
     }
 
+    /**
+     *
+     * @param estado
+     */
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFechaAdopcion() {
         return fechaAdopcion;
     }
 
+    /**
+     *
+     * @param fechaAdopcion
+     */
     public void setFechaAdopcion(String fechaAdopcion) {
         this.fechaAdopcion = fechaAdopcion;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFechaSolicitud() {
         return fechaSolicitud;
     }
 
+    /**
+     *
+     * @param fechaSolicitud
+     */
     public void setFechaSolicitud(String fechaSolicitud) {
         this.fechaSolicitud = fechaSolicitud;
     }
@@ -261,10 +392,18 @@ public class Mascota implements Serializable {
         return "com.alvaro.pse.petadoptv2.entities.Mascota[ id=" + id + " ]";
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFirma() {
         return firma;
     }
 
+    /**
+     *
+     * @param firma
+     */
     public void setFirma(String firma) {
         this.firma = firma;
     }

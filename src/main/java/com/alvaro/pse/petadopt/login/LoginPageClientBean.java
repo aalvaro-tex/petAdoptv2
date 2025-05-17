@@ -14,32 +14,23 @@ import com.alvaro.pse.petadopt.json.ClienteWriter;
 import com.alvaro.pse.petadopt.json.EspeciesWriter;
 import com.alvaro.pse.petadopt.json.MascotaWriter;
 import com.alvaro.pse.petadopt.json.RefugioWriter;
-import com.alvaro.pse.petadopt.json.UsuarioReader;
-import com.alvaro.pse.petadopt.json.UsuarioWriter;
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.persistence.NoResultException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import static org.primefaces.component.keyboard.KeyboardBase.PropertyKeys.password;
 
 /**
  *
@@ -57,115 +48,29 @@ public class LoginPageClientBean implements Serializable {
     @Inject
     UsuarioEJB usuarioEJB;
 
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
         bean.setCliente(null);
         bean.setRefugio(null);
         bean.setUsuarioLogeado(null);
-
+       
     }
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         client.close();
     }
 
-    /*
-    public String findUsuario() {
-        this.getEspecies();
-        target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.usuario");
-        String success = "failure";
-        Usuario u = new Usuario();
-        u.setEmail(bean.getEmail());
-        u.setPassword(bean.getPassword());
-        Response response = target
-                .path("find-by-login")
-                .request()
-                .post(Entity.entity(u, MediaType.APPLICATION_JSON));
-        if (response.getStatus() == 200) {
-            Usuario found = response.readEntity(Usuario.class);
-            bean.setUsuarioLogeado(found);
-            bean.setUsuarioFound(true);
-
-            // aqui sabemos que el usuario está registrado, 
-            // pero hay que comprobar si está iniciando sesión desde
-            // la página correcta (refugio o cliente)
-            // como sabemos desde qué página está accediendo, basta llamar
-            // a getById de la entidad correspondiente
-            if (bean.getRol().equalsIgnoreCase("Cliente")) {
-                // antes de buscar en la tabla de clientes, debemos comprobar
-                // si es administrador o no
-
-                target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.administrador");
-                response = target.register(ClienteWriter.class)
-                        .path("{id}")
-                        .resolveTemplate("id", found.getId())
-                        .request(MediaType.APPLICATION_JSON)
-                        .get();
-                if (response.getStatus() == 200) {
-                    // es administrador 
-                    // creamos un nuevo cliente pero asignamos el rol de la 
-                    // aplicación pasa a ser 'Administrador'
-
-                    Cliente c = response.readEntity(Cliente.class);
-                    bean.setCliente(c);
-                    bean.setRefugio(null);
-                    bean.setRol("Administrador");
-                    success = "success";
-                } else {
-
-                    // no es administrador luego debe ser cliente 'normal'
-                    target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.cliente");
-                    response = target.register(ClienteWriter.class)
-                            .path("{id}")
-                            .resolveTemplate("id", found.getId())
-                            .request(MediaType.APPLICATION_JSON)
-                            .get();
-                    if (response.getStatus() == 200) {
-                        Cliente c = response.readEntity(Cliente.class);
-                        bean.setCliente(c);
-                        bean.setRefugio(null);
-                        // hemos encontrado el id del usuario que ha intentado 
-                        // inicar sesión, luego sí está accediendo correctamente
-                        success = "success";
-                    } else {
-                        bean.showError();
-                    }
-                }
-
-            } else if (bean.getRol().equalsIgnoreCase("Refugio")) {
-                target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.refugio");
-                response = target.register(RefugioWriter.class)
-                        .path("{id}")
-                        .resolveTemplate("id", found.getId())
-                        .request(MediaType.APPLICATION_JSON)
-                        .get();
-                if (response.getStatus() == 200) {
-                    // hemos encontrado el id del usuario que ha intentado 
-                    // inicar sesión, luego sí está accediendo correctamente
-                    Refugio r = response.readEntity(Refugio.class);
-                    bean.setRefugio(r);
-                    bean.setCliente(null);
-                    bean.setTieneNotificaciones(this.hasNotifications());
-                    // hemos encontrado el id del usuario que ha intentado 
-                    // inicar sesión, luego sí está accediendo correctamente
-                    success = "success";
-                } else {
-                    bean.showError();
-                }
-
-            }
-
-        } else {
-            bean.setUsuarioFound(false);
-            bean.showError();
-        }
-        //System.out.println(success);
-        bean.clearValues();
-        return success;
-
-    }
+    /**
+     *
+     * @return
      */
     public String login() {
         String success = "failure";
@@ -254,6 +159,10 @@ public class LoginPageClientBean implements Serializable {
         return success;
     }
 
+    /**
+     *
+     * @return
+     */
     public String logout() {
         String logoutok = "";
         FacesContext context = FacesContext.getCurrentInstance();
@@ -274,8 +183,13 @@ public class LoginPageClientBean implements Serializable {
     }
 
     // Indica si el usuario logueado tiene alguna notificación pendiente
-    // Esto es, solicitud pendiente
-    private boolean hasNotifications() {
+    // Esto es, solicitud.estado = pendiente
+
+    /**
+     *
+     * @return
+     */
+    public boolean hasNotifications() {
         boolean tieneNotificaciones = false;
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
         Response response = target.register(MascotaWriter.class)
@@ -287,6 +201,8 @@ public class LoginPageClientBean implements Serializable {
         if (response.getStatus() == 200) {
             tieneNotificaciones = !response.readEntity(List.class).isEmpty();
         }
+        bean.setTieneNotificaciones(tieneNotificaciones);
+        System.out.println("Tiene notificaciones pendientes");
         return tieneNotificaciones;
     }
 

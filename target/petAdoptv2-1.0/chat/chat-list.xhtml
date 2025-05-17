@@ -13,7 +13,7 @@
 
             <ui:define name="top">
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
-                    <c:if test="${loginPageBackingBean.rol eq 'Refugio'}">
+                    <c:if test="${loginPageBackingBean.rol eq 'Refugio' and loginPageBackingBean.refugio ne null}">
                         <h:form >
                             <p:sticky target="navMenu"/>
                             <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
@@ -27,6 +27,10 @@
                                 </p:menuitem>
                                 <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
                                 <p:menuitem icon="pi pi-inbox" value="Chat" outcome="/chat/chat-list" style="font-weight: 600"/>
+                                <p:menuitem disabled="true" style="width:calc(100vw - 700px);"/>
+                                 <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
+                                    Salir
+                                </p:menuitem>
                             </p:megaMenu>
                         </h:form>
                         <h:form style="margin-top:10px;">
@@ -36,7 +40,7 @@
                             </p:breadCrumb>
                         </h:form>
                     </c:if>
-                    <c:if test="${loginPageBackingBean.rol eq 'Cliente'}">
+                    <c:if test="${loginPageBackingBean.rol eq 'Cliente' and loginPageBackingBean.cliente ne null}">
                         <h:form >
                             <p:sticky target="navMenu"/>
                             <p:megaMenu orientation="horizontal" autoDisplay="false" id="navMenu">
@@ -58,27 +62,8 @@
                             </p:breadCrumb>
                         </h:form>
                     </c:if>
-                    <c:if test="${loginPageBackingBean.rol eq 'Administrador'}">
-                        <h:form >
-                            <p:megaMenu orientation="horizontal" autoDisplay="false">
-                                <p:menuitem value="Inicio" outcome="home"/>
-                                <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
-                                <p:menuitem value="Gestionar refugios" outcome="/administrador/refugios"/>
-                                <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
-                                <p:menuitem disabled="true" style="width:calc(100vw - 700px);"/>
-                                <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
-                                    Salir
-                                </p:menuitem>
-                            </p:megaMenu>
-                        </h:form>
-                        <h:form style="margin-top:10px;">
-                            <p:breadCrumb>
-                                <p:menuitem outcome="/home/home" value="Inicio"/>
-                            </p:breadCrumb>
-                        </h:form>
-                    </c:if>
                 </c:if>
-                <c:if test="${loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null}" >
+                <c:if test="${(loginPageBackingBean.cliente eq null and loginPageBackingBean.refugio eq null) or loginPageBackingBean.rol eq 'Administrador'}" >
                     <img src="#{resource['images/error404.png']}" style="display:block; margin-left: auto; margin-right: auto; width: 30%; margin-top: 40px;"/>
                     <p:linkButton outcome="/index" value="Volver a inicio" style="display:block; margin-left: auto; margin-right: auto;" styleClass="ui-button-secondary ui-button-flat"></p:linkButton>
                 </c:if>

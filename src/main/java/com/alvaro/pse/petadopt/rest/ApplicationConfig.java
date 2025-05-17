@@ -15,6 +15,10 @@ import javax.ws.rs.core.Application;
 @javax.ws.rs.ApplicationPath("webresources")
 public class ApplicationConfig extends Application {
 
+    /**
+     *
+     * @return
+     */
     @Override
     public Set<Class<?>> getClasses() {
         Set<Class<?>> resources = new java.util.HashSet<>();
@@ -31,7 +35,6 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.alvaro.pse.petadopt.json.ChatWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.ClienteWriter.class);
-        resources.add(com.alvaro.pse.petadopt.json.ComunidadReader.class);
         resources.add(com.alvaro.pse.petadopt.json.EspeciesWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.HistoricoSolicitudesWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.MascotaWriter.class);
@@ -39,7 +42,6 @@ public class ApplicationConfig extends Application {
         resources.add(com.alvaro.pse.petadopt.json.RefugioWriter.class);
         resources.add(com.alvaro.pse.petadopt.json.UsuarioReader.class);
         resources.add(com.alvaro.pse.petadopt.json.UsuarioWriter.class);
-        resources.add(com.alvaro.pse.petadopt.rest.AdministradorFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.ChatFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.ClienteFacadeREST.class);
         resources.add(com.alvaro.pse.petadopt.rest.EspecieFacadeREST.class);

@@ -65,13 +65,29 @@ public class HistoricoSolicitudes implements Serializable {
     @Column(name = "fecha_modificacion")
     private String fechaModificacion;
 
+    /**
+     *
+     */
     public HistoricoSolicitudes() {
     }
 
+    /**
+     *
+     * @param id
+     */
     public HistoricoSolicitudes(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param id
+     * @param idRefugio
+     * @param idMascota
+     * @param idCliente
+     * @param estado
+     * @param fechaModificacion
+     */
     public HistoricoSolicitudes(Long id, long idRefugio, long idMascota, long idCliente, String estado, String fechaModificacion) {
         this.id = id;
         this.idRefugio = idRefugio;
@@ -81,50 +97,98 @@ public class HistoricoSolicitudes implements Serializable {
         this.fechaModificacion = fechaModificacion;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdRefugio() {
         return idRefugio;
     }
 
+    /**
+     *
+     * @param idRefugio
+     */
     public void setIdRefugio(long idRefugio) {
         this.idRefugio = idRefugio;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdMascota() {
         return idMascota;
     }
 
+    /**
+     *
+     * @param idMascota
+     */
     public void setIdMascota(long idMascota) {
         this.idMascota = idMascota;
     }
 
+    /**
+     *
+     * @return
+     */
     public long getIdCliente() {
         return idCliente;
     }
 
+    /**
+     *
+     * @param idCliente
+     */
     public void setIdCliente(long idCliente) {
         this.idCliente = idCliente;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEstado() {
         return estado;
     }
 
+    /**
+     *
+     * @param estado
+     */
     public void setEstado(String estado) {
         this.estado = estado;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFechaModificacion() {
         return fechaModificacion;
     }
 
+    /**
+     *
+     * @param fechaModificacion
+     */
     public void setFechaModificacion(String fechaModificacion) {
         this.fechaModificacion = fechaModificacion;
     }
@@ -154,6 +218,11 @@ public class HistoricoSolicitudes implements Serializable {
         return "com.alvaro.pse.petadopt.entities.HistoricoSolicitudes[ id=" + id + " ]";
     }
 
+    /**
+     *
+     * @param index
+     * @return
+     */
     public String getAttrAtIdx(int index) {
         switch (index) {
             case 0:

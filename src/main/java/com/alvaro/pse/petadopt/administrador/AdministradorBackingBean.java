@@ -25,38 +25,77 @@ public class AdministradorBackingBean implements Serializable {
     
     private String nuevaEspecie;
 
+    /**
+     *
+     * @return
+     */
     public String getNuevaEspecie() {
         return nuevaEspecie;
     }
 
+    /**
+     *
+     * @param nuevaEspecie
+     */
     public void setNuevaEspecie(String nuevaEspecie) {
         this.nuevaEspecie = nuevaEspecie;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getIdEspecieSelected() {
         return idEspecieSelected;
     }
 
+    /**
+     *
+     * @param idEspecieSelected
+     */
     public void setIdEspecieSelected(Long idEspecieSelected) {
         this.idEspecieSelected = idEspecieSelected;
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getIdUsuarioSelected() {
         return idUsuarioSelected;
     }
 
+    /**
+     *
+     * @param idUsuarioSelected
+     */
     public void setIdUsuarioSelected(Long idUsuarioSelected) {
         this.idUsuarioSelected = idUsuarioSelected;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getVerClientesFilter() {
         return verClientesFilter;
     }
 
+    /**
+     *
+     * @param verClientesFilter
+     */
     public void setVerClientesFilter(String verClientesFilter) {
         this.verClientesFilter = verClientesFilter;
     }
 
+    /**
+     *
+     * @param u1
+     * @param u2
+     * @param sortMeta
+     * @return
+     */
     public int sortByEmail(Usuario u1, Usuario u2, SortMeta sortMeta) {
         int sort = 0;
         if (u1.equals(u2)) {
@@ -69,6 +108,10 @@ public class AdministradorBackingBean implements Serializable {
         return sort;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getFilterDisplayName() {
         String displayName = "";
         switch (this.verClientesFilter) {

@@ -41,12 +41,18 @@ public class AdopcionClientBean{
     private Client client;
     private WebTarget target;
 
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
     }
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         client.close();
@@ -65,6 +71,10 @@ public class AdopcionClientBean{
         return all;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Mascota> findByEspecie() {
         List<Mascota> all = null;
         if (bean.getMascotaFilter().equalsIgnoreCase("todas")) {
@@ -82,6 +92,10 @@ public class AdopcionClientBean{
         return all;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getMascotaById() {
         String success = "failure";
         Mascota found;
@@ -98,6 +112,10 @@ public class AdopcionClientBean{
         return success;
     }
 
+    /**
+     *
+     * @return
+     */
     public String confirmarAdopcion() {
         String success = "failure";
         Mascota m = new Mascota();

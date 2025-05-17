@@ -5,7 +5,6 @@
  */
 package com.alvaro.pse.petadopt.external;
 
-import com.alvaro.pse.petadopt.json.AdoptanteReader;
 import com.alvaro.pse.petadopt.solicitudes.AdoptanteDTO;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
@@ -27,11 +26,19 @@ public class ListaNegraAPI {
     Client client = ClientBuilder.newClient();
     WebTarget target;
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         client.close();
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     public boolean consultaListaNegra(String email) {
         boolean puedeAdoptar = false;
         target = client.target("http://serpis.infor.uva.es/darklist/api/validar_adoptante/" + email);

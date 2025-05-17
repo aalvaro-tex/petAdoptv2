@@ -50,7 +50,7 @@
                                 <p:menuitem value="Adoptar" outcome="/adopcion/lista-mascotas"/>
                                 <p:menuitem value="Mi cuenta" outcome="/micuenta/mi-cuenta"/>
                                 <p:menuitem icon="pi pi-inbox"  value="Chat" outcome="/chat/chat-list" />
-                               <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
+                                <p:menuitem disabled="true" style="width:calc(100vw - 630px);"/>
                                 <p:menuitem icon="pi pi-sign-out" action="#{loginPageClientBean.logout()}" iconPos="right" >
                                     Salir
                                 </p:menuitem>
@@ -236,9 +236,9 @@
                                             <div class="solicitud-list-action">
                                                 <div style="display:flex;flex-direction: row; gap:10px; justify-content: center">
                                                     <p:commandButton icon="pi pi-check" styleClass="ui-button-success" update=":form:data"  action="#{solicitudesClientBean.aceptarSolicitud(solicitud.id)}" id="acceptBtn" rendered="#{(solicitud.estado.equalsIgnoreCase('pendiente')) and (solicitudesClientBean.puedeAdoptar(solicitud.idCliente))}" oncomplete="updateNavMenu();" >
-                                                       
+
                                                         <p:ajax event="click" update=":form:data"/> 
-                                                        
+
                                                     </p:commandButton>
 
                                                     <p:tooltip for="acceptBtn" value="Aceptar" position="bottom"/>
@@ -272,6 +272,8 @@
                                 }
                                 function handleSubmitDelete() {
                                     PF('mascotaDeleteDialog').hide();
+                                    console.log("reload");
+                                    location.reload();
                                 }
                                 function handleSubmitUpdate() {
                                     PF('mascotaUpdateDialog').hide();
@@ -438,7 +440,10 @@
                                                         }
                                                         function hideStatus() {
                                                             PF('statusDialog').hide();
+
                                                         }
+
+
                                                     </script>
                                                     <p:dialog modal="true" widgetVar="statusDialog" header="Status" draggable="false" closable="false"
                                                               resizable="false">
@@ -468,7 +473,7 @@
                     <h:form>
                         <p>¿Seguro que deseas cancelar tu solicitud de adopción?</p>
                         <p>Esta acción no puede deshacerse</p>
-                        <p:commandButton value="Cancelar solicitud" update=":form:data" styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.cancelarSolicitud()}" oncomplete="handleSubmitDelete(xhr, status, args)">
+                        <p:commandButton value="Cancelar solicitud" update=":form:data" styleClass="ui-button-danger" actionListener="#{solicitudesClientBean.cancelarSolicitud()}" oncomplete="handleSubmitDelete(xhr, status, args);">
                             <p:ajax event="click" update=":form:data"/> 
                         </p:commandButton>
                     </h:form>

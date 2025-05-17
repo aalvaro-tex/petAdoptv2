@@ -31,10 +31,17 @@ public class EspecieFacadeREST extends AbstractFacade<Especie> {
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public EspecieFacadeREST() {
         super(Especie.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -42,6 +49,11 @@ public class EspecieFacadeREST extends AbstractFacade<Especie> {
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -49,12 +61,21 @@ public class EspecieFacadeREST extends AbstractFacade<Especie> {
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -62,6 +83,10 @@ public class EspecieFacadeREST extends AbstractFacade<Especie> {
         return super.find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -69,6 +94,12 @@ public class EspecieFacadeREST extends AbstractFacade<Especie> {
         return super.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -76,6 +107,10 @@ public class EspecieFacadeREST extends AbstractFacade<Especie> {
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -83,6 +118,10 @@ public class EspecieFacadeREST extends AbstractFacade<Especie> {
         return String.valueOf(super.count());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;

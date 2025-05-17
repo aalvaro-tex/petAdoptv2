@@ -9,8 +9,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -66,14 +64,29 @@ public class Refugio implements Serializable {
     @Column(name = "domicilio_social")
     private String domicilioSocial;
 
-
+    /**
+     *
+     */
     public Refugio() {
     }
 
+    /**
+     *
+     * @param id
+     */
     public Refugio(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @param id
+     * @param nombre
+     * @param cif
+     * @param telefono
+     * @param domicilioSocial
+     * @param verificado
+     */
     public Refugio(Long id, String nombre, String cif, String telefono, String domicilioSocial, boolean verificado) {
         this.id = id;
         this.nombre = nombre;
@@ -84,42 +97,82 @@ public class Refugio implements Serializable {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     *
+     * @param id
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombre() {
         return nombre;
     }
 
+    /**
+     *
+     * @param nombre
+     */
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getCif() {
         return cif;
     }
 
+    /**
+     *
+     * @param cif
+     */
     public void setCif(String cif) {
         this.cif = cif;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getTelefono() {
         return telefono;
     }
 
+    /**
+     *
+     * @param telefono
+     */
     public void setTelefono(String telefono) {
         this.telefono = telefono;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getDomicilioSocial() {
         return domicilioSocial;
     }
 
+    /**
+     *
+     * @param domicilioSocial
+     */
     public void setDomicilioSocial(String domicilioSocial) {
         this.domicilioSocial = domicilioSocial;
     }
@@ -153,10 +206,18 @@ public class Refugio implements Serializable {
         return "com.alvaro.pse.petadoptv2.entities.Refugio[ id=" + id + " ]";
     }
 
+    /**
+     *
+     * @return
+     */
     public Boolean getVerificado() {
         return verificado;
     }
 
+    /**
+     *
+     * @param verificado
+     */
     public void setVerificado(Boolean verificado) {
         this.verificado = verificado;
     }

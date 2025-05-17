@@ -6,33 +6,12 @@
 package com.alvaro.pse.petadopt.utils;
 
 import com.alvaro.pse.petadopt.entities.HistoricoSolicitudes;
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.Serializable;
-import static java.lang.Thread.sleep;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFFont;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFFont;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.model.DefaultStreamedContent;
 
 /**
@@ -44,6 +23,12 @@ import org.primefaces.model.DefaultStreamedContent;
 @SessionScoped
 public class ExcelUtils implements Serializable {
 
+    /**
+     *
+     * @param h
+     * @return
+     * @throws IOException
+     */
     public DefaultStreamedContent generateHistorialExcel(HistoricoSolicitudes[] h) throws IOException {
 
         /*

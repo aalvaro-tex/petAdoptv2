@@ -28,16 +28,45 @@ import javax.ws.rs.ext.Provider;
 @Produces(MediaType.APPLICATION_JSON)
 public class RefugioWriter implements MessageBodyWriter<Refugio>{
 
+    /**
+     *
+     * @param type
+     * @param type1
+     * @param antns
+     * @param mt
+     * @return
+     */
     @Override
     public boolean isWriteable(Class<?> type, Type type1, Annotation[] antns, MediaType mt) {
         return Usuario.class.isAssignableFrom(type);
     }
 
+    /**
+     *
+     * @param t
+     * @param type
+     * @param genericType
+     * @param annotations
+     * @param mediaType
+     * @return
+     */
     @Override
     public long getSize(Refugio t, Class<?> type, Type genericType, Annotation[] annotations, MediaType mediaType) {
         return -1;
                 }
 
+    /**
+     *
+     * @param t
+     * @param type
+     * @param type1
+     * @param antns
+     * @param mt
+     * @param mm
+     * @param out
+     * @throws IOException
+     * @throws WebApplicationException
+     */
     @Override
     public void writeTo(Refugio t, Class<?> type, Type type1, Annotation[] antns, MediaType mt, MultivaluedMap<String, Object> mm, OutputStream out) throws IOException, WebApplicationException {
         JsonGenerator gen = Json.createGenerator(out);

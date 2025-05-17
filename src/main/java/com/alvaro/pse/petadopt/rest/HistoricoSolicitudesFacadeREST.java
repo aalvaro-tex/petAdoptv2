@@ -32,10 +32,17 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public HistoricoSolicitudesFacadeREST() {
         super(HistoricoSolicitudes.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -43,6 +50,11 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -50,12 +62,21 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -63,6 +84,10 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         return super.find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -70,6 +95,12 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         return super.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -77,6 +108,10 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -84,6 +119,11 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         return String.valueOf(super.count());
     }
      
+    /**
+     *
+     * @param idRefugio
+     * @return
+     */
     @GET
     @Path("find-by-refugio/{idRefugio}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -99,6 +139,12 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         return found;
     }
     
+    /**
+     *
+     * @param idRefugio
+     * @param estado
+     * @return
+     */
     @GET
     @Path("find-by-refugio-estado/{idRefugio}/{estado}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -114,6 +160,12 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         return found;
     }
     
+    /**
+     *
+     * @param idCliente
+     * @param estado
+     * @return
+     */
     @GET
     @Path("find-by-cliente-estado/{idCliente}/{estado}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -129,6 +181,10 @@ public class HistoricoSolicitudesFacadeREST extends AbstractFacade<HistoricoSoli
         return found;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;

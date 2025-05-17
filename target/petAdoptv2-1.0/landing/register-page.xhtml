@@ -33,7 +33,7 @@
 
             </ui:define>
 
-            <ui:define name="content">
+            <ui:define name="content" >
 
                 <div class="card" style="margin-top:40px;">
                     <!-- Registro para refugios -->
@@ -110,8 +110,8 @@
                                 <div class="col-12 flex align-items-center justify-content-center" style="gap:10px;">
                                     <p:fileUpload id="upload" value="#{signUpPageBackingBean.fotoPerfil}"
                                                   mode="simple" skinSimple="true" auto="true"
-                                                  process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true"/>
-                                    <p:commandButton ajax="false" action="#{signUpPageClientBean.register()}" update="growlSignUp" value="Darse de alta" id="signUpBtn" disabled="#{(!signUpPageBackingBean.terminosAceptados) or (!signUpPageBackingBean.fotoPerfil)}">      
+                                                  process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true" update="signUpBtn"/>
+                                    <p:commandButton ajax="false" action="#{signUpPageClientBean.register()}" update="growlSignUp" value="Darse de alta" id="signUpBtn" disabled="#{(!signUpPageBackingBean.terminosAceptados) or (signUpPageBackingBean.fotoPerfil == null)}">      
                                     </p:commandButton>
                                     <p:selectBooleanCheckbox value="#{signUpPageBackingBean.terminosAceptados}">He leído y acepto los<a onclick="PF('terminosCondiciones').show()" style="font-size: 600"><span style="font-weight: bold; cursor: pointer; color: blue;">términos y condiciones</span></a>
                                         <p:ajax event="change" update=":signupRefugio:signUpBtn" />
@@ -234,8 +234,8 @@
                                 <div class="col-12 flex align-items-center justify-content-center" style="gap:10px;">
                                     <p:fileUpload id="upload" value="#{signUpPageBackingBean.fotoPerfil}"
                                                   mode="simple" skinSimple="true" auto="true"
-                                                  process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true"/>
-                                    <p:commandButton id="signUpBtn" ajax="false" action="#{signUpPageClientBean.register()}" update="growlSignUp" value="Darse de alta" disabled="#{!signUpPageBackingBean.terminosAceptados}">      
+                                                  process="@this" label="Subir imagen" chooseIcon="pi pi-image" required="true" update="signUpBtn"/>
+                                    <p:commandButton id="signUpBtn" ajax="false" action="#{signUpPageClientBean.register()}" update="growlSignUp" value="Darse de alta" disabled="#{(!signUpPageBackingBean.terminosAceptados) or (signUpPageBackingBean.fotoPerfil == null)}" >      
                                     </p:commandButton>
                                     <p:selectBooleanCheckbox value="#{signUpPageBackingBean.terminosAceptados}">He leído y acepto los<a onclick="PF('terminosCondiciones').show()" style="font-size: 600"><span style="font-weight: bold; cursor: pointer; color: blue;">términos y condiciones</span></a>
                                         <p:ajax event="change" update=":signupCliente:signUpBtn" />

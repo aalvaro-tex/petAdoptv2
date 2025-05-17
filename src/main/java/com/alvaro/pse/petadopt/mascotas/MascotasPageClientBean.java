@@ -6,22 +6,16 @@
 package com.alvaro.pse.petadopt.mascotas;
 
 import com.alvaro.pse.petadopt.entities.Mascota;
-import com.alvaro.pse.petadopt.json.ClienteWriter;
-import com.alvaro.pse.petadopt.json.MascotaReader;
 import com.alvaro.pse.petadopt.json.MascotaWriter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import com.alvaro.pse.petadopt.utils.ImageUtils;
 import com.alvaro.pse.petadopt.utils.StringUtils;
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.ws.rs.client.Client;
@@ -51,17 +45,27 @@ public class MascotasPageClientBean {
     private Client client;
     private WebTarget target;
 
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
         target = client.target("http://localhost:8080/petAdoptv2/webresources/com.alvaro.pse.petadoptv2.entities.mascota");
     }
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         client.close();
     }
 
+    /**
+     *
+     * @return
+     */
     public String addMascota() {
         String success = "failure";
         Mascota m = new Mascota();
@@ -114,6 +118,10 @@ public class MascotasPageClientBean {
         return all;
     }
 
+    /**
+     *
+     * @return
+     */
     public List<Mascota> findByRefugioAndEstado() {
         List<Mascota> all = null;
         if (bean.getVerMascotasFilter().equalsIgnoreCase("todas")) {
@@ -133,6 +141,10 @@ public class MascotasPageClientBean {
         return all;
     }
 
+    /**
+     *
+     * @return
+     */
     public String deleteMascota() {
         target.path("{mascotaId}")
                 .resolveTemplate("mascotaId", bean.getIdMascotaSelected())
@@ -141,6 +153,10 @@ public class MascotasPageClientBean {
         return "success";
     }
     
+    /**
+     *
+     * @return
+     */
     public String getMascotaById(){
         String success = "failure";
         Mascota found;
@@ -157,6 +173,10 @@ public class MascotasPageClientBean {
         return success;
     }
     
+    /**
+     *
+     * @return
+     */
     public String updateMascota(){
         String success = "failure";
         Mascota m = new Mascota();

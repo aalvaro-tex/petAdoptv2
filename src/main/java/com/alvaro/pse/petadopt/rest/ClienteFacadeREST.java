@@ -6,7 +6,6 @@
 package com.alvaro.pse.petadopt.rest;
 
 import com.alvaro.pse.petadopt.entities.Cliente;
-import com.alvaro.pse.petadopt.entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.inject.Named;
@@ -34,10 +33,17 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public ClienteFacadeREST() {
         super(Cliente.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -45,6 +51,11 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -52,12 +63,21 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Long id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -65,6 +85,10 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
         return super.find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -72,6 +96,12 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
         return super.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -79,6 +109,10 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -86,6 +120,10 @@ public class ClienteFacadeREST extends AbstractFacade<Cliente> {
         return String.valueOf(super.count());
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;

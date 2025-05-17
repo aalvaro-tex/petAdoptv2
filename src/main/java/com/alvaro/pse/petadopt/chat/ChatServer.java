@@ -9,31 +9,20 @@ import com.alvaro.pse.petadopt.entities.Chat;
 import com.alvaro.pse.petadopt.json.ChatWriter;
 import com.alvaro.pse.petadopt.login.LoginPageBackingBean;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CopyOnWriteArraySet;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
 import javax.websocket.EncodeException;
 import javax.websocket.Session;
-import javax.websocket.EndpointConfig;
 import javax.websocket.OnClose;
-import javax.websocket.OnError;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
-import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import javax.ws.rs.client.Client;
@@ -58,28 +47,50 @@ public class ChatServer {
     private Client client;
     private WebTarget target;
 
+    /**
+     *
+     */
     @PostConstruct
     public void init() {
         client = ClientBuilder.newClient();
 
     }
 
+    /**
+     *
+     */
     @PreDestroy
     public void destroy() {
         client.close();
     }
 
+    /**
+     *
+     * @param peer
+     * @param room
+     */
     @OnOpen
     public void onOpen(Session peer, @PathParam("room") String room) {
         //System.out.println(room);
         peers.add(peer);
     }
 
+    /**
+     *
+     * @param peer
+     */
     @OnClose
     public void onClose(Session peer) {
         peers.remove(peer);
     }
 
+    /**
+     *
+     * @param message
+     * @param client
+     * @throws IOException
+     * @throws EncodeException
+     */
     @OnMessage
     public void message(String message, Session client) throws IOException, EncodeException {
         for (Session peer : peers) {

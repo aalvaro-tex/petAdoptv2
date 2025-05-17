@@ -43,30 +43,58 @@ public class UsuarioGrupo implements Serializable {
     @Column(name = "nombre_grupo")
     private String nombreRol;
 
+    /**
+     *
+     */
     public UsuarioGrupo() {
     }
 
+    /**
+     *
+     * @param email
+     */
     public UsuarioGrupo(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @param email
+     * @param nombreRol
+     */
     public UsuarioGrupo(String email, String nombreRol) {
         this.email = email;
         this.nombreRol = nombreRol;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     *
+     * @param email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     *
+     * @return
+     */
     public String getNombreRol() {
         return nombreRol;
     }
 
+    /**
+     *
+     * @param nombreRol
+     */
     public void setNombreRol(String nombreRol) {
         this.nombreRol = nombreRol;
     }

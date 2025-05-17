@@ -31,10 +31,17 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
     @PersistenceContext(unitName = "com.alvaro.pse_petAdoptv2_war_1.0PU")
     private EntityManager em;
 
+    /**
+     *
+     */
     public UsuarioGrupoFacadeREST() {
         super(UsuarioGrupo.class);
     }
 
+    /**
+     *
+     * @param entity
+     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -42,6 +49,11 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
         super.create(entity);
     }
 
+    /**
+     *
+     * @param id
+     * @param entity
+     */
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -49,12 +61,21 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
         super.edit(entity);
     }
 
+    /**
+     *
+     * @param id
+     */
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") String id) {
         super.remove(super.find(id));
     }
 
+    /**
+     *
+     * @param id
+     * @return
+     */
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -62,6 +83,10 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
         return super.find(id);
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Override
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -69,6 +94,12 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
         return super.findAll();
     }
 
+    /**
+     *
+     * @param from
+     * @param to
+     * @return
+     */
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
@@ -76,6 +107,10 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
         return super.findRange(new int[]{from, to});
     }
 
+    /**
+     *
+     * @return
+     */
     @GET
     @Path("count")
     @Produces(MediaType.TEXT_PLAIN)
@@ -83,6 +118,11 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
         return String.valueOf(super.count());
     }
 
+    /**
+     *
+     * @param email
+     * @return
+     */
     @GET
     @Path("is-user-admin/{email}")
     public boolean isUserAdmin(@PathParam("email") String email) {
@@ -96,6 +136,10 @@ public class UsuarioGrupoFacadeREST extends AbstractFacade<UsuarioGrupo> {
         return isAdmin;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     protected EntityManager getEntityManager() {
         return em;
