@@ -14,6 +14,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.inject.Inject;
@@ -92,9 +94,13 @@ public class ChatServer {
      * @throws EncodeException
      */
     @OnMessage
-    public void message(String message, Session client) throws IOException, EncodeException {
+    public void message(String message, Session client){
         for (Session peer : peers) {
-            peer.getBasicRemote().sendText(message);
+            try {
+                peer.getBasicRemote().sendText(message);
+            } catch (IOException ex) {
+                System.out.println("Excepcion");
+            }
             String datos = message.split("-")[0];
             String idConversacion = datos.split("@")[1];
             Long idEmisor = Long.parseLong(datos.split("@")[0]);

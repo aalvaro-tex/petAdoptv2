@@ -478,7 +478,7 @@ public class SolicitudesClientBean {
         try {
             pdf = this.pdfUtils.generateCertificadoAdopcionPDF(nombreCliente, nombreMascota, nombreRefugio, coste, idOperacion, fechaAdopcion, direccionRefugio, telefonoRefugio, base64firma);
         } catch (IOException ex) {
-            Logger.getLogger(SolicitudesClientBean.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error en la generación del PDF");
         }
         return pdf;
     }

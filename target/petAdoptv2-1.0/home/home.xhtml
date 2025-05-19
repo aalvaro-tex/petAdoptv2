@@ -74,7 +74,7 @@
                         <h:form >
                             <p:megaMenu orientation="horizontal" autoDisplay="false">
                                 <p:menuitem value="Inicio" outcome="home" style="font-weight: 600"/>
-                                <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores"/>
+                                <p:menuitem value="Gestionar administradores" outcome="/administrador/administradores" disabled="true"/>
                                 <p:menuitem value="Gestionar usuarios" outcome="/administrador/solicitudes-pendientes"/>
                                 <p:menuitem value="Añadir especies" outcome="/administrador/especies"/>
                                 <p:menuitem disabled="true" style="width:calc(100vw - 750px);"/>
@@ -100,7 +100,7 @@
                 <c:if test="${loginPageBackingBean.cliente ne null or loginPageBackingBean.refugio ne null}" >
                     <c:if test="${loginPageBackingBean.refugio.verificado eq false}">
                         <div class="card">
-                            <p:staticMessage severity="warn" summary="IMPORTANTE" detail="Cuenta temporal" style="width: calc(100% - 10px); margin-top:10px;"/>
+                            <p:staticMessage severity="warn" summary="IMPORTANTE" detail="Cuenta temporal. Tendrás acciones limitadas hasta que un administrador apruebe tu cuenta" style="width: calc(100% - 10px); margin-top:10px;"/>
                         </div>
                     </c:if>
                     <div class="card" style="margin-top:40px;">

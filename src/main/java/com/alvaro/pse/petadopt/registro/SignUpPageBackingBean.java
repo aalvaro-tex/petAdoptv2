@@ -387,8 +387,6 @@ public class SignUpPageBackingBean implements Serializable {
         setNif(null);
         setFechaNacimiento(null);
         setTerminosAceptados(false);
-        System.out.println("Foto:");
-        System.out.println(Arrays.toString(fotoPerfil.getContent()));
     }
 
 }

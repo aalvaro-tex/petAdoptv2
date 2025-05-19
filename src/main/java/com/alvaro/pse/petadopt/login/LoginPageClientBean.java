@@ -87,7 +87,6 @@ public class LoginPageClientBean implements Serializable {
             Usuario found = usuarioEJB.findByEmail(bean.getEmail());
             if (found.getActivo() == true) {
                 bean.setUsuarioLogeado(found);
-
                 System.out.println(request.isUserInRole("usuario"));
                 System.out.println("Id usuario: " + found.getId());
                 if (request.isUserInRole("usuario")) {
@@ -135,7 +134,7 @@ public class LoginPageClientBean implements Serializable {
                         }
                     }
 
-                } else if (request.isUserInRole("admin")) {
+                } else if (request.isUserInRole("admin") && bean.getRol().equalsIgnoreCase("cliente")) {
                     // es administrador
                     // basta crear un cliente vacio, asignarle el id del usuario
                     // y poner el rol de la aplicación en modo 'Administrador'
@@ -144,7 +143,7 @@ public class LoginPageClientBean implements Serializable {
                     c.setId(usuarioEJB.findByEmail(bean.getEmail()).getId());
                     bean.setCliente(c);
                     bean.setRol("Administrador");
-
+                    bean.setRefugio(null);
                 } else {
                     bean.showError();
                 }
@@ -154,7 +153,7 @@ public class LoginPageClientBean implements Serializable {
         } catch (Exception e) {
             bean.showError();
         }
-
+        System.out.println("Rol: " + bean.getRol());
         System.out.println(success);
         return success;
     }
